@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A298613A-E1BE-4C25-B07B-9777961F4AED}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>EasyGo</RootNamespace>
+    <AssemblyName>EasyGo</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\setup-res\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <SupportUrl>https://OurCompany.com</SupportUrl>
+    <ProductName>EasyGo</ProductName>
+    <PublisherName>OurCompany</PublisherName>
+    <SuiteName>EasyGo</SuiteName>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>AE372BFF02ED68DA8BF91E663AE20B266AB34201</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>EasyGo_1_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ControlzEx">
+      <HintPath>..\packages\ControlzEx.4.4.0\lib\net462\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="De.TorstenMandelkow.MetroChart">
+      <HintPath>..\packages\De.TorstenMandelkow.MetroChart.1.0.0\lib\De.TorstenMandelkow.MetroChart.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetKit.Wpf.AutoCompleteComboBox, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetKit.Wpf.AutoCompleteComboBox.1.4.0\lib\net45\DotNetKit.Wpf.AutoCompleteComboBox.dll</HintPath>
+    </Reference>
+    <Reference Include="FontAwesome.WPF">
+      <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.WIA">
+      <HintPath>bin\Interop.WIA.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="LiveCharts">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\packages\MahApps.Metro.2.4.5\lib\net47\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors">
+      <HintPath>..\packages\MaterialDesignColors.2.0.0\lib\net452\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf">
+      <HintPath>..\packages\MaterialDesignThemes.4.0.0\lib\net452\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.12.2\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.12.2\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.12.2\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1449.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1449.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1449.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.2.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1449.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1449.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Panteam.MetroChart">
+      <HintPath>..\packages\Panteam.MetroChart.1.0.1\lib\net40\Panteam.MetroChart.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.106.12.0\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.6.0.0\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common">
+      <HintPath>..\packages\System.Drawing.Common.5.0.2\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.12.2\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Reactive">
+      <HintPath>..\packages\System.Reactive.4.0.0\lib\net46\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.6.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Permissions.6.0.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Tulpep.NotificationWindow">
+      <HintPath>..\packages\Tulpep.NotificationWindow.1.1.38\lib\net40\Tulpep.NotificationWindow.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFTabTip">
+      <HintPath>..\packages\WPFTabTip.1.2.2\lib\net45\WPFTabTip.dll</HintPath>
+    </Reference>
+    <Reference Include="Zen.Barcode.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b5ae55aa76d2d9de, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Zen.Barcode.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="ar_file.Designer.cs" />
+    <Compile Include="Classes\AppSettings.cs" />
+    <Compile Include="converters\Class1.cs" />
+    <Compile Include="en_file.Designer.cs" />
+    <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
+      <DependentUpon>uc_sectionData.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\FillCombo.cs" />
+    <Compile Include="Classes\FindVisualChildren.cs" />
+    <Compile Include="Classes\HelpClass.cs" />
+    <Compile Include="Classes\KeyValue.cs" />
+    <Compile Include="Classes\Md5Encription.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="Keyboard\AnimationHelper.cs" />
+    <Compile Include="Keyboard\EnvironmentEx.cs" />
+    <Compile Include="Keyboard\HardwareKeyboard.cs" />
+    <Compile Include="Keyboard\PoolingTimer.cs" />
+    <Compile Include="Keyboard\Screen.cs" />
+    <Compile Include="Keyboard\TabTip.cs" />
+    <Compile Include="Keyboard\TabTipAutomation.cs" />
+    <Compile Include="Keyboard\Taskbar.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\sectionData\uc_sectionData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="ar_file.resx" />
+    <EmbeddedResource Include="en_file.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="fonts\cairo-font\Cairo Regular 400.ttf" />
+    <None Include="EasyGo_TemporaryKey.pfx" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.orderPreparingStatus.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.BalanceSTS.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.CardsSts.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.InventoryClass.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.InventoryItemLocation1.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.InvoiceTaxes.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ItemTransferInvoiceTax.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ItemUnitCost.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.OpenClosOperatinModel.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.POSOpenCloseModel.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Storage.datasource" />
+    <Resource Include="pic\favicon.ico" />
+    <Resource Include="favicon.ico" />
+    <Resource Include="fonts\cairo-font\cairo bold.ttf" />
+    <Resource Include="fonts\cairo-font\cairo-light.ttf" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\EasyGo.ApiClasses.ApiConnect.datasource" />
+    <None Include="Properties\DataSources\EasyGo.ApiClasses.APIResult.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Agent.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.AgentMembershipCash1.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.OrderPreparing1.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Tables.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.TablesReservation.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Bank.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Branch.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Card.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.CashTransfer.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.CashTransfer1.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.CashTransferSts.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Coupon.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.CouponInvoice.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ErrorClass.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Invoice.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Invoice1.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Invoice2.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.InvoicesClass.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ItemLocation.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ItemTransfer2.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ItemTransferInvoice1.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ItemUnitInvoiceProfit.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Location.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Memberships.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Offer1.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.OrderPreparingSTS.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.PayedInvclass1.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Pos.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ResidentialSectors.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.SalesMembership.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.Section.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ShippingCompanies.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.StorageCost.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.User.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\netoaster\netoaster.csproj">
+      <Project>{211d37ef-74f8-4e4f-9ed0-da4566f423f5}</Project>
+      <Name>netoaster</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\no-image-icon-125x125.png" />
+    <Resource Include="pic\no-image-icon-40x40.png" />
+    <Resource Include="pic\no-image-icon-512x512.png" />
+    <Resource Include="pic\no-image-icon-90x90.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\ApiClasses\" />
+    <Folder Include="View\accounts\" />
+    <Folder Include="View\catalog\" />
+    <Folder Include="View\home\" />
+    <Folder Include="View\purchase\" />
+    <Folder Include="View\reports\" />
+    <Folder Include="View\sales\" />
+    <Folder Include="View\settings\" />
+    <Folder Include="View\storage\" />
+    <Folder Include="View\windows\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
