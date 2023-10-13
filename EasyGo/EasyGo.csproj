@@ -225,6 +225,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ar_file.Designer.cs" />
+    <Compile Include="Classes\ApiClasses\User.cs" />
     <Compile Include="Classes\AppSettings.cs" />
     <Compile Include="converters\Class1.cs" />
     <Compile Include="en_file.Designer.cs" />
@@ -365,7 +366,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\ApiClasses\" />
     <Folder Include="View\accounts\" />
     <Folder Include="View\catalog\" />
     <Folder Include="View\home\" />
