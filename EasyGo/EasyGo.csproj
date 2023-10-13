@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>EasyGo</RootNamespace>
     <AssemblyName>EasyGo</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -36,6 +36,7 @@
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -64,10 +65,11 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>AE372BFF02ED68DA8BF91E663AE20B266AB34201</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>0D1D19156079EA9E0601BE4039A3193122B108A2</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>EasyGo_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -345,12 +347,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\netoaster\netoaster.csproj">
-      <Project>{211d37ef-74f8-4e4f-9ed0-da4566f423f5}</Project>
-      <Name>netoaster</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="pic\no-image-icon-125x125.png" />
     <Resource Include="pic\no-image-icon-40x40.png" />
     <Resource Include="pic\no-image-icon-512x512.png" />
@@ -379,6 +375,12 @@
     <Folder Include="View\settings\" />
     <Folder Include="View\storage\" />
     <Folder Include="View\windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\netoaster\netoaster.csproj">
+      <Project>{211d37ef-74f8-4e4f-9ed0-da4566f423f5}</Project>
+      <Name>netoaster</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
