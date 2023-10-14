@@ -5146,4 +5146,10 @@ Please add Email in setting</value>
   <data name="trRatioCannotBeZero" xml:space="preserve">
     <value>Ratio can't be zero</value>
   </data>
+  <data name="trFullNameAlreadyExist" xml:space="preserve">
+    <value>Full name already exist</value>
+  </data>
+  <data name="trUserNameAlreadyExist" xml:space="preserve">
+    <value>User name already exist</value>
+  </data>
 </root>

@@ -5120,4 +5120,10 @@
   <data name="trRatioCannotBeZero" xml:space="preserve">
     <value>النسبة لا يمكن أن تكون صفر</value>
   </data>
+  <data name="trFullNameAlreadyExist" xml:space="preserve">
+    <value>الاسم الكامل موجود مسبقاً</value>
+  </data>
+  <data name="trUserNameAlreadyExist" xml:space="preserve">
+    <value>اسم المستخدم موجود مسبقاً</value>
+  </data>
 </root>
