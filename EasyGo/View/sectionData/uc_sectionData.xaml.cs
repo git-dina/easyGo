@@ -152,12 +152,13 @@ namespace EasyGo.View.sectionData
             */
 
         }
-        private void Btn_users_Click(object sender, RoutedEventArgs e)
+        private void Btn_user_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 MainWindow.mainWindow.grid_main.Children.Clear();
-                //MainWindow.mainWindow.grid_main.Children.Add(uc_hallDivide.Instance);
+                uc_user uc = new uc_user();
+                MainWindow.mainWindow.grid_main.Children.Add(uc);
 
                 Button button = sender as Button;
                 //MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
