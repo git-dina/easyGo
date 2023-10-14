@@ -238,6 +238,9 @@
     <Compile Include="View\sectionData\uc_user.xaml.cs">
       <DependentUpon>uc_user.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
+      <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -271,6 +274,10 @@
     <Page Include="View\sectionData\uc_user.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_acceptCancelPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -384,7 +391,6 @@
     <Folder Include="View\sales\" />
     <Folder Include="View\settings\" />
     <Folder Include="View\storage\" />
-    <Folder Include="View\windows\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\netoaster\netoaster.csproj">
