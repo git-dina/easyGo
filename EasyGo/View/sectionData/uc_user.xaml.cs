@@ -1,0 +1,500 @@
+﻿using netoaster;
+using EasyGo.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Resources;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Microsoft.Win32;
+using System.IO;
+using Microsoft.Reporting.WinForms;
+using EasyGo.Classes.ApiClasses;
+
+namespace EasyGo.View.sectionData
+{
+    /// <summary>
+    /// Interaction logic for uc_user.xaml
+    /// </summary>
+    public partial class uc_user : UserControl
+    {
+        public uc_user()
+        {
+            InitializeComponent();
+        }
+
+        User user = new User();
+        IEnumerable<User> usersQuery;
+        IEnumerable<User> users;
+        byte tgl_userState;
+        string searchText = "";
+        public static List<string> requiredControlList;
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            //Instance = null;
+            GC.Collect();
+        }
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {//load
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                requiredControlList = new List<string> { "name", "lastname", "mobile","username" };
+
+                translate();
+
+
+               
+                Keyboard.Focus(tb_FirstName);
+                await Search();
+
+
+                Clear();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private void translate()
+        {
+
+          
+        }
+        #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
+        private async void Btn_add_Click(object sender, RoutedEventArgs e)
+        { //add
+
+        }
+        private async void Btn_update_Click(object sender, RoutedEventArgs e)
+        {//update
+            
+        }
+        private async void Btn_delete_Click(object sender, RoutedEventArgs e)
+        {//delete
+            
+        }
+      
+        #endregion
+        #region events
+        private async void Tb_search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                /*
+                if (FillCombo.usersList != null)
+                    users = FillCombo.usersList.ToList();
+                if (users is null)
+                    await RefreshUsersList();
+                tgl_userState = 1;
+                await Search();
+                */
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (users is null)
+                    await RefreshUsersList();
+                tgl_userState = 0;
+                await Search();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private void Btn_clear_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                Clear();
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private async void Dg_user_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //selection
+                if (dg_user.SelectedIndex != -1)
+                {
+                    user = dg_user.SelectedItem as User;
+                    this.DataContext = user;
+                    if (user != null)
+                    {
+
+                    }
+                }
+                HelpClass.clearValidate(requiredControlList, this);
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private async void Btn_refresh_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {//refresh
+
+                HelpClass.StartAwait(grid_main);
+
+                tb_search.Text = "";
+                searchText = "";
+                await RefreshUsersList();
+                await Search();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+
+      
+        #endregion
+        #region Refresh & Search
+        async Task Search()
+        {
+            /*
+            //search
+            if (users is null)
+                await RefreshUsersList();
+            searchText = tb_search.Text.ToLower();
+            usersQuery = users.Where(s => (s.name.ToLower().Contains(searchText) ||
+            ) && s.isActive == tgl_userState);
+            RefreshCustomersView();
+            */
+        }
+        async Task<IEnumerable<User>> RefreshUsersList()
+        {
+            /*
+            await FillCombo.RefreshUsers();
+            users = FillCombo.usersList.ToList();
+
+            users = users.Where(x => x.isAdmin != true);
+            */
+            return users;
+        }
+        void RefresUsersView()
+        {
+            dg_user.ItemsSource = usersQuery;
+            txt_count.Text = usersQuery.Count().ToString();
+        }
+        #endregion
+        #region validate - clearValidate - textChange - lostFocus - . . . . 
+        void Clear()
+        {
+            user = new User();
+            this.DataContext = user;
+           
+
+            // last 
+            HelpClass.clearValidate(requiredControlList, this);
+            p_error_Email.Visibility = Visibility.Collapsed;
+          
+        }
+        string input;
+        decimal _decimal = 0;
+        private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+
+
+                //only  digits
+                TextBox textBox = sender as TextBox;
+                HelpClass.InputJustNumber(ref textBox);
+                if (textBox.Tag.ToString() == "int")
+                {
+                    Regex regex = new Regex("[^0-9]");
+                    e.Handled = regex.IsMatch(e.Text);
+                }
+                else if (textBox.Tag.ToString() == "decimal")
+                {
+                    input = e.Text;
+                    e.Handled = !decimal.TryParse(textBox.Text + input, out _decimal);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private void Code_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+                //only english and digits
+                Regex regex = new Regex("^[a-zA-Z0-9. -_?]*$");
+                if (!regex.IsMatch(e.Text))
+                    e.Handled = true;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+
+        }
+        private void Spaces_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                e.Handled = e.Key == Key.Space;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private decimal _commissionValue = 0;
+        private void ValidateEmpty_TextChange(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                var txb = sender as TextBox;
+                HelpClass.validate(requiredControlList, this);
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private void validateEmpty_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.validate(requiredControlList, this);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+
+        #endregion
+        private void Btn_image_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        /*
+          #region Image
+          string imgFileName = "pic/no-image-icon-125x125.png";
+          bool isImgPressed = false;
+          OpenFileDialog openFileDialog = new OpenFileDialog();
+          SaveFileDialog saveFileDialog = new SaveFileDialog();
+          private void Btn_image_Click(object sender, RoutedEventArgs e)
+          {
+              //select image
+              try
+              {
+                  HelpClass.StartAwait(grid_main);
+                  isImgPressed = true;
+                  openFileDialog.Filter = "Images|*.png;*.jpg;*.bmp;*.jpeg;*.jfif";
+                  if (openFileDialog.ShowDialog() == true)
+                  {
+                      HelpClass.imageBrush = new ImageBrush();
+                      HelpClass.imageBrush.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Relative));
+                      btn_image.Background = HelpClass.imageBrush;
+                      imgFileName = openFileDialog.FileName;
+                  }
+                  else
+                  { }
+                  HelpClass.EndAwait(grid_main);
+              }
+              catch (Exception ex)
+              {
+                  HelpClass.EndAwait(grid_main);
+                  HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+              }
+          }
+          private async Task getImg()
+          {
+              try
+              {
+                  HelpClass.StartAwait(grid_image, "forImage");
+                  if (string.IsNullOrEmpty(user.image))
+                  {
+                      HelpClass.clearImg(btn_image);
+                  }
+                  else
+                  {
+                      byte[] imageBuffer = await user.downloadImage(user.image); // read this as BLOB from your DB
+
+                      var bitmapImage = new BitmapImage();
+                      if (imageBuffer != null)
+                      {
+                          using (var memoryStream = new MemoryStream(imageBuffer))
+                          {
+                              bitmapImage.BeginInit();
+                              bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                              bitmapImage.StreamSource = memoryStream;
+                              bitmapImage.EndInit();
+                          }
+
+                          btn_image.Background = new ImageBrush(bitmapImage);
+                          // configure trmporary path
+                          string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                          string tmpPath = System.IO.Path.Combine(dir, Global.TMPUsersFolder);
+                          tmpPath = System.IO.Path.Combine(tmpPath, user.image);
+                          openFileDialog.FileName = tmpPath;
+                      }
+                      else
+                          HelpClass.clearImg(btn_image);
+                  }
+                  HelpClass.EndAwait(grid_image, "forImage");
+              }
+              catch
+              {
+                  HelpClass.EndAwait(grid_image, "forImage");
+              }
+          }
+          #endregion
+          */
+
+
+
+
+        #region Password
+        private void ValidateEmpty_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.validate(requiredControlList, this);
+                p_error_password.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private void P_showPassword_MouseEnter(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                tb_Password.Text = pb_Password.Password;
+                tb_Password.Visibility = Visibility.Visible;
+                pb_Password.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            { HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name); }
+        }
+        private void P_showPassword_MouseLeave(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                tb_Password.Visibility = Visibility.Collapsed;
+                pb_Password.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            { HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name); }
+        }
+        private bool chkPasswordLength(string password)
+        {
+            bool isValid = true;
+
+            if (password.Length < 6)
+                isValid = false;
+
+            if (!isValid)
+            {
+                p_error_password.Visibility = Visibility.Visible;
+                #region Tooltip
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = AppSettings.resourcemanager.GetString("trErrorPasswordLengthToolTip");
+                toolTip.Style = Application.Current.Resources["ToolTipError"] as Style;
+                p_error_password.ToolTip = toolTip;
+                #endregion
+            }
+
+            return isValid;
+        }
+        #endregion
+       
+       
+       
+   
+        #region report
+       
+        private void Btn_pdf_Click(object sender, RoutedEventArgs e)
+        {
+          
+        }
+
+        private void Btn_print_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void Btn_exportToExcel_Click(object sender, RoutedEventArgs e)
+        {
+         
+        }
+
+        private void Btn_preview_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        #endregion
+
+    
+    }
+}
