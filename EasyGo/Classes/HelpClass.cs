@@ -272,9 +272,9 @@ namespace EasyGo.Classes
         public static bool IsValidEmail(UserControl userControl)
         {//for email
             bool isValidEmail = true;
-            TextBox textBoxEmail = FindControls.FindVisualChildren<TextBox>(userControl).Where(x => x.Name == "tb_email")
+            TextBox textBoxEmail = FindControls.FindVisualChildren<TextBox>(userControl).Where(x => x.Name == "tb_Email")
                     .FirstOrDefault();
-            Path pathEmail = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_email")
+            Path pathEmail = FindControls.FindVisualChildren<Path>(userControl).Where(x => x.Name == "p_error_Email")
                     .FirstOrDefault();
             if (textBoxEmail != null && pathEmail != null)
             {
