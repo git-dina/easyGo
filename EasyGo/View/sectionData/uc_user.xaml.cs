@@ -51,7 +51,7 @@ namespace EasyGo.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "name", "lastname", "mobile","username" };
+                requiredControlList = new List<string> { "FirstName", "LastName", "Mobile","UserName" ,"Password"};
 
                 translate();
 
@@ -74,20 +74,273 @@ namespace EasyGo.View.sectionData
         private void translate()
         {
 
-          
+            txt_title.Text = AppSettings.resourcemanager.GetString("trUser");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
+
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_FirstName, AppSettings.resourcemanager.GetString("trFirstNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_LastName, AppSettings.resourcemanager.GetString("trLastNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Mobile, AppSettings.resourcemanager.GetString("trMobileHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Email, AppSettings.resourcemanager.GetString("trEmailHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Address, AppSettings.resourcemanager.GetString("trAdressHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Notes, AppSettings.resourcemanager.GetString("trNoteHint"));
+            
+
+
+            txt_loginInformation.Text = AppSettings.resourcemanager.GetString("trLoginInformation");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_UserName, AppSettings.resourcemanager.GetString("trUserNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(pb_Password, AppSettings.resourcemanager.GetString("trPasswordHint"));
+            txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");
+            txt_updateButton.Text = AppSettings.resourcemanager.GetString("trUpdate");
+            txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
+            tt_add_Button.Content = AppSettings.resourcemanager.GetString("trAdd");
+            tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
+            tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
+
+            dg_user.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_user.Columns[1].Header = AppSettings.resourcemanager.GetString("trMobile");
+            dg_user.Columns[2].Header = AppSettings.resourcemanager.GetString("traddress");
+            dg_user.Columns[3].Header = AppSettings.resourcemanager.GetString("trNotes");
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+
+
+            //txt_branchButton.Text = AppSettings.resourcemanager.GetString("trBranch");
+            //txt_storesButton.Text = AppSettings.resourcemanager.GetString("trStore");
+            //txt_sliceButton.Text = AppSettings.resourcemanager.GetString("prices");
+
+            btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
+            tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
+            tt_print.Content = AppSettings.resourcemanager.GetString("trPrint");
+            tt_excel.Content = AppSettings.resourcemanager.GetString("trExcel");
+            tt_preview.Content = AppSettings.resourcemanager.GetString("trPreview");
+            tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
         }
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
         private async void Btn_add_Click(object sender, RoutedEventArgs e)
         { //add
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
+                {
 
+                    //chk password length
+                    bool passLength = false;
+                    passLength = chkPasswordLength(pb_Password.Password);
+
+                    user = new User();
+                    if (HelpClass.validate(requiredControlList, this) &&  passLength && HelpClass.IsValidEmail(this))
+                    {
+
+                        user.UserName = tb_UserName.Text;
+                        user.Password = Md5Encription.MD5Hash("Inc-m" + pb_Password.Password);
+                        user.FirstName = tb_FirstName.Text;
+                        user.LastName = tb_LastName.Text;
+                        user.Mobile =tb_Mobile.Text; ;
+                        user.Email = tb_Email.Text;
+                        user.Address = tb_Address.Text;
+                        user.Notes = tb_Notes.Text;
+
+                        //user.driverIsAvailable = 0;
+
+                        //user.hasCommission = (bool)tgl_hasCommission.IsChecked;
+                        //try { user.commissionValue = decimal.Parse(tb_commissionValue.Text); }
+                        //catch { user.commissionValue = 0; }
+                        //try { user.commissionRatio = decimal.Parse(tb_commissionRatio.Text); }
+                        //catch { user.commissionRatio = 0; }
+
+                        //if (FillCombo.groupObject.HasPermissionAction(permissionPermission, FillCombo.groupObjects, "one"))
+                        //{
+
+                        //    if (cb_groupId.SelectedValue != null && (long)cb_groupId.SelectedValue != 0)
+                        //        user.groupId = (long)cb_groupId.SelectedValue;
+                        //    else
+                        //        user.groupId = null;
+                        //}
+
+
+                        var res = await user.Save(user);
+
+
+                        if (res.Equals("failed"))
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                        else if (res.Equals("dUserName")) //user name already exist
+                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trUserNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
+
+                        else if (res.Equals("dFullName")) //full name already exist
+                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trFullNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
+
+                        else
+                        {
+                            Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                            if (openFileDialog.FileName != "")
+                            {
+                                long userId = long.Parse(res);
+                                string b = await user.uploadImage(imgFileName,
+                                    Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
+                                user.Image = b;
+
+                            }
+
+                            Clear();
+                            await RefreshUsersList();
+                            await Search();
+                            FillCombo.usersList = users.ToList();
+                        }
+                       
+                    }
+                }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
         private async void Btn_update_Click(object sender, RoutedEventArgs e)
         {//update
-            
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                if (user.UserId > 0)
+                {
+                    //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
+                    {
+                        if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                        {
+                            user.UserName = tb_UserName.Text;
+                            user.Password = Md5Encription.MD5Hash("Inc-m" + pb_Password.Password);
+                            user.FirstName = tb_FirstName.Text;
+                            user.LastName = tb_LastName.Text;
+                            user.Mobile = tb_Mobile.Text; ;
+                            user.Email = tb_Email.Text;
+                            user.Address = tb_Address.Text;
+                            user.Notes = tb_Notes.Text;
+
+                            //user.driverIsAvailable = 0;
+
+                            //user.hasCommission = (bool)tgl_hasCommission.IsChecked;
+                            //try { user.commissionValue = decimal.Parse(tb_commissionValue.Text); }
+                            //catch { user.commissionValue = 0; }
+                            //try { user.commissionRatio = decimal.Parse(tb_commissionRatio.Text); }
+                            //catch { user.commissionRatio = 0; }
+
+                            //if (FillCombo.groupObject.HasPermissionAction(permissionPermission, FillCombo.groupObjects, "one"))
+                            //{
+
+                            //    if (cb_groupId.SelectedValue != null && (long)cb_groupId.SelectedValue != 0)
+                            //        user.groupId = (long)cb_groupId.SelectedValue;
+                            //    else
+                            //        user.groupId = null;
+                            //}
+
+
+                            var res = await user.Save(user);
+
+
+                            if (res.Equals("failed"))
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+                            else if (res.Equals("dUserName")) //user name already exist
+                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trUserNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
+
+                            else if (res.Equals("dFullName")) //full name already exist
+                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trFullNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
+
+                           else
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                await Search();
+                                FillCombo.usersList = users.ToList();
+                                long userId = long.Parse(res);
+                                if (MainWindow.userLogin.UserId == userId)
+                                    MainWindow.userLogin = user;
+                                if (openFileDialog.FileName != "")
+                                {
+                                    string b = await user.uploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + userId.ToString()), userId);
+                                    user.Image = b;
+                                    if (!b.Equals(""))
+                                    {
+                                        await getImg();
+                                    }
+                                    else
+                                    {
+                                        HelpClass.clearImg(btn_image);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //else
+                    //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+                }
+                else
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
         private async void Btn_delete_Click(object sender, RoutedEventArgs e)
         {//delete
-            
+            try
+            {
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete"))
+                {
+                    HelpClass.StartAwait(grid_main);
+                    if (user.UserId != 0)
+                    {
+                        #region
+                        //Window.GetWindow(this).Opacity = 0.2;
+                        //wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        //if (user.canDelete)
+                        //    w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
+                        //if (!user.canDelete)
+                        //    w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
+                        //w.ShowDialog();
+                        //Window.GetWindow(this).Opacity = 1;
+                        #endregion
+                        //if (w.isOk)
+                        {
+                            var res = await user.Delete(user.UserId, MainWindow.userLogin.UserId);
+                            if (res.Equals("failed"))
+                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                            else
+                            {
+                                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
+
+                                await RefreshUsersList();
+                                await Search();
+                                Clear();
+                                FillCombo.usersList = users.ToList();
+                            }
+                        }
+
+                    }
+                    HelpClass.EndAwait(grid_main);
+                }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
       
         #endregion
@@ -330,11 +583,8 @@ namespace EasyGo.View.sectionData
         }
 
         #endregion
-        private void Btn_image_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
-        /*
+   
           #region Image
           string imgFileName = "pic/no-image-icon-125x125.png";
           bool isImgPressed = false;
@@ -370,13 +620,13 @@ namespace EasyGo.View.sectionData
               try
               {
                   HelpClass.StartAwait(grid_image, "forImage");
-                  if (string.IsNullOrEmpty(user.image))
+                  if (string.IsNullOrEmpty(user.Image))
                   {
                       HelpClass.clearImg(btn_image);
                   }
                   else
                   {
-                      byte[] imageBuffer = await user.downloadImage(user.image); // read this as BLOB from your DB
+                      byte[] imageBuffer = await user.DownloadImage(user.Image); // read this as BLOB from your DB
 
                       var bitmapImage = new BitmapImage();
                       if (imageBuffer != null)
@@ -393,7 +643,7 @@ namespace EasyGo.View.sectionData
                           // configure trmporary path
                           string dir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                           string tmpPath = System.IO.Path.Combine(dir, Global.TMPUsersFolder);
-                          tmpPath = System.IO.Path.Combine(tmpPath, user.image);
+                          tmpPath = System.IO.Path.Combine(tmpPath, user.Image);
                           openFileDialog.FileName = tmpPath;
                       }
                       else
@@ -407,7 +657,6 @@ namespace EasyGo.View.sectionData
               }
           }
           #endregion
-          */
 
 
 

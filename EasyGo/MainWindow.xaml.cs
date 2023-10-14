@@ -20,6 +20,7 @@ using MaterialDesignThemes.Wpf;
 using WPFTabTip;
 using EasyGo.Classes;
 using EasyGo.View.sectionData;
+using EasyGo.Classes.ApiClasses;
 
 namespace EasyGo
 {
@@ -28,9 +29,12 @@ namespace EasyGo
     /// </summary>
     public partial class MainWindow : Window
     {
-        //internal static User userLogin = new User();
-        //internal static Pos posLogin;
+        internal static UserLog userLog;
+        internal static User userLogin = new User();
+        internal static Pos posLogin;
         //internal static Branch branchLogin;
+
+        public static Boolean go_out = false;
 
         public static DispatcherTimer timer;
 
