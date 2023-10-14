@@ -2992,6 +2992,7 @@
 
             <SolidColorBrush x:Key="MainColor" Color="#3498DB"/>
             <SolidColorBrush x:Key="LightMainColor" Color="#60AEE3"/>
+            <SolidColorBrush x:Key="VeryLightMainColor" Color="#B7DBF2"/>
             <SolidColorBrush x:Key="SecondColor" Color="#FFFFFF"/>
             <SolidColorBrush x:Key="backGround" Color="#EEF2F3"/>
             <SolidColorBrush x:Key="textColor" Color="#4E4E4E"/>
