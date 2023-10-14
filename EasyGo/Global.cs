@@ -12,8 +12,8 @@ namespace EasyGo
         public static string APIUri = "http://localhost:4747/api/";
 
 
-
-
+        public const string TMPFolder = "Thumb";
+        public const string TMPUsersFolder = "Thumb/users"; // folder to save users photos locally 
 
     }
 }
