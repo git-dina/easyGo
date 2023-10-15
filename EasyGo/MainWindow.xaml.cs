@@ -57,12 +57,12 @@ namespace EasyGo
             #region translate
             if (AppSettings.lang.Equals("en"))
             {
-                AppSettings.resourcemanager = new ResourceManager("Hesabate_POS.en_file", Assembly.GetExecutingAssembly());
+                AppSettings.resourcemanager = new ResourceManager("EasyGo.en_file", Assembly.GetExecutingAssembly());
                 grid_mainWindow.FlowDirection = FlowDirection.LeftToRight;
             }
             else
             {
-                AppSettings.resourcemanager = new ResourceManager("Hesabate_POS.ar_file", Assembly.GetExecutingAssembly());
+                AppSettings.resourcemanager = new ResourceManager("EasyGo.ar_file", Assembly.GetExecutingAssembly());
 
                 grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
             }
@@ -86,14 +86,14 @@ namespace EasyGo
 
                 if (AppSettings.lang.Equals("en"))
                 {
-                    AppSettings.resourcemanager = new ResourceManager("Hesabate_POS.en_file", Assembly.GetExecutingAssembly());
+                    AppSettings.resourcemanager = new ResourceManager("EasyGo.en_file", Assembly.GetExecutingAssembly());
                     grid_mainWindow.FlowDirection = FlowDirection.LeftToRight;
                     //txt_lang.Text = "AR";
 
                 }
                 else
                 {
-                    AppSettings.resourcemanager = new ResourceManager("Hesabate_POS.ar_file", Assembly.GetExecutingAssembly());
+                    AppSettings.resourcemanager = new ResourceManager("EasyGo.ar_file", Assembly.GetExecutingAssembly());
                     grid_mainWindow.FlowDirection = FlowDirection.RightToLeft;
                     //txt_lang.Text = "EN";
 
