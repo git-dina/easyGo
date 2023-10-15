@@ -30,8 +30,8 @@ namespace EasyGo.Classes.ApiClasses
         public bool IsActive { get; set; } = true;
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public Nullable<long> CreateUserId { get; set; } = MainWindow.userLogin.UserId;
-        public Nullable<long> UpdateUserId { get; set; } = MainWindow.userLogin.UserId;
+        public Nullable<long> CreateUserId { get; set; }
+        public Nullable<long> UpdateUserId { get; set; }
         public Nullable<long> RoleId { get; set; }
         public Nullable<decimal> Balance { get; set; } = 0;
         public Nullable<byte> BalanceType { get; set; } = 0;
