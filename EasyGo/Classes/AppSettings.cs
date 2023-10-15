@@ -60,6 +60,8 @@ namespace EasyGo.Classes
 
         #region print
         public static string show_header;
+        public static string rep_printer_name;
+        public static string rep_print_count;
         #endregion
     }
 }
