@@ -422,7 +422,13 @@ namespace EasyGo.View.sectionData
                     this.DataContext = user;
                     if (user != null)
                     {
-
+                        #region image
+                        bool isModified = HelpClass.chkImgChng(user.Image, (DateTime)user.UpdateDate, Global.TMPUsersFolder);
+                        if (isModified)
+                            getImg();
+                        else
+                            HelpClass.getLocalImg("User", user.Image, btn_image);
+                        #endregion
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -472,8 +478,7 @@ namespace EasyGo.View.sectionData
         }
         async Task<IEnumerable<User>> RefreshUsersList()
         {
-            if(FillCombo.usersList is null)
-                await FillCombo.RefreshUsers();
+            await FillCombo.RefreshUsers();
             users = FillCombo.usersList.ToList();
 
             users = users.Where(x => x.IsAdmin != true);
@@ -491,8 +496,11 @@ namespace EasyGo.View.sectionData
         {
             user = new User();
             this.DataContext = user;
-           
 
+            dg_user.SelectedIndex = -1;
+            #region image
+            HelpClass.clearImg(btn_image);
+            #endregion
             // last 
             HelpClass.clearValidate(requiredControlList, this);
             p_error_Email.Visibility = Visibility.Collapsed;
@@ -758,7 +766,7 @@ namespace EasyGo.View.sectionData
         }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {
-            try
+            //try
             {
 
                 HelpClass.StartAwait(grid_main);
@@ -782,12 +790,12 @@ namespace EasyGo.View.sectionData
 
                 HelpClass.EndAwait(grid_main);
             }
-            catch (Exception ex)
-            {
+            //catch (Exception ex)
+            //{
 
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
+            //    HelpClass.EndAwait(grid_main);
+            //    HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            //}
         }
 
         private void Btn_print_Click(object sender, RoutedEventArgs e)

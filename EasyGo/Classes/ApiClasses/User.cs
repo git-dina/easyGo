@@ -38,7 +38,7 @@ namespace EasyGo.Classes.ApiClasses
         public bool HasCommission { get; set; }
         public Nullable<decimal> CommissionValue { get; set; }
         public Nullable<decimal> CommissionRatio { get; set; }
-        public Nullable<bool> IsAdmin { get; set; }
+        public bool IsAdmin { get; set; } 
         #endregion
 
         #region Methods

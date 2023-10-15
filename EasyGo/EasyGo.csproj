@@ -307,8 +307,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\SectionData\Persons\Ar\ArUsers.rdlc" />
-    <EmbeddedResource Include="Reports\SectionData\Persons\En\EnUsers.rdlc" />
+    <Content Include="Reports\SectionData\Persons\Ar\ArUsers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\Persons\En\EnUsers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="fonts\cairo-font\Cairo Regular 400.ttf" />
     <None Include="EasyGo_TemporaryKey.pfx" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.orderPreparingStatus.datasource" />
