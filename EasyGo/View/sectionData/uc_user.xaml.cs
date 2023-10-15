@@ -10,17 +10,17 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.IO;
-using Microsoft.Reporting.WinForms;
 using EasyGo.Classes.ApiClasses;
+using EasyGo.View.windows;
+using System.Windows.Shapes;
+using System.Windows.Data;
+using System.Windows.Documents;
+using Microsoft.Reporting.WinForms;
 
 namespace EasyGo.View.sectionData
 {
@@ -37,7 +37,6 @@ namespace EasyGo.View.sectionData
         User user = new User();
         IEnumerable<User> usersQuery;
         IEnumerable<User> users;
-        byte tgl_userState;
         string searchText = "";
         public static List<string> requiredControlList;
 
@@ -55,8 +54,7 @@ namespace EasyGo.View.sectionData
 
                 translate();
 
-
-               
+              
                 Keyboard.Focus(tb_FirstName);
                 await Search();
 
@@ -100,7 +98,7 @@ namespace EasyGo.View.sectionData
 
             dg_user.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
             dg_user.Columns[1].Header = AppSettings.resourcemanager.GetString("trMobile");
-            dg_user.Columns[2].Header = AppSettings.resourcemanager.GetString("traddress");
+            dg_user.Columns[2].Header = AppSettings.resourcemanager.GetString("trAddress");
             dg_user.Columns[3].Header = AppSettings.resourcemanager.GetString("trNotes");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
@@ -141,6 +139,7 @@ namespace EasyGo.View.sectionData
                         user.Email = tb_Email.Text;
                         user.Address = tb_Address.Text;
                         user.Notes = tb_Notes.Text;
+                        user.CreateUserId = MainWindow.userLogin.UserId;
 
                         //user.driverIsAvailable = 0;
 
@@ -224,7 +223,7 @@ namespace EasyGo.View.sectionData
                             user.Email = tb_Email.Text;
                             user.Address = tb_Address.Text;
                             user.Notes = tb_Notes.Text;
-
+                            user.UpdateUserId = MainWindow.userLogin.UserId;
                             //user.driverIsAvailable = 0;
 
                             //user.hasCommission = (bool)tgl_hasCommission.IsChecked;
@@ -303,16 +302,14 @@ namespace EasyGo.View.sectionData
                     if (user.UserId != 0)
                     {
                         #region
-                        //Window.GetWindow(this).Opacity = 0.2;
-                        //wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        //if (user.canDelete)
-                        //    w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
-                        //if (!user.canDelete)
-                        //    w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDeactivate");
-                        //w.ShowDialog();
-                        //Window.GetWindow(this).Opacity = 1;
+                        Window.GetWindow(this).Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                         w.contentText = AppSettings.resourcemanager.GetString("trMessageBoxDelete");
+                        
+                        w.ShowDialog();
+                        Window.GetWindow(this).Opacity = 1;
                         #endregion
-                        //if (w.isOk)
+                        if (w.isOk)
                         {
                             var res = await user.Delete(user.UserId, MainWindow.userLogin.UserId);
                             if (res.Equals("failed"))
@@ -387,7 +384,7 @@ namespace EasyGo.View.sectionData
                 HelpClass.StartAwait(grid_main);
                 if (users is null)
                     await RefreshUsersList();
-                tgl_userState = 0;
+                //tgl_userState = 0;
                 await Search();
                 HelpClass.EndAwait(grid_main);
             }
@@ -464,24 +461,23 @@ namespace EasyGo.View.sectionData
         #region Refresh & Search
         async Task Search()
         {
-            /*
+  
             //search
             if (users is null)
                 await RefreshUsersList();
             searchText = tb_search.Text.ToLower();
-            usersQuery = users.Where(s => (s.name.ToLower().Contains(searchText) ||
-            ) && s.isActive == tgl_userState);
-            RefreshCustomersView();
-            */
+            usersQuery = users.Where(s => s.FirstName.ToLower().Contains(searchText) );
+            RefresUsersView();
+ 
         }
         async Task<IEnumerable<User>> RefreshUsersList()
         {
-            /*
-            await FillCombo.RefreshUsers();
+            if(FillCombo.usersList is null)
+                await FillCombo.RefreshUsers();
             users = FillCombo.usersList.ToList();
 
-            users = users.Where(x => x.isAdmin != true);
-            */
+            users = users.Where(x => x.IsAdmin != true);
+
             return users;
         }
         void RefresUsersView()
@@ -716,15 +712,82 @@ namespace EasyGo.View.sectionData
             return isValid;
         }
         #endregion
-       
-       
-       
-   
+
+
+
+
         #region report
-       
+        ReportCls reportclass = new ReportCls();
+        LocalReport rep = new LocalReport();
+        public void BuildReport()
+        {
+
+            List<ReportParameter> paramarr = new List<ReportParameter>();
+
+            string addpath;
+            bool isArabic = ReportCls.checkLang();
+            if (isArabic)
+            {
+                addpath = @"\Reports\SectionData\Persons\Ar\ArUsers.rdlc";
+            }
+            else
+            {
+                addpath = @"\Reports\SectionData\Persons\En\EnUsers.rdlc";
+            }
+            string searchval = "";
+            string stateval = "";
+            //filter   
+            stateval = tgl_isActive.IsChecked == true ? AppSettings.resourcemanagerreport.GetString("trActive_")
+              : AppSettings.resourcemanagerreport.GetString("trNotActive");
+            paramarr.Add(new ReportParameter("stateval", stateval));
+            paramarr.Add(new ReportParameter("trActiveState", AppSettings.resourcemanagerreport.GetString("trState")));
+            paramarr.Add(new ReportParameter("trSearch", AppSettings.resourcemanagerreport.GetString("trSearch")));
+            searchval = tb_search.Text;
+            paramarr.Add(new ReportParameter("searchVal", searchval));
+            //end filter
+            string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+
+            ReportConfig.UserReport(usersQuery, rep, reppath, paramarr);
+            ReportConfig.setReportLanguage(paramarr);
+            ReportConfig.Header(paramarr);
+
+            rep.SetParameters(paramarr);
+
+            rep.Refresh();
+
+        }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {
-          
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "report"))
+                {
+                    #region
+                    BuildReport();
+
+                    saveFileDialog.Filter = "PDF|*.pdf;";
+
+                    if (saveFileDialog.ShowDialog() == true)
+                    {
+                        string filepath = saveFileDialog.FileName;
+                        LocalReportExtensions.ExportToPDF(rep, filepath);
+                    }
+                    #endregion
+                }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
 
         private void Btn_print_Click(object sender, RoutedEventArgs e)
