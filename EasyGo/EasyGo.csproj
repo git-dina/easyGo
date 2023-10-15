@@ -230,6 +230,10 @@
     <Compile Include="Classes\ApiClasses\User.cs" />
     <Compile Include="Classes\AppSettings.cs" />
     <Compile Include="Classes\ImageProcess.cs" />
+    <Compile Include="Classes\NumberToWord\CurrencyInfo.cs" />
+    <Compile Include="Classes\NumberToWord\ToWord.cs" />
+    <Compile Include="Classes\ReportCls.cs" />
+    <Compile Include="Classes\ReportConfig.cs" />
     <Compile Include="converters\Class1.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
@@ -302,6 +306,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\SectionData\Persons\Ar\ArUsers.rdlc" />
+    <EmbeddedResource Include="Reports\SectionData\Persons\En\EnUsers.rdlc" />
     <Resource Include="fonts\cairo-font\Cairo Regular 400.ttf" />
     <None Include="EasyGo_TemporaryKey.pfx" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.orderPreparingStatus.datasource" />
