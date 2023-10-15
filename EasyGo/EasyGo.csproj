@@ -230,6 +230,7 @@
     <Compile Include="Classes\ApiClasses\User.cs" />
     <Compile Include="Classes\AppSettings.cs" />
     <Compile Include="Classes\ImageProcess.cs" />
+    <Compile Include="Classes\LocalReportExtensions.cs" />
     <Compile Include="Classes\NumberToWord\CurrencyInfo.cs" />
     <Compile Include="Classes\NumberToWord\ToWord.cs" />
     <Compile Include="Classes\ReportCls.cs" />
