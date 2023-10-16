@@ -13,6 +13,7 @@ namespace EasyGo
 
         public const string TMPFolder = "Thumb";
         public const string TMPUsersFolder = "Thumb/users"; // folder to save users photos locally 
+        public const string TMPAgentsFolder = "Thumb/agents"; // folder to save agents photos locally 
 
     }
 }
