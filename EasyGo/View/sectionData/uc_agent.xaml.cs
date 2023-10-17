@@ -159,7 +159,7 @@ namespace EasyGo.View.sectionData
                             Clear();
                             await RefreshAgentsList();
                             await Search();
-                            FillCombo.suppliersList = agents.ToList();
+                            FillCombo.customersList = agents.ToList();
                         }
 
                     }
@@ -181,7 +181,7 @@ namespace EasyGo.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                if (agent.AgentId > 0)
+                if (agent.CustomerId > 0)
                 {
                     //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
                     {
@@ -213,7 +213,7 @@ namespace EasyGo.View.sectionData
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await Search();
-                                FillCombo.suppliersList = agents.ToList();
+                                FillCombo.customersList = agents.ToList();
                                 long agentId = long.Parse(res);
                                 
                                 
@@ -241,7 +241,7 @@ namespace EasyGo.View.sectionData
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete"))
                 {
                     HelpClass.StartAwait(grid_main);
-                    if (agent.AgentId != 0)
+                    if (agent.CustomerId != 0)
                     {
                         #region
                         Window.GetWindow(this).Opacity = 0.2;
@@ -253,7 +253,7 @@ namespace EasyGo.View.sectionData
                         #endregion
                         if (w.isOk)
                         {
-                            var res = await agent.Delete(agent.AgentId, MainWindow.userLogin.UserId);
+                            var res = await agent.Delete(agent.CustomerId, MainWindow.userLogin.UserId);
                             if (res.Equals("failed"))
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
                             else
@@ -263,7 +263,7 @@ namespace EasyGo.View.sectionData
                                 await RefreshAgentsList();
                                 await Search();
                                 Clear();
-                                FillCombo.suppliersList = agents.ToList();
+                                FillCombo.customersList = agents.ToList();
                             }
                         }
 
@@ -376,8 +376,8 @@ namespace EasyGo.View.sectionData
         }
         async Task<IEnumerable<Customer>> RefreshAgentsList()
         {
-            await FillCombo.RefreshAgents();
-            agents = FillCombo.suppliersList.ToList();
+            await FillCombo.RefreshCustomers();
+            agents = FillCombo.customersList.ToList();
 
             return agents;
         }
