@@ -105,8 +105,8 @@
 
                     </Border>
                     <!--#endregion-->
-                    <!--#region agent-->
-                    <Border Tag="agent" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
+                    <!--#region supplier-->
+                    <Border Tag="supplier" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
                         <Border.Effect>
                             <DropShadowEffect
                                 ShadowDepth="1"
@@ -121,35 +121,35 @@
                                     Background="{StaticResource dashboardColor2}" 
                                     Height="15" 
                                     />
-                            <Path x:Name="path_agentIcon" 
+                            <Path x:Name="path_supplierIcon" 
                                   Grid.Row="1"
                                   Margin="0 20 0 10"
-                                  Tag="agent" Fill="{StaticResource dashboardColor2}" 
+                                  Tag="supplier" Fill="{StaticResource dashboardColor2}" 
                                   Stretch="Fill" 
                                   HorizontalAlignment="Center"
                              VerticalAlignment="Center"
                                   Height="50" Width="50"
                                 FlowDirection="LeftToRight"  
-                             Data="{StaticResource agent}"/>
+                             Data="{StaticResource supplier}"/>
                             <Separator Grid.Row="2" Margin="0 10 0 10"
                                 Background="{StaticResource veryLightGrey}" VerticalAlignment="Center" Width="auto"  />
-                            <TextBlock x:Name="txt_agentInfo" 
+                            <TextBlock x:Name="txt_supplierInfo" 
                                        Grid.Row="2"
-                                           Tag="agent" Text="agent" 
+                                           Tag="supplier" Text="supplier" 
                                        Foreground="{StaticResource textColor}"
                                        FontWeight="SemiBold" FontSize="14"   
                                        HorizontalAlignment="Center"
                                         VerticalAlignment="Center"/>
-                            <TextBlock x:Name="txt_agentHint" 
+                            <TextBlock x:Name="txt_supplierHint" 
                                        Grid.Row="3"
-                                       Tag="agent" Text="add, update, delete..." 
+                                       Tag="supplier" Text="add, update, delete..." 
                                        Margin="10 5 10 5"  
                                        Foreground="#949494"
                                        HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
                             <Button Grid.Row="4"
                                     Padding="0"
-                                Tag="agent" 
+                                Tag="supplier" 
                                     Height="30" 
                                 VerticalAlignment="Center" 
                                     HorizontalAlignment="Center"
@@ -157,7 +157,7 @@
                                         Background="{StaticResource White}"
                                       BorderBrush="{StaticResource dashboardColor2}"
                                     BorderThickness="1"
-                                    Click="Btn_agent_Click"
+                                    Click="Btn_supplier_Click"
                                      materialDesign:ButtonAssist.CornerRadius="15"
                                   VerticalContentAlignment="Center">
                                 <Grid  Width="100">
@@ -187,6 +187,92 @@
                                  Background="{StaticResource dashboardColor2}" 
                                  Height="10"
                                  />     
+                        </StackPanel>
+
+                    </Border>
+                    <!--#endregion-->
+                    <!--#region customer-->
+                    <Border Tag="customer" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
+                        <Border.Effect>
+                            <DropShadowEffect
+             ShadowDepth="1"
+             Direction="360"
+             Color="Gray"
+             Opacity="0.3"
+            BlurRadius="10"/>
+                        </Border.Effect>
+                        <StackPanel >
+                            <Border Grid.Row="0" 
+             CornerRadius="12.5 12.5 0 0"   
+                 Background="{StaticResource dashboardColor3}" 
+                 Height="15" 
+                 />
+                            <Path x:Name="path_customerIcon" 
+               Grid.Row="1"
+               Margin="0 20 0 10"
+               Tag="customer" Fill="{StaticResource dashboardColor3}" 
+               Stretch="Fill" 
+               HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+               Height="50" Width="50"
+             FlowDirection="LeftToRight"  
+          Data="{StaticResource customer}"/>
+                            <Separator Grid.Row="2" Margin="0 10 0 10"
+             Background="{StaticResource veryLightGrey}" VerticalAlignment="Center" Width="auto"  />
+                            <TextBlock x:Name="txt_customerInfo" 
+                    Grid.Row="2"
+                        Tag="customer" Text="customer" 
+                    Foreground="{StaticResource textColor}"
+                    FontWeight="SemiBold" FontSize="14"   
+                    HorizontalAlignment="Center"
+                     VerticalAlignment="Center"/>
+                            <TextBlock x:Name="txt_customerHint" 
+                    Grid.Row="3"
+                    Tag="customer" Text="add, update, delete..." 
+                    Margin="10 5 10 5"  
+                    Foreground="#949494"
+                    HorizontalAlignment="Center"
+             VerticalAlignment="Center"/>
+                            <Button Grid.Row="4"
+                 Padding="0"
+             Tag="customer" 
+                 Height="30" 
+             VerticalAlignment="Center" 
+                 HorizontalAlignment="Center"
+                 Margin="10 10 10 10"
+                     Background="{StaticResource White}"
+                   BorderBrush="{StaticResource dashboardColor3}"
+                 BorderThickness="1"
+                 Click="Btn_customer_Click"
+                  materialDesign:ButtonAssist.CornerRadius="15"
+               VerticalContentAlignment="Center">
+                                <Grid  Width="100">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Enter"  Tag="enterButton"
+                            Foreground="{StaticResource dashboardColor3}"
+                            Margin="10 0"
+                                Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                                    <materialDesign:PackIcon
+                     Grid.Column="1"
+                            Margin="0 0 5 0"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Right"
+                     Foreground="{StaticResource dashboardColor3}"
+                     Kind="ArrowRightCircle"   Width="25" Height="25"/>
+                                </Grid>
+                            </Button>
+                            <Border Grid.Row="7" 
+                 Margin="0 0"
+                 VerticalAlignment="Bottom"
+                  CornerRadius="0 0 12.5 12.5"   
+              Background="{StaticResource dashboardColor3}" 
+              Height="10"
+              />
                         </StackPanel>
 
                     </Border>
