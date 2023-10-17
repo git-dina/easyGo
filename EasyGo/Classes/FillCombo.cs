@@ -22,6 +22,16 @@ namespace EasyGo.Classes
             return usersList;
         }
         #endregion
+        #region Agent
+        static public Agent agent = new Agent();
+        static public List<Agent> agentsList;
+
+        static public async Task<IEnumerable<Agent>> RefreshAgents()
+        {
+            agentsList = await agent.Get("");
+            return agentsList;
+        }
+        #endregion
 
     }
 }
