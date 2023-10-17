@@ -225,7 +225,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ar_file.Designer.cs" />
-    <Compile Include="Classes\ApiClasses\Agent.cs" />
+    <Compile Include="Classes\ApiClasses\Customer.cs" />
     <Compile Include="Classes\ApiClasses\APIResult.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
     <Compile Include="Classes\ApiClasses\User.cs" />
@@ -236,6 +236,7 @@
     <Compile Include="Classes\NumberToWord\ToWord.cs" />
     <Compile Include="Classes\ReportCls.cs" />
     <Compile Include="Classes\ReportConfig.cs" />
+    <Compile Include="Classes\ApiClasses\Supplier.cs" />
     <Compile Include="converters\Class1.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="View\sectionData\uc_agent.xaml.cs">

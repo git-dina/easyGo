@@ -34,9 +34,9 @@ namespace EasyGo.View.sectionData
             InitializeComponent();
         }
 
-        Agent agent = new Agent();
-        IEnumerable<Agent> agentsQuery;
-        IEnumerable<Agent> agents;
+        Customer agent = new Customer();
+        IEnumerable<Customer> agentsQuery;
+        IEnumerable<Customer> agents;
         string searchText = "";
         public static List<string> requiredControlList;
         SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -123,7 +123,7 @@ namespace EasyGo.View.sectionData
 
                     //chk password length
 
-                    agent = new Agent();
+                    agent = new Customer();
                     if (HelpClass.validate(requiredControlList, this) &&  HelpClass.IsValidEmail(this))
                     {
 
@@ -159,7 +159,7 @@ namespace EasyGo.View.sectionData
                             Clear();
                             await RefreshAgentsList();
                             await Search();
-                            FillCombo.agentsList = agents.ToList();
+                            FillCombo.suppliersList = agents.ToList();
                         }
 
                     }
@@ -213,7 +213,7 @@ namespace EasyGo.View.sectionData
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await Search();
-                                FillCombo.agentsList = agents.ToList();
+                                FillCombo.suppliersList = agents.ToList();
                                 long agentId = long.Parse(res);
                                 
                                 
@@ -263,7 +263,7 @@ namespace EasyGo.View.sectionData
                                 await RefreshAgentsList();
                                 await Search();
                                 Clear();
-                                FillCombo.agentsList = agents.ToList();
+                                FillCombo.suppliersList = agents.ToList();
                             }
                         }
 
@@ -322,7 +322,7 @@ namespace EasyGo.View.sectionData
                 //selection
                 if (dg_agent.SelectedIndex != -1)
                 {
-                    agent = dg_agent.SelectedItem as Agent;
+                    agent = dg_agent.SelectedItem as Customer;
                     this.DataContext = agent;
                     if (agent != null)
                     {
@@ -374,10 +374,10 @@ namespace EasyGo.View.sectionData
             RefresAgentsView();
 
         }
-        async Task<IEnumerable<Agent>> RefreshAgentsList()
+        async Task<IEnumerable<Customer>> RefreshAgentsList()
         {
             await FillCombo.RefreshAgents();
-            agents = FillCombo.agentsList.ToList();
+            agents = FillCombo.suppliersList.ToList();
 
             return agents;
         }
@@ -390,7 +390,7 @@ namespace EasyGo.View.sectionData
         #region validate - clearValidate - textChange - lostFocus - . . . . 
         void Clear()
         {
-            agent = new Agent();
+            agent = new Customer();
             this.DataContext = agent;
 
             dg_agent.SelectedIndex = -1;

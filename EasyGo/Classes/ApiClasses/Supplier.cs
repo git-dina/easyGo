@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace EasyGo.Classes.ApiClasses
 {
-    public class Agent
+    public class Supplier
     {
         #region Attributes
-        public long AgentId { get; set; }
+        public long SupplierId { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public string Company { get; set; }
@@ -24,7 +24,6 @@ namespace EasyGo.Classes.ApiClasses
         public string Email { get; set; }
         public string Mobile { get; set; }
         public string Image { get; set; }
-        public string Type { get; set; }
         public Nullable<decimal> Balance { get; set; }
         public Nullable<byte> BalanceType { get; set; }
         public string Fax { get; set; }
@@ -40,41 +39,38 @@ namespace EasyGo.Classes.ApiClasses
         #endregion
 
         #region Methods
-        public async Task<string> Save(Agent agent)
+        public async Task<string> Save(Supplier supplier)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "Agent/Save";
+            string method = "Supplier/Save";
 
-            var myContent = JsonConvert.SerializeObject(agent);
+            var myContent = JsonConvert.SerializeObject(supplier);
             parameters.Add("itemObject", myContent);
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<List<Agent>> Get(string type)
+        public async Task<List<Supplier>> Get()
         {
-            List<Agent> agents = new List<Agent>();
+            List<Supplier> sups = new List<Supplier>();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("type", type);
-
-            IEnumerable<Claim> claims = await APIResult.getList("Agent/Get",parameters);
+            IEnumerable<Claim> claims = await APIResult.getList("Supplier/Get");
 
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")
                 {
-                    agents.Add(JsonConvert.DeserializeObject<Agent>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    sups.Add(JsonConvert.DeserializeObject<Supplier>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
-            return agents;
+            return sups;
         }
-        public async Task<string> Delete(long agentId, long userId)
+        public async Task<string> Delete(long supplierId, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", agentId.ToString());
+            parameters.Add("itemId", supplierId.ToString());
             parameters.Add("userId", userId.ToString());
 
-            string method = "Agent/Delete";
+            string method = "Supplier/Delete";
             return await APIResult.post(method, parameters);
         }
         public async Task<byte[]> DownloadImage(string imageName)
@@ -82,10 +78,10 @@ namespace EasyGo.Classes.ApiClasses
             byte[] byteImg = null;
             if (imageName != "")
             {
-                byteImg = await APIResult.getImage("Agent/GetImage", imageName);
+                byteImg = await APIResult.getImage("Supplier/GetImage", imageName);
 
                 string dir = Directory.GetCurrentDirectory();
-                string tmpPath = Path.Combine(dir, Global.TMPAgentsFolder);
+                string tmpPath = Path.Combine(dir, Global.TMPSuppliersFolder);
                 if (!Directory.Exists(tmpPath))
                     Directory.CreateDirectory(tmpPath);
                 tmpPath = Path.Combine(tmpPath, imageName);
@@ -106,7 +102,7 @@ namespace EasyGo.Classes.ApiClasses
             return byteImg;
 
         }
-        public async Task<string> uploadImage(string imagePath, string imageName, long agentId)
+        public async Task<string> uploadImage(string imagePath, string imageName, long supplierId)
         {
             if (imagePath != "")
             {
@@ -119,7 +115,7 @@ namespace EasyGo.Classes.ApiClasses
                 {
                     // configure trmporery path
                     string dir = Directory.GetCurrentDirectory();
-                    string tmpPath = Path.Combine(dir, Global.TMPUsersFolder);
+                    string tmpPath = Path.Combine(dir, Global.TMPSuppliersFolder);
                     string[] files = System.IO.Directory.GetFiles(tmpPath, imageName + ".*");
                     foreach (string f in files)
                     {
@@ -154,16 +150,16 @@ namespace EasyGo.Classes.ApiClasses
                             };
                             form.Add(content, "fileToUpload");
 
-                            var response = await client.PostAsync(@"Agent/PostUserImage", form);
+                            var response = await client.PostAsync(@"Supplier/PostUserImage", form);
 
                         }
                         stream.Dispose();
                     }
                     // save image name in DB
-                    Agent agent = new Agent();
-                    agent.AgentId = agentId;
-                    agent.Image = fileName;
-                    await updateImage(agent);
+                    Supplier sup = new Supplier();
+                    sup.SupplierId = supplierId;
+                    sup.Image = fileName;
+                    await updateImage(sup);
                     return fileName;
                 }
                 catch
@@ -172,13 +168,13 @@ namespace EasyGo.Classes.ApiClasses
             return "";
         }
 
-        public async Task<string> updateImage(Agent agent)
+        public async Task<string> updateImage(Supplier supplier)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            var myContent = JsonConvert.SerializeObject(agent);
+            var myContent = JsonConvert.SerializeObject(supplier);
             parameters.Add("itemObject", myContent);
 
-            string method = "Agent/UpdateImage";
+            string method = "Supplier/UpdateImage";
             return await APIResult.post(method, parameters);
         }
         #endregion

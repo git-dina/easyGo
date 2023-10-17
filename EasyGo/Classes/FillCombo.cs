@@ -22,14 +22,24 @@ namespace EasyGo.Classes
             return usersList;
         }
         #endregion
-        #region Agent
-        static public Agent agent = new Agent();
-        static public List<Agent> agentsList;
+        #region Customer
+        static public Customer customer = new Customer();
+        static public List<Customer> suppliersList;
 
-        static public async Task<IEnumerable<Agent>> RefreshAgents()
+        static public async Task<IEnumerable<Customer>> RefreshAgents()
         {
-            agentsList = await agent.Get("");
-            return agentsList;
+            suppliersList = await customer.Get();
+            return suppliersList;
+        }
+        #endregion
+         #region Supplier
+        static public Supplier supplier = new Supplier();
+        static public List<Supplier> suppliersList;
+
+        static public async Task<IEnumerable<Supplier>> RefreshSuppliers()
+        {
+            suppliersList = await supplier.Get();
+            return suppliersList;
         }
         #endregion
 
