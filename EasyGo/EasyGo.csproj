@@ -239,8 +239,11 @@
     <Compile Include="Classes\ApiClasses\Supplier.cs" />
     <Compile Include="converters\Class1.cs" />
     <Compile Include="en_file.Designer.cs" />
-    <Compile Include="View\sectionData\uc_agent.xaml.cs">
-      <DependentUpon>uc_agent.xaml</DependentUpon>
+    <Compile Include="View\sectionData\uc_customer.xaml.cs">
+      <DependentUpon>uc_customer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sectionData\uc_supplier.xaml.cs">
+      <DependentUpon>uc_supplier.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
       <DependentUpon>uc_sectionData.xaml</DependentUpon>
@@ -250,6 +253,9 @@
     </Compile>
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_previewPdf.xaml.cs">
+      <DependentUpon>wd_previewPdf.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -277,7 +283,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\sectionData\uc_agent.xaml">
+    <Page Include="View\sectionData\uc_customer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sectionData\uc_supplier.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -290,6 +300,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_acceptCancelPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_previewPdf.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
