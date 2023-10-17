@@ -238,6 +238,9 @@
     <Compile Include="Classes\ReportConfig.cs" />
     <Compile Include="converters\Class1.cs" />
     <Compile Include="en_file.Designer.cs" />
+    <Compile Include="View\sectionData\uc_agent.xaml.cs">
+      <DependentUpon>uc_agent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\uc_sectionData.xaml.cs">
       <DependentUpon>uc_sectionData.xaml</DependentUpon>
     </Compile>
@@ -273,6 +276,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\sectionData\uc_agent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\sectionData\uc_sectionData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -308,6 +315,21 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="pic\socialMedia\email.png" />
+    <Resource Include="pic\socialMedia\facebook.png" />
+    <Resource Include="pic\socialMedia\fax.png" />
+    <Resource Include="pic\socialMedia\instagram.png" />
+    <Resource Include="pic\socialMedia\messenger.png" />
+    <Resource Include="pic\socialMedia\mobile.png" />
+    <Resource Include="pic\socialMedia\phone.png" />
+    <Resource Include="pic\socialMedia\skype.png" />
+    <Resource Include="pic\socialMedia\snapchat.png" />
+    <Resource Include="pic\socialMedia\telegram.png" />
+    <Resource Include="pic\socialMedia\tikTok.png" />
+    <Resource Include="pic\socialMedia\twitter.png" />
+    <Resource Include="pic\socialMedia\website.png" />
+    <Resource Include="pic\socialMedia\whatsapp.png" />
+    <Resource Include="pic\socialMedia\youtube.png" />
     <Content Include="Reports\SectionData\Persons\Ar\ArUsers.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -327,7 +349,6 @@
     <None Include="Properties\DataSources\EasyGo.Classes.OpenClosOperatinModel.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.POSOpenCloseModel.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.Storage.datasource" />
-    <Resource Include="pic\favicon.ico" />
     <Resource Include="favicon.ico" />
     <Resource Include="fonts\cairo-font\cairo bold.ttf" />
     <Resource Include="fonts\cairo-font\cairo-light.ttf" />
