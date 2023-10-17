@@ -225,9 +225,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ar_file.Designer.cs" />
+    <Compile Include="Classes\ApiClasses\Category.cs" />
     <Compile Include="Classes\ApiClasses\Customer.cs" />
     <Compile Include="Classes\ApiClasses\APIResult.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
+    <Compile Include="Classes\ApiClasses\Unit.cs" />
     <Compile Include="Classes\ApiClasses\User.cs" />
     <Compile Include="Classes\AppSettings.cs" />
     <Compile Include="Classes\ImageProcess.cs" />

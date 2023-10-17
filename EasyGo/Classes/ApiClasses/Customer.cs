@@ -31,11 +31,11 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<decimal> MaxDeserve { get; set; }
         public string PayType { get; set; }
         public string Notes { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public Nullable<long> CreateUserId { get; set; }
-        public Nullable<long> UpdateUserId { get; set; }
+        public Nullable<long> CreateUserId { get; set; }  = MainWindow.userLogin.UserId;
+        public Nullable<long> UpdateUserId { get; set; } = MainWindow.userLogin.UserId;
         #endregion
 
         #region Methods

@@ -13,75 +13,69 @@ using System.Threading.Tasks;
 
 namespace EasyGo.Classes.ApiClasses
 {
-    public class Supplier
+    public class Category
     {
         #region Attributes
-        public long SupplierId { get; set; }
-        public string Name { get; set; }
+        public int CategoryId { get; set; }
         public string Code { get; set; }
-        public string Company { get; set; }
-        public string Address { get; set; }
-        public string Email { get; set; }
-        public string Mobile { get; set; }
+        public string Name { get; set; }
+        public string Details { get; set; }
         public string Image { get; set; }
-        public Nullable<decimal> Balance { get; set; }
-        public Nullable<byte> BalanceType { get; set; }
-        public string Fax { get; set; }
-        public bool IsLimited { get; set; }
-        public Nullable<decimal> MaxDeserve { get; set; }
-        public string PayType { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<int> ParentId { get; set; }
         public string Notes { get; set; }
-        public bool IsActive { get; set; } = true;
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public Nullable<long> CreateUserId { get; set; } = MainWindow.userLogin.UserId;
-        public Nullable<long> UpdateUserId { get; set; } = MainWindow.userLogin.UserId;
+        public Nullable<long> CreateUserId { get; set; }
+        public Nullable<long> UpdateUserId { get; set; }
+
         #endregion
 
         #region Methods
-        public async Task<string> Save(Supplier supplier)
+        public async Task<string> Save(Category category)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            string method = "Supplier/Save";
+            string method = "Category/Save";
 
-            var myContent = JsonConvert.SerializeObject(supplier);
+            var myContent = JsonConvert.SerializeObject(category);
             parameters.Add("itemObject", myContent);
             return await APIResult.post(method, parameters);
         }
 
-        public async Task<List<Supplier>> Get()
+        public async Task<List<Category>> Get()
         {
-            List<Supplier> sups = new List<Supplier>();
+            List<Category> units = new List<Category>();
 
-            IEnumerable<Claim> claims = await APIResult.getList("Supplier/Get");
+            IEnumerable<Claim> claims = await APIResult.getList("Category/Get");
 
             foreach (Claim c in claims)
             {
                 if (c.Type == "scopes")
                 {
-                    sups.Add(JsonConvert.DeserializeObject<Supplier>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    units.Add(JsonConvert.DeserializeObject<Category>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
-            return sups;
+            return units;
         }
-        public async Task<string> Delete(long supplierId, long userId)
+        public async Task<string> Delete(long delUserId, long categoryId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("itemId", supplierId.ToString());
-            parameters.Add("userId", userId.ToString());
+            parameters.Add("delUserId", delUserId.ToString());
+            parameters.Add("unitId", categoryId.ToString());
 
-            string method = "Supplier/Delete";
+            string method = "Category/Delete";
             return await APIResult.post(method, parameters);
         }
+
         public async Task<byte[]> DownloadImage(string imageName)
         {
             byte[] byteImg = null;
             if (imageName != "")
             {
-                byteImg = await APIResult.getImage("Supplier/GetImage", imageName);
+                byteImg = await APIResult.getImage("User/GetImage", imageName);
 
                 string dir = Directory.GetCurrentDirectory();
-                string tmpPath = Path.Combine(dir, Global.TMPSuppliersFolder);
+                string tmpPath = Path.Combine(dir, Global.TMPCatFolder);
                 if (!Directory.Exists(tmpPath))
                     Directory.CreateDirectory(tmpPath);
                 tmpPath = Path.Combine(tmpPath, imageName);
@@ -102,7 +96,7 @@ namespace EasyGo.Classes.ApiClasses
             return byteImg;
 
         }
-        public async Task<string> uploadImage(string imagePath, string imageName, long supplierId)
+        public async Task<string> uploadImage(string imagePath, string imageName, int categoryId)
         {
             if (imagePath != "")
             {
@@ -115,7 +109,7 @@ namespace EasyGo.Classes.ApiClasses
                 {
                     // configure trmporery path
                     string dir = Directory.GetCurrentDirectory();
-                    string tmpPath = Path.Combine(dir, Global.TMPSuppliersFolder);
+                    string tmpPath = Path.Combine(dir, Global.TMPCatFolder);
                     string[] files = System.IO.Directory.GetFiles(tmpPath, imageName + ".*");
                     foreach (string f in files)
                     {
@@ -150,16 +144,16 @@ namespace EasyGo.Classes.ApiClasses
                             };
                             form.Add(content, "fileToUpload");
 
-                            var response = await client.PostAsync(@"Supplier/PostUserImage", form);
+                            var response = await client.PostAsync(@"Category/PostUserImage", form);
 
                         }
                         stream.Dispose();
                     }
                     // save image name in DB
-                    Supplier sup = new Supplier();
-                    sup.SupplierId = supplierId;
-                    sup.Image = fileName;
-                    await updateImage(sup);
+                    Category cat = new Category();
+                    cat.CategoryId = categoryId;
+                    cat.Image = fileName;
+                    await updateImage(cat);
                     return fileName;
                 }
                 catch
@@ -168,13 +162,13 @@ namespace EasyGo.Classes.ApiClasses
             return "";
         }
 
-        public async Task<string> updateImage(Supplier supplier)
+        public async Task<string> updateImage(Category cat)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            var myContent = JsonConvert.SerializeObject(supplier);
+            var myContent = JsonConvert.SerializeObject(cat);
             parameters.Add("itemObject", myContent);
 
-            string method = "Supplier/UpdateImage";
+            string method = "Category/UpdateImage";
             return await APIResult.post(method, parameters);
         }
         #endregion
