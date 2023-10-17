@@ -356,45 +356,7 @@ namespace EasyGo.View.sectionData
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
-        private async void Tgl_isActive_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                /*
-                if (FillCombo.usersList != null)
-                    users = FillCombo.usersList.ToList();
-                if (users is null)
-                    await RefreshUsersList();
-                tgl_userState = 1;
-                await Search();
-                */
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
-        }
-        private async void Tgl_isActive_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-                if (users is null)
-                    await RefreshUsersList();
-                //tgl_userState = 0;
-                await Search();
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
-        }
+      
         private void Btn_clear_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -429,6 +391,8 @@ namespace EasyGo.View.sectionData
                         else
                             HelpClass.getLocalImg("User", user.Image, btn_image);
                         #endregion
+
+                        inputEditable();
                     }
                 }
                 HelpClass.clearValidate(requiredControlList, this);
@@ -501,10 +465,17 @@ namespace EasyGo.View.sectionData
             #region image
             HelpClass.clearImg(btn_image);
             #endregion
+            inputEditable();
             // last 
             HelpClass.clearValidate(requiredControlList, this);
             p_error_Email.Visibility = Visibility.Collapsed;
           
+        }
+        private void inputEditable()
+        {
+            tb_UserName.IsEnabled = user.UserId.Equals(0) ? true : false;
+            pb_Password.IsEnabled = user.UserId.Equals(0) ? true : false;
+
         }
         string input;
         decimal _decimal = 0;
@@ -591,34 +562,10 @@ namespace EasyGo.View.sectionData
    
           #region Image
           string imgFileName = "pic/no-image-icon-125x125.png";
-          bool isImgPressed = false;
+
           OpenFileDialog openFileDialog = new OpenFileDialog();
           SaveFileDialog saveFileDialog = new SaveFileDialog();
-          private void Btn_image_Click(object sender, RoutedEventArgs e)
-          {
-              //select image
-              try
-              {
-                  HelpClass.StartAwait(grid_main);
-                  isImgPressed = true;
-                  openFileDialog.Filter = "Images|*.png;*.jpg;*.bmp;*.jpeg;*.jfif";
-                  if (openFileDialog.ShowDialog() == true)
-                  {
-                      HelpClass.imageBrush = new ImageBrush();
-                      HelpClass.imageBrush.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Relative));
-                      btn_image.Background = HelpClass.imageBrush;
-                      imgFileName = openFileDialog.FileName;
-                  }
-                  else
-                  { }
-                  HelpClass.EndAwait(grid_main);
-              }
-              catch (Exception ex)
-              {
-                  HelpClass.EndAwait(grid_main);
-                  HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-              }
-          }
+         
           private async Task getImg()
           {
               try
@@ -663,11 +610,39 @@ namespace EasyGo.View.sectionData
 
         private void Btn_uploadPic_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                openFileDialog.Filter = "Images|*.png;*.jpg;*.bmp;*.jpeg;*.jfif";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    HelpClass.imageBrush = new ImageBrush();
+                    HelpClass.imageBrush.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Relative));
+                    btn_image.Background = HelpClass.imageBrush;
+                    imgFileName = openFileDialog.FileName;
+                }
+                else
+                { }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
         private void Btn_deletePic_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                HelpClass.clearImg(btn_image);
+                openFileDialog.FileName = "";
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
 
         #endregion
