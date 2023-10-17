@@ -215,8 +215,8 @@ namespace EasyGo.View.sectionData
                     {
                         if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                         {
-                            user.UserName = tb_UserName.Text;
-                            user.Password = Md5Encription.MD5Hash("Inc-m" + pb_Password.Password);
+                            //user.UserName = tb_UserName.Text;
+                            //user.Password = Md5Encription.MD5Hash("Inc-m" + pb_Password.Password);
                             user.FirstName = tb_FirstName.Text;
                             user.LastName = tb_LastName.Text;
                             user.Mobile = tb_Mobile.Text; ;
@@ -660,7 +660,17 @@ namespace EasyGo.View.sectionData
                   HelpClass.EndAwait(grid_image, "forImage");
               }
           }
-          #endregion
+
+        private void Btn_uploadPic_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Btn_deletePic_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
 
 
 
@@ -906,8 +916,9 @@ namespace EasyGo.View.sectionData
             }
         }
 
-        #endregion
 
-    
+        #endregion
+        
+        
     }
 }
