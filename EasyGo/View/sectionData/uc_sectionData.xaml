@@ -18,56 +18,181 @@
             <TextBlock x:Name="txt_mainTitle" Text="mainTitle"  Margin="40 5 40 0" FontSize="24" FontWeight="Bold" Foreground="{StaticResource LightGrey}"   />
             <ScrollViewer Grid.Row="1" Margin="5,0,-5,0">
                 <WrapPanel Margin="20 5" HorizontalAlignment="Left" >
+
                     <!--#region user-->
-                    <Border Tag="user" Background="White" CornerRadius="7.5" Height="145"  Width="260"   Margin="15 10" >
+                    <Border Tag="user" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
                         <Border.Effect>
                             <DropShadowEffect
-                              ShadowDepth="1"
-                              Direction="360"
-                              Color="Gray"
-                              Opacity="0.3"
-                             BlurRadius="10"/>
+              ShadowDepth="1"
+              Direction="360"
+              Color="Gray"
+              Opacity="0.3"
+             BlurRadius="10"/>
                         </Border.Effect>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <!--<Border CornerRadius="0 7 7 0"  BorderBrush="{StaticResource LightMainColor}" BorderThickness="0 1 1 1"  Grid.Column="1" Grid.ColumnSpan="2"/>-->
-                            <Border CornerRadius="7 0 0 7"   Background="{StaticResource MainColor}" Height="145" Width="10"/>
-                            <Path x:Name="path_userIcon" Tag="user" Fill="{StaticResource LightMainColor}" Stretch="Fill" Margin="10,10,10,10" 
-                                  HorizontalAlignment="Center" Grid.Column="1"  
-                             VerticalAlignment="Center" Height="50" Width="50"
-                                FlowDirection="LeftToRight"  
-                             Data="{StaticResource user}"/>
-                            <StackPanel Grid.Column="2" VerticalAlignment="Top"  Grid.ColumnSpan="2" Margin="5,20,0,0" HorizontalAlignment="Left">
-                                <TextBlock x:Name="txt_userInfo" Tag="user" Text="user"  Foreground="#6e6e6e" FontWeight="SemiBold" FontSize="16"></TextBlock>
-                                <TextBlock x:Name="txt_userHint" Tag="user" Text="add, update, delete..." Margin="0,2,0,0"   Foreground="#949494"></TextBlock>
-                            </StackPanel>
-                            <Button Tag="user" Height="30" Width="90"  Grid.Column="2"  VerticalAlignment="Bottom" Margin="0,0,10,10"
-                                    Background="{StaticResource MainColor}" HorizontalAlignment="Right"  
-                                  BorderThickness="0" Click="Btn_user_Click"
-                                 Padding="0"  materialDesign:ButtonAssist.CornerRadius="7"
-                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                                <StackPanel    Orientation="Horizontal">
-                                    <TextBlock Text="Enter"  Tag="enterButton"  Foreground="White" Margin="0 0 7.5 0" ></TextBlock>
-                                    <!--<TextBlock   Text=">>"    Foreground="White"></TextBlock>-->
-                                    <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 -3 00"
-                         VerticalAlignment="Center" Height="12.5" Width="10"
-                              Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
-                                    <Path  Fill="{StaticResource White}" Stretch="Fill" 
-                              Margin="0 0 0 00"
-                         VerticalAlignment="Center" Height="12.5" Width="10"
-                              Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" RenderTransformOrigin="0.5,0.5"/>
-                                </StackPanel>
+                        <StackPanel >
+                            <Border Grid.Row="0" 
+              CornerRadius="12.5 12.5 0 0"   
+                  Background="{StaticResource dashboardColor1}" 
+                  Height="15" 
+                  />
+                            <Path x:Name="path_userIcon" 
+                Grid.Row="1"
+                Margin="0 20 0 10"
+                Tag="user" Fill="{StaticResource dashboardColor1}" 
+                Stretch="Fill" 
+                HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+                Height="50" Width="50"
+              FlowDirection="LeftToRight"  
+           Data="{StaticResource user}"/>
+                            <Separator Grid.Row="2" Margin="0 10 0 10"
+              Background="{StaticResource veryLightGrey}" VerticalAlignment="Center" Width="auto"  />
+                            <TextBlock x:Name="txt_userInfo" 
+                     Grid.Row="2"
+                         Tag="user" Text="user" 
+                     Foreground="{StaticResource textColor}"
+                     FontWeight="SemiBold" FontSize="14"   
+                     HorizontalAlignment="Center"
+                      VerticalAlignment="Center"/>
+                            <TextBlock x:Name="txt_userHint" 
+                     Grid.Row="3"
+                     Tag="user" Text="add, update, delete..." 
+                     Margin="10 5 10 5"  
+                     Foreground="#949494"
+                     HorizontalAlignment="Center"
+              VerticalAlignment="Center"/>
+                            <Button Grid.Row="4"
+                  Padding="0"
+              Tag="user" 
+                  Height="30" 
+              VerticalAlignment="Center" 
+                  HorizontalAlignment="Center"
+                  Margin="10 10 10 10"
+                      Background="{StaticResource White}"
+                    BorderBrush="{StaticResource dashboardColor1}"
+                  BorderThickness="1"
+                  Click="Btn_user_Click"
+                   materialDesign:ButtonAssist.CornerRadius="15"
+                VerticalContentAlignment="Center">
+                                <Grid  Width="100">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Enter"  Tag="enterButton"
+                             Foreground="{StaticResource dashboardColor1}"
+                             Margin="10 0"
+                                 Grid.Column="0"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"/>
+                                    <materialDesign:PackIcon
+                      Grid.Column="1"
+                             Margin="0 0 5 0"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Right"
+                      Foreground="{StaticResource dashboardColor1}"
+                      Kind="ArrowRightCircle"   Width="25" Height="25"/>
+                                </Grid>
                             </Button>
-                        </Grid>
+                            <Border Grid.Row="7" 
+                  Margin="0 0"
+                  VerticalAlignment="Bottom"
+                   CornerRadius="0 0 12.5 12.5"   
+               Background="{StaticResource dashboardColor1}" 
+               Height="10"
+               />
+                        </StackPanel>
+
+                    </Border>
+                    <!--#endregion-->
+                    <!--#region agent-->
+                    <Border Tag="agent" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                ShadowDepth="1"
+                                Direction="360"
+                                Color="Gray"
+                                Opacity="0.3"
+                               BlurRadius="10"/>
+                        </Border.Effect>
+                        <StackPanel >
+                            <Border Grid.Row="0" 
+                                CornerRadius="12.5 12.5 0 0"   
+                                    Background="{StaticResource dashboardColor2}" 
+                                    Height="15" 
+                                    />
+                            <Path x:Name="path_agentIcon" 
+                                  Grid.Row="1"
+                                  Margin="0 20 0 10"
+                                  Tag="agent" Fill="{StaticResource dashboardColor2}" 
+                                  Stretch="Fill" 
+                                  HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                                  Height="50" Width="50"
+                                FlowDirection="LeftToRight"  
+                             Data="{StaticResource agent}"/>
+                            <Separator Grid.Row="2" Margin="0 10 0 10"
+                                Background="{StaticResource veryLightGrey}" VerticalAlignment="Center" Width="auto"  />
+                            <TextBlock x:Name="txt_agentInfo" 
+                                       Grid.Row="2"
+                                           Tag="agent" Text="agent" 
+                                       Foreground="{StaticResource textColor}"
+                                       FontWeight="SemiBold" FontSize="14"   
+                                       HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                            <TextBlock x:Name="txt_agentHint" 
+                                       Grid.Row="3"
+                                       Tag="agent" Text="add, update, delete..." 
+                                       Margin="10 5 10 5"  
+                                       Foreground="#949494"
+                                       HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                            <Button Grid.Row="4"
+                                    Padding="0"
+                                Tag="agent" 
+                                    Height="30" 
+                                VerticalAlignment="Center" 
+                                    HorizontalAlignment="Center"
+                                    Margin="10 10 10 10"
+                                        Background="{StaticResource White}"
+                                      BorderBrush="{StaticResource dashboardColor2}"
+                                    BorderThickness="1"
+                                    Click="Btn_agent_Click"
+                                     materialDesign:ButtonAssist.CornerRadius="15"
+                                  VerticalContentAlignment="Center">
+                                <Grid  Width="100">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Enter"  Tag="enterButton"
+                                               Foreground="{StaticResource dashboardColor2}"
+                                               Margin="10 0"
+                                                   Grid.Column="0"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                    <materialDesign:PackIcon
+                                        Grid.Column="1"
+                                               Margin="0 0 5 0"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource dashboardColor2}"
+                                        Kind="ArrowRightCircle"   Width="25" Height="25"/>
+                                </Grid>
+                            </Button>
+                            <Border Grid.Row="7" 
+                                    Margin="0 0"
+                                    VerticalAlignment="Bottom"
+                                     CornerRadius="0 0 12.5 12.5"   
+                                 Background="{StaticResource dashboardColor2}" 
+                                 Height="10"
+                                 />     
+                        </StackPanel>
+
                     </Border>
                     <!--#endregion-->
 
-                    
+
                 </WrapPanel>
             </ScrollViewer>
         </Grid>

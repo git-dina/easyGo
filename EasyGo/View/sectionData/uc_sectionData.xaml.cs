@@ -169,5 +169,21 @@ namespace EasyGo.View.sectionData
             }
         }
 
+        private void Btn_agent_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                uc_agent uc = new uc_agent();
+                MainWindow.mainWindow.grid_main.Children.Add(uc);
+
+                Button button = sender as Button;
+                //MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
     }
 }
