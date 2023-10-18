@@ -12,6 +12,16 @@ namespace EasyGo.Classes
     public class FillCombo
     {
 
+        #region Unit
+        static public Unit unit = new Unit();
+        static public List<Unit> unitsList;
+
+        static public async Task<IEnumerable<Unit>> RefreshUnits()
+        {
+            unitsList = await unit.Get();
+            return unitsList;
+        }
+        #endregion
         #region User
         static public User user = new User();
         static public List<User> usersList;
@@ -32,7 +42,7 @@ namespace EasyGo.Classes
             return customersList;
         }
         #endregion
-         #region Supplier
+        #region Supplier
         static public Supplier supplier = new Supplier();
         static public List<Supplier> suppliersList;
 
