@@ -57,7 +57,7 @@
                      Foreground="#4E4E4E"  TextChanged="Tb_search_TextChanged"
                       MaxLength="50" 
                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                    BorderBrush="#737373"   BorderThickness="0" Margin="4,0"  />
+                    BorderBrush="#737373"   BorderThickness="0" Margin="0,0,5,-1"  />
                     </Grid>
                 </Border>
                 <!--<TextBlock    x:Name="txt_active" Grid.Column="3"
@@ -331,7 +331,7 @@
             Foreground="#4E4E4E"  
              MaxLength="50" BorderThickness="0"
             materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-            Height="40"  Margin="4,0" 
+            Height="40"  Margin="5,0,5,-1" 
                   LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                     <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
      HorizontalAlignment="Right" Visibility="Collapsed"    x:Name="p_error_Code"
@@ -349,7 +349,7 @@ VerticalAlignment="Center" Width="15"  Height="15"
             Foreground="#4E4E4E"  
              MaxLength="50" BorderThickness="0"
             materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-            Height="40"   Margin="4,0"  
+            Height="40"   Margin="5,0,5,-1"  
         LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
                                     <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_Name"
      HorizontalAlignment="Right" Visibility="Collapsed"   
@@ -366,7 +366,7 @@ VerticalAlignment="Center" Width="15"  Height="15"
             Foreground="#4E4E4E"  
              MaxLength="50" BorderThickness="0"
             materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-            Height="40"   Margin="4,0"  
+            Height="40"   Margin="5,0,5,-1"  
         LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange" />
                                     <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_Company"
      HorizontalAlignment="Right" Visibility="Collapsed"   
@@ -377,7 +377,7 @@ VerticalAlignment="Center" Width="15"  Height="15"
                             </Border>-->
                             <Border  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid   >
-                                    <TextBox Margin="4,0" x:Name="tb_Mobile"  
+                                    <TextBox Margin="5,0,5,-1" x:Name="tb_Mobile"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                                          Text="{Binding Mobile, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="Mobile..."   Foreground="#4E4E4E"
@@ -394,7 +394,7 @@ VerticalAlignment="Center" Width="15"  Height="15"
                             </Border>
                             <!--<Border  CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid   >
-                                    <TextBox Margin="4,0" x:Name="tb_Fax"  
+                                    <TextBox Margin="5,0,5,-1" x:Name="tb_Fax"  
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                                          Text="{Binding Fax, Mode=OneWay}" Padding="10,0,5,0"   BorderThickness="0" 
                                          materialDesign:HintAssist.Hint="Fax..."   Foreground="#4E4E4E"
@@ -417,7 +417,7 @@ VerticalAlignment="Center" Width="15"  Height="15"
                                      Foreground="#4E4E4E"  
                                       MaxLength="50" BorderThickness="0"
                                      materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-                                     Height="40"  Margin="4,0" 
+                                     Height="40"  Margin="5,0,5,-1" 
                                      LostFocus="validateEmpty_LostFocus" TextChanged="ValidateEmpty_TextChange"/>
                                     <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_Email" 
                               HorizontalAlignment="Right" Visibility="Collapsed"   
@@ -434,7 +434,7 @@ VerticalAlignment="Center" Width="15"  Height="15"
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                   materialDesign:HintAssist.Hint="Address..."  
                                   Foreground="#4E4E4E"
-                                 Margin="4,0"  BorderThickness="0"
+                                 Margin="5,0,5,-1"  BorderThickness="0"
                             Grid.Column="1"  Height="70" TextWrapping="Wrap"/>
                                     <Path Fill="#E81123" Grid.Row="8" Stretch="Fill" Margin="5,5,15,5"
                                   HorizontalAlignment="Right" Grid.Column="2"  Visibility="Collapsed"   
@@ -453,7 +453,7 @@ VerticalAlignment="Center" Width="15"  Height="15"
                                  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                   materialDesign:HintAssist.Hint="Note..."  
                                   Foreground="#4E4E4E"
-                                 Margin="4,0"  BorderThickness="0"
+                                 Margin="5,0,5,-1"  BorderThickness="0"
                             Grid.Column="1"  Height="70" TextWrapping="Wrap"/>
                                 </Grid>
                             </Border>
