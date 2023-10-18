@@ -228,6 +228,8 @@
     <Compile Include="Classes\ApiClasses\Category.cs" />
     <Compile Include="Classes\ApiClasses\Customer.cs" />
     <Compile Include="Classes\ApiClasses\APIResult.cs" />
+    <Compile Include="Classes\ApiClasses\Item.cs" />
+    <Compile Include="Classes\ApiClasses\ItemUnit.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
     <Compile Include="Classes\ApiClasses\Unit.cs" />
     <Compile Include="Classes\ApiClasses\User.cs" />
