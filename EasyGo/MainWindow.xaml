@@ -237,6 +237,38 @@ Data="{StaticResource system}"/>
                Margin="10,0,0,0"/>
                                     </Grid>
                                 </Button>
+                                <Button   x:Name="btn_catalog" 
+ Tag="catalog"
+ Click="Btn_catalog_Click"
+Height="40" 
+HorizontalAlignment="Left"  
+Background="{DynamicResource White}" 
+ BorderBrush="{x:Null}"    
+ Padding="0"  BorderThickness="0"  Margin="10 5"
+materialDesign:ButtonAssist.CornerRadius="15">
+                                    <Grid Width="{Binding ElementName=grid, Path=ActualWidth}"
+ Height="40"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Path  x:Name="path_catalog" 
+       Grid.Column="0"  
+ Tag="catalog"
+          FlowDirection="LeftToRight"
+      Fill="{DynamicResource MainColor}" 
+      Stretch="Fill"  
+ HorizontalAlignment="Center"
+   VerticalAlignment="Center" Width="20" Height="20"
+ Data="{StaticResource categoryTree}"/>
+                                        <TextBlock  x:Name="txt_catalog" Grid.Column="1"
+ Tag="catalog"
+           Text="catalog" 
+      Foreground="{DynamicResource MainColor}" 
+      HorizontalAlignment="Left" VerticalAlignment="Center" 
+           Margin="10,0,0,0"/>
+                                    </Grid>
+                                </Button>
 
                                 <Button   x:Name="btn_sectionData" 
      Tag="sectionData"

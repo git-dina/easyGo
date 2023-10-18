@@ -21,6 +21,7 @@ using WPFTabTip;
 using EasyGo.Classes;
 using EasyGo.View.sectionData;
 using EasyGo.Classes.ApiClasses;
+using EasyGo.View.catalog;
 
 namespace EasyGo
 {
@@ -81,7 +82,7 @@ namespace EasyGo
                 timer.Tick += timer_Tick;
                 timer.Start();
 
-                menuList = new List<string> { "home", "", "",
+                menuList = new List<string> { "home", "catalog", "",
                    "sectionData",""};
 
                 if (AppSettings.lang.Equals("en"))
@@ -503,6 +504,25 @@ namespace EasyGo
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
+
+        private void Btn_catalog_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                ColorButtonRefresh(button.Tag.ToString());
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                uc_catalog uc = new uc_catalog();
+                MainWindow.mainWindow.grid_main.Children.Add(uc);
+
+                //MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+
         private void Btn_sectionData_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -524,8 +544,9 @@ namespace EasyGo
 
 
 
+
         #endregion
 
-
+       
     }
 }
