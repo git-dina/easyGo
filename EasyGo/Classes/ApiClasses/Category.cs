@@ -21,13 +21,13 @@ namespace EasyGo.Classes.ApiClasses
         public string Name { get; set; }
         public string Details { get; set; }
         public string Image { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; } = true;
         public Nullable<int> ParentId { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public Nullable<long> CreateUserId { get; set; }
-        public Nullable<long> UpdateUserId { get; set; }
+        public Nullable<long> CreateUserId { get; set; } = MainWindow.userLogin.UserId;
+        public Nullable<long> UpdateUserId { get; set; } = MainWindow.userLogin.UserId;
 
         #endregion
 

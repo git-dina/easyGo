@@ -196,7 +196,7 @@ namespace EasyGo.View.sectionData
                             supplier.Email = tb_Email.Text;
                             supplier.Address = tb_Address.Text;
                             supplier.Notes = tb_Notes.Text;
-                            //supplier.UpdateUserId = MainWindow.userLogin.UserId;
+                            supplier.UpdateUserId = MainWindow.userLogin.UserId;
                           
 
                             var res = await supplier.Save(supplier);

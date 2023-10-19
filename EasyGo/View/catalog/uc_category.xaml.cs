@@ -122,13 +122,10 @@ namespace EasyGo.View.catalog
 
                         category.Name = tb_Name.Text;
                         category.Code = tb_Code.Text;
-                        category.Mobile = tb_Mobile.Text; ;
-                        category.Email = tb_Email.Text;
-                        category.Address = tb_Address.Text;
+                        if(cb_ParentId.SelectedValue != null)
+                            category.ParentId = (int) cb_ParentId.SelectedValue; ;
+                        category.Details = tb_Details.Text;
                         category.Notes = tb_Notes.Text;
-                        category.CreateUserId = MainWindow.userLogin.UserId;
-
-
 
 
                         var res = await category.Save(category);
@@ -136,12 +133,6 @@ namespace EasyGo.View.catalog
 
                         if (res.Equals("failed"))
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-
-                        else if (res.Equals("dCategoryName")) //category name already exist
-                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCategoryNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
-
-                        else if (res.Equals("dFullName")) //full name already exist
-                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trFullNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
 
                         else
                         {
@@ -174,7 +165,6 @@ namespace EasyGo.View.catalog
         {//update
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
                 if (category.CategoryId > 0)
                 {
@@ -184,13 +174,11 @@ namespace EasyGo.View.catalog
                         {
                             category.Name = tb_Name.Text;
                             category.Code = tb_Code.Text;
-                            category.Mobile = tb_Mobile.Text; ;
-                            category.Email = tb_Email.Text;
-                            category.Address = tb_Address.Text;
+                            if (cb_ParentId.SelectedValue != null)
+                                category.ParentId = (int)cb_ParentId.SelectedValue; ;
+                            category.Details = tb_Details.Text;
                             category.Notes = tb_Notes.Text;
                             category.UpdateUserId = MainWindow.userLogin.UserId;
-
-
 
                             var res = await category.Save(category);
 
@@ -198,18 +186,11 @@ namespace EasyGo.View.catalog
                             if (res.Equals("failed"))
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
-                            else if (res.Equals("dCategoryName")) //category name already exist
-                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCategoryNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
-
-                            else if (res.Equals("dFullName")) //full name already exist
-                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trFullNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
-
-                            else
+                           else
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await Search();
-                                FillCombo.categorysList = categorys.ToList();
-                                long categoryId = long.Parse(res);
+                                FillCombo.categoriesList = categorys.ToList();
 
 
                             }
@@ -222,7 +203,7 @@ namespace EasyGo.View.catalog
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
-                */
+            
             }
             catch (Exception ex)
             {
@@ -236,7 +217,7 @@ namespace EasyGo.View.catalog
             {
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete"))
                 {
-                    /*
+
                     HelpClass.StartAwait(grid_main);
                     if (category.CategoryId != 0)
                     {
@@ -260,13 +241,13 @@ namespace EasyGo.View.catalog
                                 await RefreshCategorysList();
                                 await Search();
                                 Clear();
-                                FillCombo.categorysList = categorys.ToList();
+                                FillCombo.categoriesList = categorys.ToList();
                             }
                         }
 
                     }
                     HelpClass.EndAwait(grid_main);
-                    */
+     
                 }
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
