@@ -53,7 +53,7 @@ namespace EasyGo.View.catalog
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "Name", "Code", "Company", "Mobile", };
+                requiredControlList = new List<string> { "Name", "Code" };
 
                 translate();
 
@@ -82,9 +82,8 @@ namespace EasyGo.View.catalog
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Name, AppSettings.resourcemanager.GetString("trNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Code, AppSettings.resourcemanager.GetString("trCodeHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Mobile, AppSettings.resourcemanager.GetString("trMobileHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Email, AppSettings.resourcemanager.GetString("trEmailHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Address, AppSettings.resourcemanager.GetString("trAdressHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_ParentId, AppSettings.resourcemanager.GetString("trParentCategorieHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Details, AppSettings.resourcemanager.GetString("trDetailsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
 
@@ -95,18 +94,9 @@ namespace EasyGo.View.catalog
             tt_add_Button.Content = AppSettings.resourcemanager.GetString("trAdd");
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
-            /*
-            dg_category.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_category.Columns[1].Header = AppSettings.resourcemanager.GetString("trMobile");
-            dg_category.Columns[2].Header = AppSettings.resourcemanager.GetString("trAddress");
-            dg_category.Columns[3].Header = AppSettings.resourcemanager.GetString("trNotes");
-            */
+
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
-
-            //txt_branchButton.Text = AppSettings.resourcemanager.GetString("trBranch");
-            //txt_storesButton.Text = AppSettings.resourcemanager.GetString("trStore");
-            //txt_sliceButton.Text = AppSettings.resourcemanager.GetString("prices");
 
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
             tt_report.Content = AppSettings.resourcemanager.GetString("trPdf");
@@ -120,7 +110,6 @@ namespace EasyGo.View.catalog
         { //add
             try
             {
-                /*
                 HelpClass.StartAwait(grid_main);
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
                 {
@@ -163,7 +152,7 @@ namespace EasyGo.View.catalog
                             Clear();
                             await RefreshCategorysList();
                             await Search();
-                            FillCombo.categorysList = categorys.ToList();
+                            FillCombo.categoriesList = categorys.ToList();
                         }
 
                     }
@@ -172,7 +161,7 @@ namespace EasyGo.View.catalog
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
                 HelpClass.EndAwait(grid_main);
-                */
+             
             }
             catch (Exception ex)
             {

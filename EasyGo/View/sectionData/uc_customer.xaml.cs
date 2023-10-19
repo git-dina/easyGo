@@ -51,7 +51,7 @@ namespace EasyGo.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "Name", "Code", "Company", "Mobile", };
+                requiredControlList = new List<string> { "Name",  "Mobile", };
 
                 translate();
 
@@ -78,7 +78,7 @@ namespace EasyGo.View.sectionData
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Name, AppSettings.resourcemanager.GetString("trFullNameHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Code, AppSettings.resourcemanager.GetString("trCodeHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Mobile, AppSettings.resourcemanager.GetString("trMobileHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Email, AppSettings.resourcemanager.GetString("trEmailHint"));
@@ -94,10 +94,11 @@ namespace EasyGo.View.sectionData
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
-            dg_customer.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_customer.Columns[1].Header = AppSettings.resourcemanager.GetString("trMobile");
-            dg_customer.Columns[2].Header = AppSettings.resourcemanager.GetString("trAddress");
-            dg_customer.Columns[3].Header = AppSettings.resourcemanager.GetString("trNotes");
+            dg_customer.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode");
+            dg_customer.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_customer.Columns[2].Header = AppSettings.resourcemanager.GetString("trMobile");
+            dg_customer.Columns[3].Header = AppSettings.resourcemanager.GetString("trAddress");
+            dg_customer.Columns[4].Header = AppSettings.resourcemanager.GetString("trNotes");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
 

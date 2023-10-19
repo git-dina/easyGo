@@ -5126,4 +5126,13 @@
   <data name="trUserNameAlreadyExist" xml:space="preserve">
     <value>اسم المستخدم موجود مسبقاً</value>
   </data>
+  <data name="trCategory" xml:space="preserve">
+    <value>الصنف</value>
+  </data>
+  <data name="trFullNameHint" xml:space="preserve">
+    <value>الاسم الكامل...</value>
+  </data>
+  <data name="trSupplier" xml:space="preserve">
+    <value>المورد</value>
+  </data>
 </root>

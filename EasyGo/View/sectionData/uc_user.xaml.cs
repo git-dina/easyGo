@@ -169,7 +169,9 @@ namespace EasyGo.View.sectionData
                             Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trUserNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
 
                         else if (res.Equals("dFullName")) //full name already exist
-                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trFullNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
+                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorDuplicateUserFullNameToolTip"), animation: ToasterAnimation.FadeIn);
+                        else if (res.Equals("upgrade")) //reached maximum number of users
+                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
                         else
                         {
@@ -252,7 +254,7 @@ namespace EasyGo.View.sectionData
                                 Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trUserNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
 
                             else if (res.Equals("dFullName")) //full name already exist
-                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trFullNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
+                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorDuplicateUserFullNameToolTip"), animation: ToasterAnimation.FadeIn);
 
                            else
                             {

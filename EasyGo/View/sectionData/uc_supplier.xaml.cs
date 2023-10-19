@@ -51,7 +51,7 @@ namespace EasyGo.View.sectionData
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "Name", "Code", "Company", "Mobile",  };
+                requiredControlList = new List<string> { "Name","Company", "Mobile",  };
 
                 translate();
 
@@ -78,9 +78,11 @@ namespace EasyGo.View.sectionData
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Name, AppSettings.resourcemanager.GetString("trFullNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Company, AppSettings.resourcemanager.GetString("trCompanyHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Code, AppSettings.resourcemanager.GetString("trCodeHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Mobile, AppSettings.resourcemanager.GetString("trMobileHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Fax, AppSettings.resourcemanager.GetString("trFaxHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Email, AppSettings.resourcemanager.GetString("trEmailHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Address, AppSettings.resourcemanager.GetString("trAdressHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Notes, AppSettings.resourcemanager.GetString("trNoteHint"));
@@ -94,10 +96,11 @@ namespace EasyGo.View.sectionData
             tt_update_Button.Content = AppSettings.resourcemanager.GetString("trUpdate");
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
-            dg_supplier.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_supplier.Columns[1].Header = AppSettings.resourcemanager.GetString("trMobile");
-            dg_supplier.Columns[2].Header = AppSettings.resourcemanager.GetString("trAddress");
-            dg_supplier.Columns[3].Header = AppSettings.resourcemanager.GetString("trNotes");
+            dg_supplier.Columns[0].Header = AppSettings.resourcemanager.GetString("trCode"); 
+            dg_supplier.Columns[1].Header = AppSettings.resourcemanager.GetString("trName");
+            dg_supplier.Columns[2].Header = AppSettings.resourcemanager.GetString("trMobile");
+            dg_supplier.Columns[3].Header = AppSettings.resourcemanager.GetString("trAddress");
+            dg_supplier.Columns[4].Header = AppSettings.resourcemanager.GetString("trNotes");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
 
@@ -121,23 +124,20 @@ namespace EasyGo.View.sectionData
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
                 {
 
-                    //chk password length
-
                     supplier = new Supplier();
                     if (HelpClass.validate(requiredControlList, this) &&  HelpClass.IsValidEmail(this))
                     {
 
                         supplier.Name = tb_Name.Text;
-                        supplier.Code = tb_Code.Text;
-                        supplier.Mobile = tb_Mobile.Text; ;
+                        //supplier.Code = tb_Code.Text;
+                        supplier.Company = tb_Company.Text;
+                        supplier.Mobile = tb_Mobile.Text; 
+                        supplier.Fax = tb_Fax.Text; 
                         supplier.Email = tb_Email.Text;
                         supplier.Address = tb_Address.Text;
                         supplier.Notes = tb_Notes.Text;
-                        supplier.CreateUserId = MainWindow.userLogin.UserId;
-
-                  
-
-
+                        //supplier.CreateUserId = MainWindow.userLogin.UserId;
+                 
                         var res = await supplier.Save(supplier);
 
 
@@ -150,11 +150,12 @@ namespace EasyGo.View.sectionData
                         else if (res.Equals("dFullName")) //full name already exist
                             Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trFullNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
 
+                         else if (res.Equals("upgrade")) //reached maximum number of suppliers
+                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
+
                         else
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
-
-                            
 
                             Clear();
                             await RefreshSuppliersList();
@@ -188,14 +189,15 @@ namespace EasyGo.View.sectionData
                         if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                         {
                             supplier.Name = tb_Name.Text;
-                            supplier.Code = tb_Code.Text;
-                            supplier.Mobile = tb_Mobile.Text; ;
+                           // supplier.Code = tb_Code.Text;
+                            supplier.Company = tb_Company.Text;
+                            supplier.Mobile = tb_Mobile.Text;
+                            supplier.Fax = tb_Fax.Text;
                             supplier.Email = tb_Email.Text;
                             supplier.Address = tb_Address.Text;
                             supplier.Notes = tb_Notes.Text;
-                            supplier.UpdateUserId = MainWindow.userLogin.UserId;
-                           
-
+                            //supplier.UpdateUserId = MainWindow.userLogin.UserId;
+                          
 
                             var res = await supplier.Save(supplier);
 

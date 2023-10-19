@@ -5152,4 +5152,13 @@ Please add Email in setting</value>
   <data name="trUserNameAlreadyExist" xml:space="preserve">
     <value>User name already exist</value>
   </data>
+  <data name="trCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="trFullNameHint" xml:space="preserve">
+    <value>Full Name...</value>
+  </data>
+  <data name="trSupplier" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
 </root>

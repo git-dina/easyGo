@@ -22,6 +22,16 @@ namespace EasyGo.Classes
             return unitsList;
         }
         #endregion
+        #region Category
+        static public Category category = new Category();
+        static public List<Category> categoriesList;
+
+        static public async Task<IEnumerable<Category>> RefreshCategoriesList()
+        {
+            categoriesList = await category.Get();
+            return categoriesList;
+        }
+        #endregion
         #region User
         static public User user = new User();
         static public List<User> usersList;
