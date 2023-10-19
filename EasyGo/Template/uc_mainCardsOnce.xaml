@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="EasyGo.Template.uc_mainCardsOnce"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EasyGo.Template"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="450" d:DesignWidth="800">
+        <Border Tag="user" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
+            <Border.Effect>
+                <DropShadowEffect
+   ShadowDepth="1"
+   Direction="360"
+   Color="Gray"
+   Opacity="0.3"
+  BlurRadius="10"/>
+            </Border.Effect>
+            <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+                <Border x:Name="brd_top" Grid.Row="0"  
+   CornerRadius="12.5 12.5 0 0"   
+       Background="{Binding Color}" 
+       Height="15" 
+       />
+                <Path x:Name="path_icon" 
+     Grid.Row="1"
+     Margin="0 20 0 10"
+     Tag="user" Fill="{Binding Color}" 
+     Stretch="Fill" 
+     HorizontalAlignment="Center"
+VerticalAlignment="Center"
+     Height="50" Width="50"
+   FlowDirection="LeftToRight"  />
+                <Separator Grid.Row="2" Margin="0 10 0 10"
+   Background="{StaticResource veryLightGrey}" VerticalAlignment="Center" Width="auto"  />
+                <TextBlock x:Name="txt_userInfo" 
+          Grid.Row="3"
+              Tag="user" Text="{Binding Title}" 
+          Foreground="{StaticResource textColor}"
+          FontWeight="SemiBold" FontSize="14"   
+          HorizontalAlignment="Center"
+           VerticalAlignment="Center"/>
+                <TextBlock x:Name="txt_userHint" 
+          Grid.Row="4"
+          Tag="user" Text="{Binding Hint}" 
+          Margin="10 5 10 5"  
+          Foreground="#949494"
+          HorizontalAlignment="Center"
+   VerticalAlignment="Center"/>
+                <Button Grid.Row="6"
+       Padding="0"
+   Tag="user" 
+       Height="30" 
+   VerticalAlignment="Center" 
+       HorizontalAlignment="Center"
+       Margin="10 10 10 10"
+           Background="{StaticResource White}"
+         BorderBrush="{Binding Color}"
+       BorderThickness="1"
+        materialDesign:ButtonAssist.CornerRadius="15"
+     VerticalContentAlignment="Center"
+                        Click="onButtonClick">
+                    <Grid  Width="100">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding ButtonText}"  Tag="enterButton"
+                  Foreground="{Binding Color}"
+                  Margin="10 0"
+                      Grid.Column="0"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon
+           Grid.Column="1"
+                  Margin="0 0 5 0"
+           VerticalAlignment="Center"
+           HorizontalAlignment="Right"
+           Foreground="{Binding Color}"
+           Kind="ArrowRightCircle"   Width="25" Height="25"/>
+                    </Grid>
+                </Button>
+                <Border Grid.Row="7" 
+       Margin="0 0"
+       VerticalAlignment="Bottom"
+        CornerRadius="0 0 12.5 15"   
+    Background="{Binding Color}" 
+    Height="10"
+    />
+            </Grid>
+
+        </Border>
+</UserControl>
