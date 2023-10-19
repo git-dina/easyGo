@@ -15,6 +15,7 @@ namespace EasyGo.Classes.ApiClasses
         public string Details { get; set; }
         public string Type { get; set; }
         public string Image { get; set; }
+        public string Notes { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<int> Min { get; set; }
         public Nullable<int> Max { get; set; }
