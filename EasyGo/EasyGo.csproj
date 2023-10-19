@@ -243,6 +243,9 @@
     <Compile Include="Classes\ApiClasses\Supplier.cs" />
     <Compile Include="converters\Class1.cs" />
     <Compile Include="en_file.Designer.cs" />
+    <Compile Include="Template\uc_mainCardsOnce.xaml.cs">
+      <DependentUpon>uc_mainCardsOnce.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\catalog\uc_catalog.xaml.cs">
       <DependentUpon>uc_catalog.xaml</DependentUpon>
     </Compile>
@@ -296,6 +299,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Template\uc_mainCardsOnce.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\catalog\uc_catalog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
