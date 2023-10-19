@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:EasyGo.View.sectionData"
              mc:Ignorable="d" 
              Tag="sectionData"
-             Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
+             Loaded="UserControl_Loaded" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="800" d:DesignWidth="1000" >
     <Grid x:Name="grid_main">
@@ -17,10 +17,10 @@
             </Grid.RowDefinitions>
             <TextBlock x:Name="txt_mainTitle" Text="mainTitle"  Margin="40 5 40 0" FontSize="24" FontWeight="Bold" Foreground="{StaticResource LightGrey}"   />
             <ScrollViewer Grid.Row="1" Margin="5,0,-5,0">
-                <WrapPanel Margin="20 5" HorizontalAlignment="Left" >
+                <WrapPanel x:Name="wp_main" Margin="20 5" HorizontalAlignment="Left" >
 
                     <!--#region user-->
-                    <Border Tag="user" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
+                    <!--<Border Tag="user" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
                         <Border.Effect>
                             <DropShadowEffect
               ShadowDepth="1"
@@ -103,10 +103,10 @@
                />
                         </StackPanel>
 
-                    </Border>
+                    </Border>-->
                     <!--#endregion-->
                     <!--#region supplier-->
-                    <Border Tag="supplier" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
+                    <!--<Border Tag="supplier" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
                         <Border.Effect>
                             <DropShadowEffect
                                 ShadowDepth="1"
@@ -189,10 +189,10 @@
                                  />     
                         </StackPanel>
 
-                    </Border>
+                    </Border>-->
                     <!--#endregion-->
                     <!--#region customer-->
-                    <Border Tag="customer" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
+                    <!--<Border Tag="customer" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
                         <Border.Effect>
                             <DropShadowEffect
              ShadowDepth="1"
@@ -275,7 +275,7 @@
               />
                         </StackPanel>
 
-                    </Border>
+                    </Border>-->
                     <!--#endregion-->
 
 

@@ -1,4 +1,5 @@
 ﻿using EasyGo.Classes;
+using EasyGo.Template;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,11 +58,52 @@ namespace EasyGo.View.sectionData
                 await translate();
                 #endregion
                 permission();
+                buildCards();
+
+
+
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
+        }
+        void buildCards()
+        {
+            #region mco_user
+            uc_mainCardsOnce mco_user = new uc_mainCardsOnce();
+            mco_user.Title = "user";
+            mco_user.Hint = "add, update, delete...";
+            mco_user.ButtonText = "enter";
+            mco_user.Icon = "user";
+            mco_user.Color = Application.Current.Resources["dashboardColor1"] as SolidColorBrush;
+            mco_user.Click += Btn_user_Click;
+            wp_main.Children.Add(mco_user);
+            #endregion
+
+            #region mco_supplier
+            uc_mainCardsOnce mco_supplier = new uc_mainCardsOnce();
+            mco_supplier.Title = "supplier";
+            mco_supplier.Hint = "add, update, delete...";
+            mco_supplier.ButtonText = "enter";
+            mco_supplier.Icon = "supplier";
+            mco_supplier.Color = Application.Current.Resources["dashboardColor2"] as SolidColorBrush;
+            mco_supplier.Click += Btn_supplier_Click;
+            wp_main.Children.Add(mco_supplier);
+            #endregion
+
+            #region mco_customer
+            uc_mainCardsOnce mco_customer = new uc_mainCardsOnce();
+            mco_customer.Title = "customer";
+            mco_customer.Hint = "add, update, delete...";
+            mco_customer.ButtonText = "enter";
+            mco_customer.Icon = "customer";
+            mco_customer.Color = Application.Current.Resources["dashboardColor3"] as SolidColorBrush;
+            mco_customer.Click += Btn_customer_Click;
+            wp_main.Children.Add(mco_customer);
+            #endregion
+
+           
         }
         void permission()
         {
@@ -98,58 +140,6 @@ namespace EasyGo.View.sectionData
         }
         private async Task translate()
         {
-            /*
-            if (FillCombo.objectsList is null || FillCombo.objectsList.Count() == 0)
-                await FillCombo.RefreshObjects();
-            // Title
-            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
-                txt_mainTitle.Text = AppSettings.resourcemanager.GetString(
-               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
-               );
-            // Icon
-            List<Path> InfoPathsList = FindControls.FindVisualChildren<Path>(this)
-                .Where(x => x.Name.Contains("Icon") && x.Tag != null).ToList();
-            foreach (var item in InfoPathsList)
-            {
-                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().icon))
-                    item.Data = App.Current.Resources[
-                FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().icon
-                   ] as Geometry;
-            }
-            // Info
-            List<TextBlock> InfoTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
-                .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
-            if (InfoTextBlocksList.Count == 0)
-            {
-                await Task.Delay(0050);
-                await translate();
-            }
-            foreach (var item in InfoTextBlocksList)
-            {
-                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate))
-                    item.Text = AppSettings.resourcemanager.GetString(
-                   FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate
-                   );
-            }
-            // Hint
-            List<TextBlock> HintTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
-                .Where(x => x.Name.Contains("Hint") && x.Tag != null).ToList();
-            foreach (var item in HintTextBlocksList)
-            {
-                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint))
-                    item.Text = AppSettings.resourcemanager.GetString(
-                   FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint
-                   );
-            }
-            // enterButton
-            List<TextBlock> enterTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
-                .Where(x => x.Tag != null).ToList();
-            enterTextBlocksList = enterTextBlocksList.Where(x => x.Tag.ToString().Contains("enterButton")).ToList();
-            foreach (var item in enterTextBlocksList)
-            {
-                item.Text = AppSettings.resourcemanager.GetString("enter");
-            }
-            */
 
         }
         private void Btn_user_Click(object sender, RoutedEventArgs e)
@@ -202,5 +192,7 @@ namespace EasyGo.View.sectionData
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
+
+       
     }
 }

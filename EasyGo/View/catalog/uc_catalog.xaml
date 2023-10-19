@@ -17,11 +17,11 @@
             </Grid.RowDefinitions>
             <TextBlock x:Name="txt_mainTitle" Text="mainTitle"  Margin="40 5 40 0" FontSize="24" FontWeight="Bold" Foreground="{StaticResource LightGrey}"   />
             <ScrollViewer Grid.Row="1" Margin="5,0,-5,0">
-                <WrapPanel Margin="20 5" HorizontalAlignment="Left" >
+                <WrapPanel x:Name="wp_main" Margin="20 5" HorizontalAlignment="Left" >
 
                  
                     <!--#region category-->
-                    <Border Tag="category" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
+                    <!--<Border Tag="category" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
                         <Border.Effect>
                             <DropShadowEffect
                                 ShadowDepth="1"
@@ -104,10 +104,10 @@
                                  />
                         </StackPanel>
 
-                    </Border>
+                    </Border>-->
                     <!--#endregion-->
                     <!--#region unit-->
-                    <Border Tag="unit" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
+                    <!--<Border Tag="unit" Background="White" CornerRadius="12.5"   Width="180"   Margin="15 10">
                         <Border.Effect>
                             <DropShadowEffect
              ShadowDepth="1"
@@ -190,7 +190,7 @@
               />
                         </StackPanel>
 
-                    </Border>
+                    </Border>-->
                     <!--#endregion-->
 
 

@@ -1,4 +1,5 @@
 ﻿using EasyGo.Classes;
+using EasyGo.Template;
 using EasyGo.View.sectionData;
 using System;
 using System.Collections.Generic;
@@ -44,11 +45,41 @@ namespace EasyGo.View.catalog
                 await translate();
                 #endregion
                 permission();
+                buildCards();
+
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
+        }
+        void buildCards()
+        {
+            #region mco_category
+            uc_mainCardsOnce mco_category = new uc_mainCardsOnce();
+            mco_category.Title = "category";
+            mco_category.Hint = "add, update, delete...";
+            mco_category.ButtonText = "enter";
+            mco_category.Icon = "categoryTree";
+            mco_category.Color = Application.Current.Resources["dashboardColor1"] as SolidColorBrush;
+            mco_category.Click += Btn_category_Click;
+            wp_main.Children.Add(mco_category);
+            #endregion
+
+          
+
+            #region mco_unit
+            uc_mainCardsOnce mco_unit = new uc_mainCardsOnce();
+            mco_unit.Title = "unit";
+            mco_unit.Hint = "add, update, delete...";
+            mco_unit.ButtonText = "enter";
+            mco_unit.Icon = "units";
+            mco_unit.Color = Application.Current.Resources["dashboardColor3"] as SolidColorBrush;
+            mco_unit.Click += Btn_unit_Click;
+            wp_main.Children.Add(mco_unit);
+            #endregion
+
+
         }
         void permission()
         {
@@ -85,59 +116,6 @@ namespace EasyGo.View.catalog
         }
         private async Task translate()
         {
-            /*
-            if (FillCombo.objectsList is null || FillCombo.objectsList.Count() == 0)
-                await FillCombo.RefreshObjects();
-            // Title
-            if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate))
-                txt_mainTitle.Text = AppSettings.resourcemanager.GetString(
-               FillCombo.objectsList.Where(x => x.name == this.Tag.ToString()).FirstOrDefault().translate
-               );
-            // Icon
-            List<Path> InfoPathsList = FindControls.FindVisualChildren<Path>(this)
-                .Where(x => x.Name.Contains("Icon") && x.Tag != null).ToList();
-            foreach (var item in InfoPathsList)
-            {
-                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().icon))
-                    item.Data = App.Current.Resources[
-                FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().icon
-                   ] as Geometry;
-            }
-            // Info
-            List<TextBlock> InfoTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
-                .Where(x => x.Name.Contains("Info") && x.Tag != null).ToList();
-            if (InfoTextBlocksList.Count == 0)
-            {
-                await Task.Delay(0050);
-                await translate();
-            }
-            foreach (var item in InfoTextBlocksList)
-            {
-                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate))
-                    item.Text = AppSettings.resourcemanager.GetString(
-                   FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translate
-                   );
-            }
-            // Hint
-            List<TextBlock> HintTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
-                .Where(x => x.Name.Contains("Hint") && x.Tag != null).ToList();
-            foreach (var item in HintTextBlocksList)
-            {
-                if (!string.IsNullOrWhiteSpace(FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint))
-                    item.Text = AppSettings.resourcemanager.GetString(
-                   FillCombo.objectsList.Where(x => x.name == item.Tag.ToString()).FirstOrDefault().translateHint
-                   );
-            }
-            // enterButton
-            List<TextBlock> enterTextBlocksList = FindControls.FindVisualChildren<TextBlock>(this)
-                .Where(x => x.Tag != null).ToList();
-            enterTextBlocksList = enterTextBlocksList.Where(x => x.Tag.ToString().Contains("enterButton")).ToList();
-            foreach (var item in enterTextBlocksList)
-            {
-                item.Text = AppSettings.resourcemanager.GetString("enter");
-            }
-            */
-
         }
         private void Btn_category_Click(object sender, RoutedEventArgs e)
         {
