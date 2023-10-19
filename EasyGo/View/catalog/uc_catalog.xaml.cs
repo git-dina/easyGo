@@ -66,7 +66,16 @@ namespace EasyGo.View.catalog
             wp_main.Children.Add(mco_category);
             #endregion
 
-          
+            #region mco_item
+            uc_mainCardsOnce mco_item = new uc_mainCardsOnce();
+            mco_item.Title = "item";
+            mco_item.Hint = "add, update, delete...";
+            mco_item.ButtonText = "enter";
+            mco_item.Icon = "items";
+            mco_item.Color = Application.Current.Resources["dashboardColor2"] as SolidColorBrush;
+            mco_item.Click += Btn_item_Click;
+            wp_main.Children.Add(mco_item);
+            #endregion
 
             #region mco_unit
             uc_mainCardsOnce mco_unit = new uc_mainCardsOnce();
@@ -123,6 +132,22 @@ namespace EasyGo.View.catalog
             {
                 MainWindow.mainWindow.grid_main.Children.Clear();
                 uc_category uc = new uc_category();
+                MainWindow.mainWindow.grid_main.Children.Add(uc);
+
+                Button button = sender as Button;
+                //MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private void Btn_item_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                uc_item uc = new uc_item();
                 MainWindow.mainWindow.grid_main.Children.Add(uc);
 
                 Button button = sender as Button;
