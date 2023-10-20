@@ -59,7 +59,7 @@ namespace EasyGo.View.catalog
 
                 Keyboard.Focus(tb_Name);
                 await Search();
-                buildItemCards();
+                buildItemCards(itemsQuery);
 
 
                 Clear();
@@ -111,22 +111,22 @@ namespace EasyGo.View.catalog
             tt_count.Content = AppSettings.resourcemanager.GetString("trCount");
         }
         #region ItemCards
-        void buildItemCards()
+        void buildItemCards(IEnumerable<Item> list)
         {
+            foreach (var item in list)
+            {
+
             #region mco_itemCards
             uc_itemCards mco_itemCards = new uc_itemCards();
             mco_itemCards.ItemName = "ItemName";
             mco_itemCards.ItemPrice = "848.516";
-            //mco_itemCards.ItemImage =  "/pic/no-image-icon-90x90.png";
-            //mco_itemCards.ItemImage = new BitmapImage(
-            //    new Uri("/pic/no-image-icon-90x90.png")
-            //    );
             var uriSource = new Uri(@"/pic/no-image-icon-90x90.png", UriKind.Relative);
             mco_itemCards.ItemImage = new BitmapImage(uriSource);
             mco_itemCards.Color = Application.Current.Resources["MainColor"] as SolidColorBrush;
             mco_itemCards.Click += Btn_itemCards_Click;
             wp_itemsCard.Children.Add(mco_itemCards);
             #endregion
+            }
         }
         private void Btn_itemCards_Click(object sender, RoutedEventArgs e)
         {
