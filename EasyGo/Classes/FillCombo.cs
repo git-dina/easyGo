@@ -31,6 +31,21 @@ namespace EasyGo.Classes
             categoriesList = await category.Get();
             return categoriesList;
         }
+        static public async Task FillCategories(ComboBox cb)
+        {
+            if (categoriesList == null)
+                RefreshCategoriesList();
+
+            var lst = categoriesList.ToList();
+            var cat = new Category();
+            cat.CategoryId = 0;
+            cat.Name = "-";
+            lst.Insert(0, cat);
+
+            cb.ItemsSource = lst;
+            cb.SelectedValuePath = "CategoryId";
+            cb.DisplayMemberPath = "Name";
+        }
         #endregion
         #region User
         static public User user = new User();
