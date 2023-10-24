@@ -141,7 +141,7 @@ namespace EasyGo.View.catalog
 
 
                             Clear();
-                            await RefreshCategorysList();
+                            await FillCombo.RefreshCategoriesList();
                             await Search();
                             FillCombo.categoriesList = categorys.ToList();
                         }
@@ -238,7 +238,7 @@ namespace EasyGo.View.catalog
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopDelete"), animation: ToasterAnimation.FadeIn);
 
-                                await RefreshCategorysList();
+                                await FillCombo.RefreshCategoriesList();
                                 await Search();
                                 Clear();
                                 FillCombo.categoriesList = categorys.ToList();
@@ -328,7 +328,7 @@ namespace EasyGo.View.catalog
 
                 tb_search.Text = "";
                 searchText = "";
-                await RefreshCategorysList();
+                await FillCombo.RefreshCategoriesList();
                 await Search();
 
                 HelpClass.EndAwait(grid_main);
@@ -348,21 +348,16 @@ namespace EasyGo.View.catalog
         {
 
             //search
-            if (categorys is null)
-                await RefreshCategorysList();
+            if (FillCombo.categoriesList is null)
+                await FillCombo.RefreshCategoriesList();
+
+            categorys = FillCombo.categoriesList.ToList();
             searchText = tb_search.Text.ToLower();
             categorysQuery = categorys.Where(s => s.Name.ToLower().Contains(searchText));
             RefresCategorysView();
 
         }
-        async Task<IEnumerable<Category>> RefreshCategorysList()
-        {
-            /*
-            await FillCombo.RefreshCategorys();
-            categorys = FillCombo.categorysList.ToList();
-            */
-            return categorys;
-        }
+
         void RefresCategorysView()
         {
             //dg_category.ItemsSource = categorysQuery;
