@@ -34,7 +34,7 @@ namespace EasyGo.Classes
         static public async Task FillCategories(ComboBox cb)
         {
             if (categoriesList == null)
-                RefreshCategoriesList();
+               await RefreshCategoriesList();
 
             var lst = categoriesList.ToList();
             var cat = new Category();
@@ -45,6 +45,17 @@ namespace EasyGo.Classes
             cb.ItemsSource = lst;
             cb.SelectedValuePath = "CategoryId";
             cb.DisplayMemberPath = "Name";
+        }
+        #endregion
+
+        #region Item
+        static public Item item = new Item();
+        static public List<Item> itemsList;
+
+        static public async Task<IEnumerable<Item>> RefreshItemsList()
+        {
+            itemsList = await item.Get();
+            return itemsList;
         }
         #endregion
         #region User

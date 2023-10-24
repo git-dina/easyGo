@@ -1,6 +1,10 @@
-﻿using System;
+﻿using EasyGo.ApiClasses;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +35,25 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<long> CreateUserId { get; set; }
         public Nullable<long> UpdateUserId { get; set; }
+        #endregion
+
+        #region Methods
+
+        public async Task<List<Item>> Get()
+        {
+            List<Item> items = new List<Item>();
+
+            IEnumerable<Claim> claims = await APIResult.getList("Item/Get");
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
         #endregion
     }
 }

@@ -44,7 +44,7 @@ namespace EasyGo.Classes.ApiClasses
 
         public async Task<List<Category>> Get()
         {
-            List<Category> units = new List<Category>();
+            List<Category> categories = new List<Category>();
 
             IEnumerable<Claim> claims = await APIResult.getList("Category/Get");
 
@@ -52,10 +52,10 @@ namespace EasyGo.Classes.ApiClasses
             {
                 if (c.Type == "scopes")
                 {
-                    units.Add(JsonConvert.DeserializeObject<Category>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                    categories.Add(JsonConvert.DeserializeObject<Category>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
                 }
             }
-            return units;
+            return categories;
         }
         public async Task<string> Delete(long delUserId, long categoryId)
         {

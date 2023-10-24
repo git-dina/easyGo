@@ -52,7 +52,7 @@ namespace EasyGo.View.catalog
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "Name", "Code", "Company", "Mobile", };
+                requiredControlList = new List<string> { "Name", "Code", "Type"};
 
                 translate();
 
@@ -80,11 +80,16 @@ namespace EasyGo.View.catalog
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
             txt_baseInformation.Text = AppSettings.resourcemanager.GetString("trBaseInformation");
 
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Code, AppSettings.resourcemanager.GetString("trCodeHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Name, AppSettings.resourcemanager.GetString("trNameHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_CategoryId, AppSettings.resourcemanager.GetString("trSelectCategorieHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_Type, AppSettings.resourcemanager.GetString("trSelectItemTypeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Details, AppSettings.resourcemanager.GetString("trDetailsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
 
 
+            txt_unitButton.Text = AppSettings.resourcemanager.GetString("trUnits");
             txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");
             txt_updateButton.Text = AppSettings.resourcemanager.GetString("trUpdate");
             txt_deleteButton.Text = AppSettings.resourcemanager.GetString("trDelete");
