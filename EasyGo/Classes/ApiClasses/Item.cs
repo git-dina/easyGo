@@ -28,8 +28,6 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<int> Max { get; set; }
         public Nullable<int> CategoryId { get; set; }
         public bool IsExpired { get; set; }
-        public int AlertDays { get; set; }
-        public bool IsTaxExempt { get; set; }
         public Nullable<decimal> Taxes { get; set; }
         public Nullable<int> MinUnitId { get; set; }
         public Nullable<int> MaxUnitId { get; set; }
