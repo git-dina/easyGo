@@ -139,7 +139,66 @@ namespace EasyGo.View.catalog
         }
         private void Btn_itemCards_Click(object sender, RoutedEventArgs e)
         {
-           
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+
+                this.DataContext = item;
+                getImg();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch
+            {
+                HelpClass.EndAwait(grid_main);
+
+            }
+        }
+
+        private void getImg()
+        {
+
+            try
+            {
+                if (string.IsNullOrEmpty(item.Image))
+                {
+                    HelpClass.clearImg(btn_image);
+                }
+                else
+                {
+                    byte[] imageBuffer = HelpClass.readLocalImage(item.Image, Global.TMPItemFolder);
+
+                    if (imageBuffer != null)
+                    {
+                        var bitmapImage = new BitmapImage();
+                        if (imageBuffer != null)
+                        {
+                            using (var memoryStream = new MemoryStream(imageBuffer))
+                            {
+                                bitmapImage.BeginInit();
+                                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                                bitmapImage.StreamSource = memoryStream;
+                                bitmapImage.EndInit();
+                            }
+
+                            btn_image.Background = new ImageBrush(bitmapImage);
+                        }
+                        // configure trmporary path
+                        string dir = Directory.GetCurrentDirectory();
+                        string tmpPath = System.IO.Path.Combine(dir, Global.TMPItemFolder);
+                        tmpPath = System.IO.Path.Combine(tmpPath, item.Image);
+                    }
+                    else
+                    {
+                        HelpClass.clearImg(btn_image);
+                    }
+
+                }
+            }
+            catch
+            {
+                HelpClass.clearImg(btn_image);
+            }
         }
         #endregion
         #region Add - Update - Delete - Search - Tgl - Clear - DG_SelectionChanged - refresh
