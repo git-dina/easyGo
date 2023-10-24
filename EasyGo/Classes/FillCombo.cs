@@ -34,6 +34,15 @@ namespace EasyGo.Classes
         static public async Task FillCategories(ComboBox cb)
         {
             if (categoriesList == null)
+                await RefreshCategoriesList();
+
+            cb.ItemsSource = categoriesList.ToList();
+            cb.SelectedValuePath = "CategoryId";
+            cb.DisplayMemberPath = "Name";
+        }
+        static public async Task FillCategoriesWithDefault(ComboBox cb)
+        {
+            if (categoriesList == null)
                await RefreshCategoriesList();
 
             var lst = categoriesList.ToList();
@@ -48,11 +57,34 @@ namespace EasyGo.Classes
         }
         #endregion
 
+        #region Item Types
+        static public List<keyValueString> itemTypesList;
+        static public IEnumerable<keyValueString> RefreshItemTypes()
+        {
+            itemTypesList = new List<keyValueString>() {
+                new keyValueString(){key="normal", value=AppSettings.resourcemanager.GetString("trNormal") },
+                new keyValueString(){key="service", value=AppSettings.resourcemanager.GetString("trService") },
+            };
+
+            return itemTypesList;
+        }
+
+        static public void fillItemTypes(ComboBox combo)
+        {
+            if (itemTypesList is null)
+                RefreshItemTypes();
+
+            combo.ItemsSource = itemTypesList;
+            combo.SelectedValuePath = "key";
+            combo.DisplayMemberPath = "value";
+            combo.SelectedIndex = -1;
+        }
+        #endregion
         #region Item
         static public Item item = new Item();
         static public List<Item> itemsList;
 
-        static public async Task<IEnumerable<Item>> RefreshItemsList()
+        static public async Task<IEnumerable<Item>> RefreshItems()
         {
             itemsList = await item.Get();
             return itemsList;

@@ -60,7 +60,7 @@ namespace EasyGo.View.catalog
 
                 Keyboard.Focus(tb_Name);
                 await Search();
-                await FillCombo.FillCategories(cb_ParentId);
+                await FillCombo.FillCategoriesWithDefault(cb_ParentId);
 
                 Clear();
                 HelpClass.EndAwait(grid_main);

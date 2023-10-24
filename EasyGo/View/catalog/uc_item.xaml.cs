@@ -40,8 +40,9 @@ namespace EasyGo.View.catalog
         IEnumerable<Item> items;
         string searchText = "";
         public static List<string> requiredControlList;
+        OpenFileDialog openFileDialog = new OpenFileDialog();
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-
+        string imgFileName = "pic/no-image-icon-90x90.png";
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             //Instance = null;
@@ -52,14 +53,17 @@ namespace EasyGo.View.catalog
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "Name", "Code", "Type"};
+                requiredControlList = new List<string> { "Name", "Code", "CategoryId", "Type"};
 
                 translate();
 
-
                 Keyboard.Focus(tb_Name);
+
+                await FillCombo.FillCategories(cb_CategoryId);
+
+                 FillCombo.fillItemTypes(cb_Type);
                 await Search();
-                buildItemCards(itemsQuery);
+               
 
 
                 Clear();
@@ -144,52 +148,54 @@ namespace EasyGo.View.catalog
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "add"))
                 {
 
-                    //chk password length
-
                     item = new Item();
-                    if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
+                    if (HelpClass.validate(requiredControlList, this) )
                     {
 
+                        item.Code = tb_Code.Text;
                         item.Name = tb_Name.Text;
+                        if (cb_CategoryId.SelectedIndex > 0)
+                            item.CategoryId = (int)cb_CategoryId.SelectedValue;
+                        item.Type = cb_Type.SelectedValue.ToString();
+                        item.Details = tb_Details.Text;
                         item.Notes = tb_Notes.Text;
                         item.CreateUserId = MainWindow.userLogin.UserId;
-
-
-
 
                         var res = await item.Save(item);
 
 
                         if (res.Equals("failed"))
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-
-                        else if (res.Equals("dItemName")) //item name already exist
-                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trItemNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
-
-                        else if (res.Equals("dFullName")) //full name already exist
-                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trFullNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
+                        else if (res.Equals("upgrade")) //reached maximum number of users
+                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
 
                         else
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
+                            if (openFileDialog.FileName != "")
+                            {
+                                long itemId = long.Parse(res);
+                                string b = await item.UploadImage(imgFileName,
+                                    Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
+                                item.Image = b;
 
+                            }
 
                             Clear();
                             await RefreshItemsList();
                             await Search();
-                            //FillCombo.itemsList = items.ToList();
                         }
 
                     }
                 }
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
-                */
+              
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -204,17 +210,21 @@ namespace EasyGo.View.catalog
             try
             {
                 HelpClass.StartAwait(grid_main);
-                /*
+ 
                 if (item.ItemId > 0)
                 {
                     //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "update"))
                     {
                         if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                         {
+                            item.Code = tb_Code.Text;
                             item.Name = tb_Name.Text;
+                            if (cb_CategoryId.SelectedIndex > 0)
+                                item.CategoryId = (int)cb_CategoryId.SelectedValue;
+                            item.Type = cb_Type.SelectedValue.ToString();
+                            item.Details = tb_Details.Text;
                             item.Notes = tb_Notes.Text;
                             item.UpdateUserId = MainWindow.userLogin.UserId;
-
 
 
                             var res = await item.Save(item);
@@ -223,19 +233,17 @@ namespace EasyGo.View.catalog
                             if (res.Equals("failed"))
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
-                            else if (res.Equals("dItemName")) //item name already exist
-                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trItemNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
-
-                            else if (res.Equals("dFullName")) //full name already exist
-                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trFullNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
-
                             else
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await Search();
                                 FillCombo.itemsList = items.ToList();
                                 long itemId = long.Parse(res);
-
+                                if (openFileDialog.FileName != "")
+                                {
+                                    string b = await item.UploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
+                                   
+                                }
 
                             }
                         }
@@ -245,7 +253,7 @@ namespace EasyGo.View.catalog
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trSelectItemFirst"), animation: ToasterAnimation.FadeIn);
-                */
+              
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -261,7 +269,7 @@ namespace EasyGo.View.catalog
                 //if (FillCombo.groupObject.HasPermissionAction(basicsPermission, FillCombo.groupObjects, "delete"))
                 {
                     HelpClass.StartAwait(grid_main);
-                    /*
+
                     if (item.ItemId != 0)
                     {
                         #region
@@ -284,12 +292,11 @@ namespace EasyGo.View.catalog
                                 await RefreshItemsList();
                                 await Search();
                                 Clear();
-                                FillCombo.itemsList = items.ToList();
                             }
                         }
 
                     }
-                    */
+             
                     HelpClass.EndAwait(grid_main);
                 }
                 //else
@@ -400,15 +407,15 @@ namespace EasyGo.View.catalog
         }
         async Task<IEnumerable<Item>> RefreshItemsList()
         {
-            /*
+        
             await FillCombo.RefreshItems();
             items = FillCombo.itemsList.ToList();
-            */
+           
             return items;
         }
         void RefresItemsView()
         {
-            //dg_item.ItemsSource = itemsQuery;
+            buildItemCards(itemsQuery);
             txt_count.Text = itemsQuery.Count().ToString();
         }
         #endregion
@@ -418,6 +425,10 @@ namespace EasyGo.View.catalog
             item = new Item();
             this.DataContext = item;
             //dg_item.SelectedIndex = -1;
+
+            #region image
+            HelpClass.clearImg(btn_image);
+            #endregion
             // last 
             HelpClass.clearValidate(requiredControlList, this);
 
@@ -696,12 +707,40 @@ namespace EasyGo.View.catalog
 
         private void Btn_uploadPic_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                openFileDialog.Filter = "Images|*.png;*.jpg;*.bmp;*.jpeg;*.jfif";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    HelpClass.imageBrush = new ImageBrush();
+                    HelpClass.imageBrush.ImageSource = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Relative));
+                    btn_image.Background = HelpClass.imageBrush;
+                    imgFileName = openFileDialog.FileName;
+                }
+                else
+                { }
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
 
         private void Btn_deletePic_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                HelpClass.clearImg(btn_image);
+                openFileDialog.FileName = "";
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
 
         private void Btn_unit_Click(object sender, RoutedEventArgs e)

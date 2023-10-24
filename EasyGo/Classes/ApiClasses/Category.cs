@@ -57,11 +57,11 @@ namespace EasyGo.Classes.ApiClasses
             }
             return categories;
         }
-        public async Task<string> Delete(long delUserId, long categoryId)
+        public async Task<string> Delete(long categoryId, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("delUserId", delUserId.ToString());
-            parameters.Add("unitId", categoryId.ToString());
+            parameters.Add("userId", userId.ToString());
+            parameters.Add("itemId", categoryId.ToString());
 
             string method = "Category/Delete";
             return await APIResult.post(method, parameters);
