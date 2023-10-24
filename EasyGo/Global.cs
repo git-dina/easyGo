@@ -8,8 +8,8 @@ namespace EasyGo
 {
     class Global
     {
-       // public static string APIUri = "http://localhost:4464/api/";
-        public static string APIUri = "http://192.168.1.101:4464/api/";
+        public static string APIUri = "http://localhost:4464/api/";
+        //public static string APIUri = "http://192.168.1.101:4464/api/";
 
 
         public const string TMPFolder = "Thumb";
