@@ -38,7 +38,7 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<byte> IsApproved { get; set; }
         public decimal ManualDiscountValue { get; set; }
         public string ManualDiscountType { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         public decimal ShippingCost { get; set; }
 
         //extra
@@ -55,7 +55,7 @@ namespace EasyGo.Classes.ApiClasses
         public string Notes { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<long> ItemUnitId { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<long> CreateUserId { get; set; }
