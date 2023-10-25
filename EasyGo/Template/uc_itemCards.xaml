@@ -33,7 +33,7 @@
             <Button  Width="175" Height="75" 
             BorderBrush="{x:Null}"  
                  BorderThickness="0"
-                 Tag="1" 
+                 Tag="{Binding ItemId}" 
                  Click="onButtonClick"
              Background="{x:Null}" 
             Padding="0"

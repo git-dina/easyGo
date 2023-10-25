@@ -24,6 +24,7 @@ namespace EasyGo.Template
         {
             InitializeComponent();
         }
+        public string ItemId { get; set; }
         public string ItemName { get; set; }
         public string ItemPrice { get; set; }
         public ImageSource ItemImage { get; set; }
