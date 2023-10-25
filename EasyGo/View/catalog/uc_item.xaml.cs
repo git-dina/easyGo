@@ -91,7 +91,7 @@ namespace EasyGo.View.catalog
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Details, AppSettings.resourcemanager.GetString("trDetailsHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Notes, AppSettings.resourcemanager.GetString("trNoteHint"));
 
-
+            txt_isExpired.Text = AppSettings.resourcemanager.GetString("trExpired");
 
             txt_unitButton.Text = AppSettings.resourcemanager.GetString("trUnits");
             txt_addButton.Text = AppSettings.resourcemanager.GetString("trAdd");
@@ -226,6 +226,7 @@ namespace EasyGo.View.catalog
                         if (cb_CategoryId.SelectedIndex > 0)
                             item.CategoryId = (int)cb_CategoryId.SelectedValue;
                         item.Type = cb_Type.SelectedValue.ToString();
+                        item.IsExpired = (bool)tgl_isExpired.IsChecked ? true : false;
                         item.Details = tb_Details.Text;
                         item.Notes = tb_Notes.Text;
                         item.CreateUserId = MainWindow.userLogin.UserId;
@@ -287,6 +288,7 @@ namespace EasyGo.View.catalog
                             if (cb_CategoryId.SelectedIndex > 0)
                                 item.CategoryId = (int)cb_CategoryId.SelectedValue;
                             item.Type = cb_Type.SelectedValue.ToString();
+                            item.IsExpired = (bool)tgl_isExpired.IsChecked ? true : false; 
                             item.Details = tb_Details.Text;
                             item.Notes = tb_Notes.Text;
                             item.UpdateUserId = MainWindow.userLogin.UserId;

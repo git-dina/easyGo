@@ -22,8 +22,8 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<bool> IsActive { get; set; } = true;
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public Nullable<int> CreateUserId { get; set; }
-        public Nullable<int> UpdateUserId { get; set; }
+        public Nullable<long> CreateUserId { get; set; }
+        public Nullable<long> UpdateUserId { get; set; }
         public Nullable<decimal> PurchasePrice { get; set; }
         public Nullable<decimal> PackCost { get; set; }
 
