@@ -124,11 +124,11 @@ namespace EasyGo.View.catalog
         {
             foreach (var item in list)
             {
-
             #region mco_itemCards
             uc_itemCards mco_itemCards = new uc_itemCards();
-            mco_itemCards.ItemName = "ItemName";
-            mco_itemCards.ItemPrice = "848.516";
+            mco_itemCards.ItemId = item.ItemId.ToString();
+            mco_itemCards.ItemName = item.Name.ToString();
+            mco_itemCards.ItemPrice = "";
             var uriSource = new Uri(@"/pic/no-image-icon-90x90.png", UriKind.Relative);
             mco_itemCards.ItemImage = new BitmapImage(uriSource);
             mco_itemCards.Color = Application.Current.Resources["MainColor"] as SolidColorBrush;
@@ -142,7 +142,11 @@ namespace EasyGo.View.catalog
             try
             {
                 HelpClass.StartAwait(grid_main);
-
+                var button = sender as Button;
+                if (button != null)
+                {
+                    MessageBox.Show($"My item id is: {button.Tag}");
+                }
                 this.DataContext = item;
                 getImg();
 

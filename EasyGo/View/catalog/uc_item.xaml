@@ -478,6 +478,24 @@ VerticalAlignment="Center" Width="15"  Height="15"
      Data="{StaticResource infoCircle}"/>
                                 </Grid>
                             </Border>
+                            <Grid Grid.Row="5"  Margin="10,5,10,5" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock   x:Name="txt_isExpired" Grid.Column="0"
+             Margin="5,0,5,0" Text="isExpired" Foreground="#6e6e6e"
+             HorizontalAlignment="Left" VerticalAlignment="Center"
+             FontSize="12"/>
+                                <ToggleButton   x:Name="tgl_isExpired" Grid.Column="1"
+                          IsChecked="{Binding isExpired, Mode=OneWay}"
+                Checked="Tgl_isExpired_Checked" 
+                Unchecked="Tgl_isExpired_Unchecked"
+                  VerticalAlignment="Center" Padding="10,15,5,5"  
+                Margin="0" Height="13" Width="28"   />
+                            </Grid>
 
                             <Border Grid.Row="9" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                 <Grid   >
