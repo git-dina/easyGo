@@ -145,10 +145,12 @@ namespace EasyGo.View.catalog
                 var button = sender as Button;
                 if (button != null)
                 {
-                    MessageBox.Show($"My item id is: {button.Tag}");
+                    var itemId = (long)button.Tag;
+                    item = FillCombo.itemsList.Where(x=> x.ItemId == itemId).FirstOrDefault();
+                    this.DataContext = item;
+                    getImg();
                 }
-                this.DataContext = item;
-                getImg();
+               
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -815,5 +817,6 @@ namespace EasyGo.View.catalog
         {
 
         }
+
     }
 }

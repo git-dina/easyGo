@@ -36,6 +36,9 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<long> CreateUserId { get; set; }
         public Nullable<long> UpdateUserId { get; set; }
+
+        //extra
+        public List<ItemUnit> ItemUnits { get; set; }
         #endregion
 
         #region Methods

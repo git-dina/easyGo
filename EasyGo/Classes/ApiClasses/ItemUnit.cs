@@ -19,12 +19,21 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<decimal> Price { get; set; }
         public Nullable<decimal> Cost { get; set; }
         public string Barcode { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; } = true;
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<int> CreateUserId { get; set; }
         public Nullable<int> UpdateUserId { get; set; }
-        public Nullable<decimal> purchasePrice { get; set; }
+        public Nullable<decimal> PurchasePrice { get; set; }
+        public Nullable<decimal> PackCost { get; set; }
+
+        //extra
+        public string ItemName { get; set; }
+        public string ItemCode { get; set; }
+        public string MainUnit { get; set; }
+        public string SmallUnit { get; set; }
+        public string ItemType { get; set; }
+        public Nullable<long> Quantity { get; set; }
         #endregion
     }
 }

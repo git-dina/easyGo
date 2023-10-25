@@ -491,8 +491,7 @@ VerticalAlignment="Center" Width="15"  Height="15"
              FontSize="12"/>
                                 <ToggleButton   x:Name="tgl_isExpired" Grid.Column="1"
                           IsChecked="{Binding isExpired, Mode=OneWay}"
-                Checked="Tgl_isExpired_Checked" 
-                Unchecked="Tgl_isExpired_Unchecked"
+
                   VerticalAlignment="Center" Padding="10,15,5,5"  
                 Margin="0" Height="13" Width="28"   />
                             </Grid>
