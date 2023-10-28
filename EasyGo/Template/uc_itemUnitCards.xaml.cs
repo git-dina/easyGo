@@ -17,15 +17,15 @@ using System.Windows.Shapes;
 namespace EasyGo.Template
 {
     /// <summary>
-    /// Interaction logic for uc_itemCards.xaml
+    /// Interaction logic for uc_itemUnitCards.xaml
     /// </summary>
-    public partial class uc_itemCards : UserControl
+    public partial class uc_itemUnitCards : UserControl
     {
-        public uc_itemCards()
+        public uc_itemUnitCards()
         {
             InitializeComponent();
         }
-        public Item item { get; set; }
+        public ItemUnit itemUnit { get; set; }
         public SolidColorBrush Color { get; set; }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
