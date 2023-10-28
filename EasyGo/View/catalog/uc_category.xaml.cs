@@ -325,12 +325,10 @@ namespace EasyGo.View.catalog
             {//refresh
 
                 HelpClass.StartAwait(grid_main);
-
                 tb_search.Text = "";
                 searchText = "";
                 await FillCombo.RefreshCategoriesList();
                 await Search();
-
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -370,7 +368,7 @@ namespace EasyGo.View.catalog
             }
             else
             {
-                buildTreeViewList(categorysQuery.Where(x => x.ParentId is null).ToList(), tv_categorys);
+                buildTreeViewList(categorysQuery.ToList(), tv_categorys);
             }
 
             txt_count.Text = categorysQuery.Count().ToString();
@@ -662,32 +660,33 @@ namespace EasyGo.View.catalog
 
         void buildTreeViewList(List<Category> _categories, TreeView treeViewItemParent)
         {
-            /*
+            
             foreach (var item in _categories)
             {
                 TreeViewItem treeViewItem = new TreeViewItem();
+                treeViewItem.DataContext = item;
                 treeViewItem.Tag = item.CategoryId.ToString();
                 treeViewItem.Header = item.Name;
                 treeViewItem.FontSize = 16;
-                treeViewItem.Foreground = Application.Current.Resources["textColor"] as SolidColorBrush; ;
+                treeViewItem.Foreground = Application.Current.Resources["textColor"] as SolidColorBrush; 
                 treeViewItem.Selected += TreeViewItem_Selected;
 
                 treeViewItemParent.Items.Add(treeViewItem);
-                if (categorysQuery.Where(x => x.CategoryParentId == item.CategoryId).ToList().Count() > 0)
+                if (categorysQuery.Where(x => x.ParentId == item.CategoryId).ToList().Count() > 0)
                 {
-                    buildTreeViewList(categorysQuery.Where(x => x.CategoryParentId == item.CategoryId).ToList(), treeViewItem);
+                    buildTreeViewList(categorysQuery.Where(x => x.ParentId == item.CategoryId).ToList(), treeViewItem);
                 }
 
 
             }
-            */
+            
         }
         void buildTreeViewList(List<Category> _categories, TreeViewItem treeViewItemParent)
         {
-            /*
             foreach (var item in _categories)
             {
                 TreeViewItem treeViewItem = new TreeViewItem();
+                treeViewItem.DataContext = item;
                 treeViewItem.Tag = item.CategoryId.ToString();
                 treeViewItem.Header = item.Name;
                 treeViewItem.FontSize = 16;
@@ -695,12 +694,11 @@ namespace EasyGo.View.catalog
                 treeViewItem.Selected += TreeViewItem_Selected;
 
                 treeViewItemParent.Items.Add(treeViewItem);
-                if (categorysQuery.Where(x => x.CategoryParentId == item.CategoryId).ToList().Count() > 0)
+                if (categorysQuery.Where(x => x.ParentId == item.CategoryId).ToList().Count() > 0)
                 {
-                    buildTreeViewList(categorysQuery.Where(x => x.CategoryParentId == item.CategoryId).ToList(), treeViewItem);
+                    buildTreeViewList(categorysQuery.Where(x => x.ParentId == item.CategoryId).ToList(), treeViewItem);
                 }
             }
-            */
         }
         private async void TreeViewItem_Selected(object sender, RoutedEventArgs e)
         {
@@ -708,13 +706,11 @@ namespace EasyGo.View.catalog
             TreeViewItem treeViewItem = sender as TreeViewItem;
             if (treeViewItem.IsSelected)
             {
-                /*
                 unExpandTreeViewItem();
                 setSelectedStyleTreeViewItem();
-                category = FillCombo.categoryList.Where(x => x.CategoryId == long.Parse(treeViewItem.Tag.ToString())).FirstOrDefault();
+                category = treeViewItem.DataContext as Category;
                 this.DataContext = category;
-                await FillCombo.fillCategorysWithDefault(cb_CategoryParentId, category.CategoryId);
-                */
+                //await FillCombo.fillCategorysWithDefault(cb_CategoryParentId, category.CategoryId);
             }
             treeViewItem.IsExpanded = true;
         }
