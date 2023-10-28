@@ -242,10 +242,15 @@
     <Compile Include="Classes\ReportCls.cs" />
     <Compile Include="Classes\ReportConfig.cs" />
     <Compile Include="Classes\ApiClasses\Supplier.cs" />
+    <Compile Include="converters\accuracyConverter.cs" />
+    <Compile Include="converters\castcateLongTextConverter.cs" />
     <Compile Include="converters\Class1.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="Template\uc_itemCards.xaml.cs">
       <DependentUpon>uc_itemCards.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Template\uc_itemUnitCards.xaml.cs">
+      <DependentUpon>uc_itemUnitCards.xaml</DependentUpon>
     </Compile>
     <Compile Include="Template\uc_mainCardsOnce.xaml.cs">
       <DependentUpon>uc_mainCardsOnce.xaml</DependentUpon>
@@ -277,6 +282,9 @@
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_itemUnit.xaml.cs">
+      <DependentUpon>wd_itemUnit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_previewPdf.xaml.cs">
       <DependentUpon>wd_previewPdf.xaml</DependentUpon>
     </Compile>
@@ -307,6 +315,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Template\uc_itemCards.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Template\uc_itemUnitCards.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -349,6 +361,10 @@
     <Page Include="View\windows\wd_acceptCancelPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\windows\wd_itemUnit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_previewPdf.xaml">
       <Generator>MSBuild:Compile</Generator>
