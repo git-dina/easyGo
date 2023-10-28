@@ -8,7 +8,8 @@
     <!--StartupUri="MainWindow.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
-            <!--<converters:netProfitColorConverter x:Key="netProfitColorConverter"/>-->
+            <converters:castcateLongTextConverter x:Key="castcateLongTextConverter"/>
+            <converters:accuracyConverter x:Key="accuracyConverter"/>
            
 
             <!--#region Fonts-->
