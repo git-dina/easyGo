@@ -122,15 +122,12 @@ namespace EasyGo.View.catalog
         #region ItemCards
         void buildItemCards(IEnumerable<Item> list)
         {
+            wp_itemsCard.Children.Clear();
             foreach (var item in list)
             {
             #region mco_itemCards
             uc_itemCards mco_itemCards = new uc_itemCards();
-            mco_itemCards.ItemId = item.ItemId.ToString();
-            mco_itemCards.ItemName = item.Name.ToString();
-            mco_itemCards.ItemPrice = "";
-            var uriSource = new Uri(@"/pic/no-image-icon-90x90.png", UriKind.Relative);
-            mco_itemCards.ItemImage = new BitmapImage(uriSource);
+            mco_itemCards.item = item;
             mco_itemCards.Color = Application.Current.Resources["MainColor"] as SolidColorBrush;
             mco_itemCards.Click += Btn_itemCards_Click;
             wp_itemsCard.Children.Add(mco_itemCards);
@@ -142,11 +139,10 @@ namespace EasyGo.View.catalog
             try
             {
                 HelpClass.StartAwait(grid_main);
-                var button = sender as Button;
-                if (button != null)
+                var itemCards = sender as uc_itemCards;
+                if (itemCards != null)
                 {
-                    var itemId = (long)button.Tag;
-                    item = FillCombo.itemsList.Where(x=> x.ItemId == itemId).FirstOrDefault();
+                    item  = itemCards.item;
                     this.DataContext = item;
                     getImg();
                 }
@@ -812,7 +808,29 @@ namespace EasyGo.View.catalog
 
         private void Btn_unit_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                //units
+                //if (FillCombo.groupObject.HasPermissionAction(unitsPermission, FillCombo.groupObjects, "one"))
+                //{
+                    Window.GetWindow(this).Opacity = 0.2;
+                    wd_itemUnit w = new wd_itemUnit();
+                    w.item = item;
+                    w.ShowDialog();
+                    Window.GetWindow(this).Opacity = 1;
+                //}
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
 
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
 
         private void btn_item_Click(object sender, RoutedEventArgs e)
