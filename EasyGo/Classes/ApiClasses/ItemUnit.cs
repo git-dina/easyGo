@@ -1,6 +1,10 @@
-﻿using System;
+﻿using EasyGo.ApiClasses;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,6 +38,45 @@ namespace EasyGo.Classes.ApiClasses
         public string SmallUnit { get; set; }
         public string ItemType { get; set; }
         public Nullable<long> Quantity { get; set; }
+        #endregion
+
+        #region Methods
+
+        public async Task<List<ItemUnit>> Get()
+        {
+            List<ItemUnit> itemUnits = new List<ItemUnit>();
+
+            IEnumerable<Claim> claims = await APIResult.getList("ItemUnit/Get");
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    itemUnits.Add(JsonConvert.DeserializeObject<ItemUnit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return itemUnits;
+        }
+
+        public async Task<string> Save(ItemUnit itemUnit)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "ItemUnit/Save";
+
+            var myContent = JsonConvert.SerializeObject(itemUnit);
+            parameters.Add("itemObject", myContent);
+            return await APIResult.post(method, parameters);
+        }
+
+        public async Task<string> Delete(long itemUnitId, long userId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("itemId", itemUnitId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            string method = "ItemUnit/Delete";
+            return await APIResult.post(method, parameters);
+        }
         #endregion
     }
 }

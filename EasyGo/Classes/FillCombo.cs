@@ -21,6 +21,17 @@ namespace EasyGo.Classes
             unitsList = await unit.Get();
             return unitsList;
         }
+
+        static public async Task FillUnits(ComboBox cmb)
+        {
+            #region Fill Active Units
+            if (unitsList is null)
+                await RefreshUnits();
+            cmb.ItemsSource = unitsList.ToList();
+            cmb.SelectedValuePath = "UnitId";
+            cmb.DisplayMemberPath = "Name";
+            #endregion
+        }
         #endregion
         #region Category
         static public Category category = new Category();
@@ -90,6 +101,20 @@ namespace EasyGo.Classes
             return itemsList;
         }
         #endregion
+
+        #region item units
+        static public ItemUnit itemUnit = new ItemUnit();
+        static public List<ItemUnit> itemUnitList;
+
+        static public async Task<List<ItemUnit>> RefreshItemUnit()
+        {
+            itemUnitList = await itemUnit.Get();
+            return itemUnitList;
+        }
+
+       
+        #endregion
+
         #region User
         static public User user = new User();
         static public List<User> usersList;
