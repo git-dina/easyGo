@@ -5161,4 +5161,10 @@ Please add Email in setting</value>
   <data name="trSupplier" xml:space="preserve">
     <value>Supplier</value>
   </data>
+  <data name="trPurchasePrice" xml:space="preserve">
+    <value>Purchase Price</value>
+  </data>
+  <data name="trPurchasePriceHint" xml:space="preserve">
+    <value>Purchase Price...</value>
+  </data>
 </root>

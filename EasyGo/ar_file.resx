@@ -5135,4 +5135,10 @@
   <data name="trSupplier" xml:space="preserve">
     <value>المورد</value>
   </data>
+  <data name="trPurchasePrice" xml:space="preserve">
+    <value>سعر الشراء</value>
+  </data>
+  <data name="trPurchasePriceHint" xml:space="preserve">
+    <value>سعر الشراء...</value>
+  </data>
 </root>

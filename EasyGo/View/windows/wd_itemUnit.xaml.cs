@@ -70,7 +70,9 @@ namespace EasyGo.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "UnitId", "UnitValue", "UubUnitId", "Barcode" };
+                requiredControlList = new List<string> { "UnitId", "UnitValue", "SubUnitId", "Barcode","Price","PurchasePrice" };
+
+                translate();
 
                 await FillCombo.FillUnits(cb_UnitId);
                 await RefreshItemUnitsList();
@@ -98,17 +100,19 @@ namespace EasyGo.View.windows
             ///////////////////////////Barcode
             dg_itemUnit.Columns[0].Header = AppSettings.resourcemanager.GetString("trUnit");
             dg_itemUnit.Columns[1].Header = AppSettings.resourcemanager.GetString("trCountUnit");
-            //dg_itemUnit.Columns[2].Header = AppSettings.resourcemanager.GetString("trPurchasePrice");
+            dg_itemUnit.Columns[2].Header = AppSettings.resourcemanager.GetString("trPurchasePrice");
+            dg_itemUnit.Columns[3].Header = AppSettings.resourcemanager.GetString("trPrice");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_UnitId, AppSettings.resourcemanager.GetString("trSelectUnitHint"));
             txt_IsDefaultPurchase.Text = AppSettings.resourcemanager.GetString("trIsDefaultPurchases");
             txt_IsDefaultSale.Text = AppSettings.resourcemanager.GetString("trIsDefaultSales");
 
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_UnitValue, AppSettings.resourcemanager.GetString("trCountHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_PurchasePrice, AppSettings.resourcemanager.GetString("trPurchasePrice"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_PurchasePrice, AppSettings.resourcemanager.GetString("trPurchasePriceHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_SubUnitId, AppSettings.resourcemanager.GetString("trUnitHint"));
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, AppSettings.resourcemanager.GetString("trPriceHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Price, AppSettings.resourcemanager.GetString("trPriceHint"));
             MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Notes, AppSettings.resourcemanager.GetString("trNoteHint"));
         }
 
         #region barcode
@@ -282,15 +286,7 @@ namespace EasyGo.View.windows
                                 //smallUnitId
                                 Nullable<int> smallUnitId = (int)cb_SubUnitId.SelectedValue;
 
-                                //PurchasePrice
-                                decimal PurchasePrice = 0;
-                                try
-                                {
-                                    PurchasePrice = decimal.Parse(tb_PurchasePrice.Text);
-                                }
-                                catch { }
-                                //barcode
-                                string barcode = tb_Barcode.Text;
+                               
                                 /////////////////////////////////////
                                 itemUnit.ItemUnitId = 0;
                                 itemUnit.ItemId = item.ItemId;
@@ -299,8 +295,10 @@ namespace EasyGo.View.windows
                                 itemUnit.SubUnitId = smallUnitId;
                                 itemUnit.IsDefaultPurchase = (bool)chb_IsDefaultPurchase.IsChecked ? true: false;
                                 itemUnit.IsDefaultSale = (bool)chb_IsDefaultSale.IsChecked ? true : false;
-                                itemUnit.PurchasePrice = PurchasePrice;
-                                itemUnit.Barcode = barcode;
+                                itemUnit.PurchasePrice = decimal.Parse(tb_PurchasePrice.Text);
+                                itemUnit.Price = decimal.Parse(tb_Price.Text);
+                                itemUnit.Barcode = tb_Barcode.Text;
+                                itemUnit.Notes = tb_Notes.Text;
                                 itemUnit.CreateUserId = MainWindow.userLogin.UserId;
                                 itemUnit.UpdateUserId = MainWindow.userLogin.UserId;
 
@@ -393,15 +391,6 @@ namespace EasyGo.View.windows
                                 //smallUnitId
                                 Nullable<int> smallUnitId = (int)cb_SubUnitId.SelectedValue;
 
-                                //PurchasePrice
-                                decimal PurchasePrice = 0;
-                                try
-                                {
-                                    PurchasePrice = decimal.Parse(tb_PurchasePrice.Text);
-                                }
-                                catch { }
-                                //barcode
-                                string barcode = tb_Barcode.Text;
                                 /////////////////////////////////////
                                 itemUnit.ItemId = item.ItemId;
                                 itemUnit.UnitId = unitId;
@@ -409,8 +398,10 @@ namespace EasyGo.View.windows
                                 itemUnit.SubUnitId = smallUnitId;
                                 itemUnit.IsDefaultPurchase = (bool)chb_IsDefaultPurchase.IsChecked ? true : false;
                                 itemUnit.IsDefaultSale = (bool)chb_IsDefaultSale.IsChecked ? true : false;
-                                itemUnit.PurchasePrice = PurchasePrice;
-                                itemUnit.Barcode = barcode;
+                                itemUnit.PurchasePrice = decimal.Parse(tb_PurchasePrice.Text);
+                                itemUnit.Price = decimal.Parse(tb_Price.Text);
+                                itemUnit.Barcode = tb_Barcode.Text;
+                                itemUnit.Notes = tb_Notes.Text;
                                 itemUnit.UpdateUserId = MainWindow.userLogin.UserId;
 
                                 var res = await itemUnit.Save(itemUnit);
@@ -848,14 +839,61 @@ namespace EasyGo.View.windows
 
         private void Cb_SubUnitId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            try
+            {
+                if (cb_UnitId.SelectedIndex != -1 && cb_SubUnitId.SelectedIndex != -1)
+                {
+                    if ((int)cb_UnitId.SelectedValue == (int)cb_SubUnitId.SelectedValue)
+                        tb_UnitValue.Text = "1";
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
 
-        private void Cb_UnitId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void Cb_UnitId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            try
+            {
+                if (cb_UnitId.SelectedValue != null)
+                {
+                    await fillSmallUnits(item.ItemId, (int)cb_UnitId.SelectedValue);
+                    cb_SubUnitId.SelectedValue = itemUnit.SubUnitId;
+                    if (itemUnit.ItemUnitId == 0)
+                        generateBarcode();
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        private async Task fillSmallUnits(long itemId, int unitId)
+        {
+            List<Unit> units = await FillCombo.unit.getSmallUnits(itemId, unitId);
+
+            if (itemUnits.Count().Equals(0)
+                || (itemUnit != null && itemUnit.ItemUnitId != 0 && itemUnit.UnitId.Equals(itemUnit.SubUnitId)))
+            {
+                cb_SubUnitId.ItemsSource = units.Where(x => x.UnitId == unitId).ToList();
+            }
+            else
+            {
+                if (itemUnit != null && itemUnit.ItemUnitId != 0)
+                    units.Remove(units.Where(x => x.UnitId == itemUnit.UnitId).FirstOrDefault());
+
+                cb_SubUnitId.ItemsSource = units.Where(x => x.Name != "package"
+                                                        && itemUnits.Select(s => s.UnitId).ToList().Contains(x.UnitId)).ToList();
+
+            }
+            cb_SubUnitId.SelectedValuePath = "UnitId";
+            cb_SubUnitId.DisplayMemberPath = "Name";
 
         }
-
 
         private void Tb_UnitValue_TextChanged(object sender, TextChangedEventArgs e)
         {
