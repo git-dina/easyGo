@@ -163,7 +163,8 @@
                                                 </Style>
                                             </DataGridTextColumn.ElementStyle>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="*"  Header="Count Unit" Binding="{Binding Path=countSmallUnit}">
+                                        <DataGridTextColumn Width="*"  Header="Count Unit" Binding="{Binding Path=countSmallUnit}"/>
+                                        <DataGridTextColumn Width="*"  Header="PurchasePrice"  Binding="{Binding Path =PurchasePrice,Converter={StaticResource accuracyConverter }}">
                                             <DataGridTextColumn.ElementStyle>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Style.Triggers>
@@ -174,8 +175,7 @@
                                                 </Style>
                                             </DataGridTextColumn.ElementStyle>
                                         </DataGridTextColumn>
-                                       
-                                        <DataGridTextColumn Width="*"  Header="cost"  Binding="{Binding Path =cost,Converter={StaticResource accuracyConverter }}">
+                                        <DataGridTextColumn Width="*"  Header="Price"  Binding="{Binding Path =Price,Converter={StaticResource accuracyConverter }}">
                                             <DataGridTextColumn.ElementStyle>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Style.Triggers>
@@ -331,43 +331,21 @@
 
                                     <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                         <Grid   >
-                                            <ComboBox x:Name="cb_unitId"    SelectedValue="{Binding unitId, Mode=OneWay}"
+                                            <ComboBox x:Name="cb_UnitId"    SelectedValue="{Binding UnitId, Mode=OneWay}"
                 Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                 materialDesign:HintAssist.Hint="Select Unit..."  
                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                   
                 Grid.Column="0" Height="40"  Margin="4,0"
                 BorderBrush="#737373" BorderThickness="0"
-                SelectionChanged="Cb_unitId_SelectionChanged"/>
-                                            <Path Fill="#E81123" x:Name="p_error_unitId" Stretch="Fill" Margin="5,5,15,5"
+                SelectionChanged="Cb_UnitId_SelectionChanged"/>
+                                            <Path Fill="#E81123" x:Name="p_error_UnitId" Stretch="Fill" Margin="5,5,15,5"
             HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
        VerticalAlignment="Center" Width="15"  Height="15" 
            Data="{StaticResource infoCircle}"/>
                                         </Grid>
                                     </Border>
-                                    <!--<Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>-->
-                                        <Border   Height="40" Margin="10,5,5,5">
-                                            <CheckBox Margin="5" x:Name="tbtn_isDefaultPurchases" IsChecked="{Binding defaultPurchase, Mode=OneWay}" >
-                                                <CheckBox.Content>
-                                                    <TextBlock  Foreground="#4E4E4E"   x:Name="txt_isDefaultPurchases" VerticalAlignment="Center" 
-                                  Text ="Is Default Purchases" />
-                                                </CheckBox.Content>
-                                            </CheckBox>
-                                        </Border>
-                                    <!--</Grid>-->
-                                    <Border   Grid.Column="1"  Height="40" Margin="10,5,10,5">
-                                        <CheckBox x:Name="tbtn_isDefaultSales" Margin="5"
-              IsChecked="{Binding defaultSale, Mode=OneWay}">
-                                            <CheckBox.Content>
-                                                <TextBlock  Foreground="#4E4E4E" Text ="Is Default Sales" Grid.Column="1"
-                        VerticalAlignment="Center" x:Name="tb_isDefaultSales"  />
-                                            </CheckBox.Content>
-                                        </CheckBox>
-                                    </Border>
+                                 
                                     <Grid Grid.Row="2" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -376,17 +354,17 @@
                                         <Border Grid.Row="8" CornerRadius="10" Margin="10,5,0,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
 
                                             <Grid>
-                                                <TextBox x:Name="tb_unitValue" Grid.Row="8"  Padding="10,0,5,0"  
-                       Text="{Binding unitValue, Mode=OneWay}"
+                                                <TextBox x:Name="tb_UnitValue" Grid.Row="8"  Padding="10,0,5,0"  
+                       Text="{Binding UnitValue, Mode=OneWay}"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                        materialDesign:HintAssist.Hint="Count..."    
          Foreground="#4E4E4E"    
                    BorderThickness="0"
                BorderBrush="AliceBlue" MaxLength="100"  Tag="int" PreviewTextInput="Number_PreviewTextInput"
   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
-Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" TextChanged="Tb_unitValue_TextChanged" />
+Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" TextChanged="Tb_UnitValue_TextChanged" />
 
-                                                <Path Fill="#E81123" x:Name="p_error_unitValue" Stretch="Fill" Margin="5,5,15,5"
+                                                <Path Fill="#E81123" x:Name="p_error_UnitValue" Stretch="Fill" Margin="5,5,15,5"
             HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
        VerticalAlignment="Center" Width="15"  Height="15" 
            Data="{StaticResource infoCircle}"/>
@@ -395,15 +373,15 @@ Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" TextChanged="
                                         </Border>
                                         <Border Grid.Row="8" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                             <Grid   >
-                                                <ComboBox x:Name="cb_subUnitId"  
+                                                <ComboBox x:Name="cb_SubUnitId"  
                 Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
                 materialDesign:HintAssist.Hint="unit..."  
                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                   
                 Grid.Column="0" Height="40"  Margin="4,0"
                 BorderBrush="#737373" BorderThickness="0"
-                SelectionChanged="Cb_subUnitId_SelectionChanged"/>
-                                                <Path Fill="#E81123" x:Name="p_error_subUnitId" Stretch="Fill" Margin="5,5,15,5"
+                SelectionChanged="Cb_SubUnitId_SelectionChanged"/>
+                                                <Path Fill="#E81123" x:Name="p_error_SubUnitId" Stretch="Fill" Margin="5,5,15,5"
             HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
        VerticalAlignment="Center" Width="15"  Height="15" 
            Data="{StaticResource infoCircle}"/>
@@ -411,19 +389,21 @@ Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" TextChanged="
                                             </Grid>
                                         </Border>
                                     </Grid>
+                                  
+
                                     <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                         <Grid>
-                                            <TextBox x:Name="tb_cost" Grid.Row="8"  Padding="10,0,5,0"  
-                       Text="{Binding cost, Mode=OneWay}"
+                                            <TextBox x:Name="tb_PurchasePrice" Grid.Row="8"  Padding="10,0,5,0"  
+                       Text="{Binding PurchasePrice, Mode=OneWay}"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                       materialDesign:HintAssist.Hint="cost..."    
+                       materialDesign:HintAssist.Hint="PurchasePrice..."    
          Foreground="#4E4E4E"    
                    BorderThickness="0" Tag="decimal"
                BorderBrush="AliceBlue" MaxLength="100" 
                PreviewTextInput="Number_PreviewTextInput"
   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
 Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
-                                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_taxes"
+                                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_PurchasePrice"
                 HorizontalAlignment="Right" Visibility="Collapsed"   
        VerticalAlignment="Center" Width="15"  Height="15"
            Data="{StaticResource infoCircle}">
@@ -433,25 +413,62 @@ Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
                                     </Border>
                                     <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                         <Grid>
-                                            <TextBox x:Name="tb_barcode" Grid.Row="8"  Padding="10,0,5,0"  
-                       Text="{Binding barcode, Mode=OneWay}"
+                                            <TextBox x:Name="tb_Price" Grid.Row="8"  Padding="10,0,5,0"  
+                       Text="{Binding Price, Mode=OneWay}"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                       materialDesign:HintAssist.Hint="barcode..."    
+                       materialDesign:HintAssist.Hint="Price..."    
+         Foreground="#4E4E4E"    
+                   BorderThickness="0" Tag="decimal"
+               BorderBrush="AliceBlue" MaxLength="100" 
+               PreviewTextInput="Number_PreviewTextInput"
+  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                                            <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_Price"
+                HorizontalAlignment="Right" Visibility="Collapsed"   
+       VerticalAlignment="Center" Width="15"  Height="15"
+           Data="{StaticResource infoCircle}">
+                                            </Path>
+                                        </Grid>
+
+                                    </Border>
+                                    <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                                        <Grid>
+                                            <TextBox x:Name="tb_Barcode" Grid.Row="8"  Padding="10,0,5,0"  
+                       Text="{Binding Barcode, Mode=OneWay}"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                       materialDesign:HintAssist.Hint="Barcode..."    
          Foreground="#4E4E4E"    
                    BorderThickness="0"
                BorderBrush="AliceBlue" MaxLength="100"  Tag="int" PreviewTextInput="Number_PreviewTextInput"
   materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
 Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown"
-                       KeyDown="Tb_barcode_KeyDown"/>
+                       KeyDown="Tb_Barcode_KeyDown"/>
 
-                                            <Path Fill="#E81123" x:Name="p_error_barcode" Stretch="Fill" Margin="5,5,15,5"
+                                            <Path Fill="#E81123" x:Name="p_error_Barcode" Stretch="Fill" Margin="5,5,15,5"
             HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
        VerticalAlignment="Center" Width="15"  Height="15" 
            Data="{StaticResource infoCircle}"/>
 
                                         </Grid>
                                     </Border>
-
+                                    <Border   Height="40" Margin="10,5,5,5">
+                                        <CheckBox Margin="5" x:Name="chb_IsDefaultPurchase" IsChecked="{Binding IsDefaultPurchase, Mode=OneWay}" >
+                                            <CheckBox.Content>
+                                                <TextBlock  Foreground="{StaticResource textColor}"   x:Name="txt_IsDefaultPurchase" VerticalAlignment="Center" 
+                                                Text ="IsDefaultPurchase" />
+                                            </CheckBox.Content>
+                                        </CheckBox>
+                                    </Border>
+                                    <Border   Grid.Column="1"  Height="40" Margin="10,5,10,5">
+                                        <CheckBox x:Name="chb_IsDefaultSale" Margin="5"
+IsChecked="{Binding defaultSale, Mode=OneWay}">
+                                            <CheckBox.Content>
+                                                <TextBlock  Foreground="{StaticResource textColor}"
+                                                            Text ="IsDefaultSale"
+                                     VerticalAlignment="Center" x:Name="txt_IsDefaultSale"  />
+                                            </CheckBox.Content>
+                                        </CheckBox>
+                                    </Border>
 
                                     <Border Grid.Row="10" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                                         <Grid   >

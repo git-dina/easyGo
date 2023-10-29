@@ -72,7 +72,7 @@ namespace EasyGo.View.windows
                 HelpClass.StartAwait(grid_main);
                 requiredControlList = new List<string> { "UnitId", "UnitValue", "UubUnitId", "Barcode" };
 
-                await FillCombo.FillUnits(cb_unitId);
+                await FillCombo.FillUnits(cb_UnitId);
                 await RefreshItemUnitsList();
                 await Search();
 
@@ -98,17 +98,17 @@ namespace EasyGo.View.windows
             ///////////////////////////Barcode
             dg_itemUnit.Columns[0].Header = AppSettings.resourcemanager.GetString("trUnit");
             dg_itemUnit.Columns[1].Header = AppSettings.resourcemanager.GetString("trCountUnit");
-            dg_itemUnit.Columns[2].Header = AppSettings.resourcemanager.GetString("trCost");
+            //dg_itemUnit.Columns[2].Header = AppSettings.resourcemanager.GetString("trPurchasePrice");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_unitId, AppSettings.resourcemanager.GetString("trSelectUnitHint"));
-            txt_isDefaultPurchases.Text = AppSettings.resourcemanager.GetString("trIsDefaultPurchases");
-            tb_isDefaultSales.Text = AppSettings.resourcemanager.GetString("trIsDefaultSales");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_UnitId, AppSettings.resourcemanager.GetString("trSelectUnitHint"));
+            txt_IsDefaultPurchase.Text = AppSettings.resourcemanager.GetString("trIsDefaultPurchases");
+            txt_IsDefaultSale.Text = AppSettings.resourcemanager.GetString("trIsDefaultSales");
 
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_unitValue, AppSettings.resourcemanager.GetString("trCountHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_cost, AppSettings.resourcemanager.GetString("trCost"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_subUnitId, AppSettings.resourcemanager.GetString("trUnitHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_UnitValue, AppSettings.resourcemanager.GetString("trCountHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_PurchasePrice, AppSettings.resourcemanager.GetString("trPurchasePrice"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_SubUnitId, AppSettings.resourcemanager.GetString("trUnitHint"));
             //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_price, AppSettings.resourcemanager.GetString("trPriceHint"));
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_Barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));
         }
 
         #region barcode
@@ -125,12 +125,12 @@ namespace EasyGo.View.windows
             }
             return true;
         }
-        private void Tb_barcode_KeyDown(object sender, KeyEventArgs e)
+        private void Tb_Barcode_KeyDown(object sender, KeyEventArgs e)
         {
             try
             {
                 TextBox tb = (TextBox)sender;
-                string barCode = tb_barcode.Text;
+                string barCode = tb_Barcode.Text;
                 if (e.Key == Key.Return && barCode.Length == 13)
                 {
                     if (isBarcodeCorrect(barCode) == false)
@@ -237,8 +237,8 @@ namespace EasyGo.View.windows
                 if (!CheckBarcodeValidity(barcodeString))
                     barcodeString = generateRandomBarcode();
             }
-            tb_barcode.Text = barcodeString;
-            HelpClass.validateEmpty("trErrorEmptyBarcodeToolTip", p_error_barcode);
+            tb_Barcode.Text = barcodeString;
+            HelpClass.validateEmpty("trErrorEmptyBarcodeToolTip", p_error_Barcode);
             //drawBarcode(barcodeString);
         }
 
@@ -253,20 +253,20 @@ namespace EasyGo.View.windows
                 itemUnit = new ItemUnit();
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    if (tb_barcode.Text.Length == 12 || tb_barcode.Text.Length == 13)
+                    if (tb_Barcode.Text.Length == 12 || tb_Barcode.Text.Length == 13)
                     {
                         bool valid = ValidateValues();
                         if (valid == true)
                         {
                             // check barcode value if assigned to any item
-                            if (!CheckBarcodeValidity(tb_barcode.Text))
+                            if (!CheckBarcodeValidity(tb_Barcode.Text))
                             {
                                 #region Tooltip_code
-                                p_error_barcode.Visibility = Visibility.Visible;
+                                p_error_Barcode.Visibility = Visibility.Visible;
                                 ToolTip toolTip_barcode = new ToolTip();
                                 toolTip_barcode.Content = AppSettings.resourcemanager.GetString("trErrorDuplicateBarcodeToolTip");
                                 toolTip_barcode.Style = Application.Current.Resources["ToolTipError"] as Style;
-                                p_error_barcode.ToolTip = toolTip_barcode;
+                                p_error_Barcode.ToolTip = toolTip_barcode;
                                 #endregion
                             }
                             else //barcode is available
@@ -274,32 +274,32 @@ namespace EasyGo.View.windows
 
                                 //unit
                                 Nullable<int> unitId = null;
-                                if (cb_unitId.SelectedIndex != -1)
-                                    unitId = (int)cb_unitId.SelectedValue;
+                                if (cb_UnitId.SelectedIndex != -1)
+                                    unitId = (int)cb_UnitId.SelectedValue;
 
                                 //count
-                                int unitValue = int.Parse(tb_unitValue.Text);
+                                int unitValue = int.Parse(tb_UnitValue.Text);
                                 //smallUnitId
-                                Nullable<int> smallUnitId = (int)cb_subUnitId.SelectedValue;
+                                Nullable<int> smallUnitId = (int)cb_SubUnitId.SelectedValue;
 
-                                //cost
-                                decimal cost = 0;
+                                //PurchasePrice
+                                decimal PurchasePrice = 0;
                                 try
                                 {
-                                    cost = decimal.Parse(tb_cost.Text);
+                                    PurchasePrice = decimal.Parse(tb_PurchasePrice.Text);
                                 }
                                 catch { }
                                 //barcode
-                                string barcode = tb_barcode.Text;
+                                string barcode = tb_Barcode.Text;
                                 /////////////////////////////////////
                                 itemUnit.ItemUnitId = 0;
                                 itemUnit.ItemId = item.ItemId;
                                 itemUnit.UnitId = unitId;
                                 itemUnit.UnitValue = unitValue;
                                 itemUnit.SubUnitId = smallUnitId;
-                                itemUnit.IsDefaultPurchase = (bool)tbtn_isDefaultPurchases.IsChecked ? true: false;
-                                itemUnit.IsDefaultSale = (bool)tbtn_isDefaultSales.IsChecked ? true : false;
-                                itemUnit.Cost = cost;
+                                itemUnit.IsDefaultPurchase = (bool)chb_IsDefaultPurchase.IsChecked ? true: false;
+                                itemUnit.IsDefaultSale = (bool)chb_IsDefaultSale.IsChecked ? true : false;
+                                itemUnit.PurchasePrice = PurchasePrice;
                                 itemUnit.Barcode = barcode;
                                 itemUnit.CreateUserId = MainWindow.userLogin.UserId;
                                 itemUnit.UpdateUserId = MainWindow.userLogin.UserId;
@@ -336,19 +336,19 @@ namespace EasyGo.View.windows
             bool valid = true;
             char[] barcodeData;
             char checkDigit;
-            if (tb_barcode.Text.Length == 12)// generate checksum didit
+            if (tb_Barcode.Text.Length == 12)// generate checksum didit
             {
-                barcodeData = tb_barcode.Text.ToCharArray();
+                barcodeData = tb_Barcode.Text.ToCharArray();
                 checkDigit = Mod10CheckDigit(barcodeData);
-                itemUnit.Barcode = checkDigit + tb_barcode.Text;
+                itemUnit.Barcode = checkDigit + tb_Barcode.Text;
                 this.DataContext = itemUnit;
             }
-            else if (tb_barcode.Text.Length == 13)
+            else if (tb_Barcode.Text.Length == 13)
             {
-                valid = isBarcodeCorrect(tb_barcode.Text);
+                valid = isBarcodeCorrect(tb_Barcode.Text);
                
             }
-            if (tb_unitValue.Text.Equals("0"))
+            if (tb_UnitValue.Text.Equals("0"))
             {
                 valid = false;
                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMustBeMoreThanZero"), animation: ToasterAnimation.FadeIn);
@@ -364,52 +364,52 @@ namespace EasyGo.View.windows
 
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    if (tb_barcode.Text.Length == 12 || tb_barcode.Text.Length == 13)
+                    if (tb_Barcode.Text.Length == 12 || tb_Barcode.Text.Length == 13)
                     {
                         bool valid = ValidateValues();
                         if (valid == true)
                         {
 
                             // check barcode value if assigned to any item
-                            if (!CheckBarcodeValidity(tb_barcode.Text) && itemUnit.Barcode != tb_barcode.Text)
+                            if (!CheckBarcodeValidity(tb_Barcode.Text) && itemUnit.Barcode != tb_Barcode.Text)
                             {
                                 #region Tooltip_code
-                                p_error_barcode.Visibility = Visibility.Visible;
+                                p_error_Barcode.Visibility = Visibility.Visible;
                                 ToolTip toolTip_barcode = new ToolTip();
                                 toolTip_barcode.Content = AppSettings.resourcemanager.GetString("trErrorDuplicateBarcodeToolTip");
                                 toolTip_barcode.Style = Application.Current.Resources["ToolTipError"] as Style;
-                                p_error_barcode.ToolTip = toolTip_barcode;
+                                p_error_Barcode.ToolTip = toolTip_barcode;
                                 #endregion
                             }
                             else //barcode is available
                             {
                                 //unit
                                 Nullable<int> unitId = null;
-                                if (cb_unitId.SelectedIndex != -1)
-                                    unitId = (int)cb_unitId.SelectedValue;
+                                if (cb_UnitId.SelectedIndex != -1)
+                                    unitId = (int)cb_UnitId.SelectedValue;
 
                                 //count
-                                int unitValue = int.Parse(tb_unitValue.Text);
+                                int unitValue = int.Parse(tb_UnitValue.Text);
                                 //smallUnitId
-                                Nullable<int> smallUnitId = (int)cb_subUnitId.SelectedValue;
+                                Nullable<int> smallUnitId = (int)cb_SubUnitId.SelectedValue;
 
-                                //cost
-                                decimal cost = 0;
+                                //PurchasePrice
+                                decimal PurchasePrice = 0;
                                 try
                                 {
-                                    cost = decimal.Parse(tb_cost.Text);
+                                    PurchasePrice = decimal.Parse(tb_PurchasePrice.Text);
                                 }
                                 catch { }
                                 //barcode
-                                string barcode = tb_barcode.Text;
+                                string barcode = tb_Barcode.Text;
                                 /////////////////////////////////////
                                 itemUnit.ItemId = item.ItemId;
                                 itemUnit.UnitId = unitId;
                                 itemUnit.UnitValue = unitValue;
                                 itemUnit.SubUnitId = smallUnitId;
-                                itemUnit.IsDefaultPurchase = (bool)tbtn_isDefaultPurchases.IsChecked ? true : false;
-                                itemUnit.IsDefaultSale = (bool)tbtn_isDefaultSales.IsChecked ? true : false;
-                                itemUnit.Cost = cost;
+                                itemUnit.IsDefaultPurchase = (bool)chb_IsDefaultPurchase.IsChecked ? true : false;
+                                itemUnit.IsDefaultSale = (bool)chb_IsDefaultSale.IsChecked ? true : false;
+                                itemUnit.PurchasePrice = PurchasePrice;
                                 itemUnit.Barcode = barcode;
                                 itemUnit.UpdateUserId = MainWindow.userLogin.UserId;
 
@@ -846,18 +846,18 @@ namespace EasyGo.View.windows
 
         #endregion
 
-        private void Cb_subUnitId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Cb_SubUnitId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void Cb_unitId_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Cb_UnitId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
 
-        private void Tb_unitValue_TextChanged(object sender, TextChangedEventArgs e)
+        private void Tb_UnitValue_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
