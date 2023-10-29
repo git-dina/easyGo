@@ -60,17 +60,20 @@ namespace EasyGo.Template
             else
                imageBuffer =HelpClass.readLocalImage(item.Image, Global.TMPItemFolder);
 
-            var bitmapImage = new BitmapImage();
-            using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+            if (imageBuffer != null)
             {
-                bitmapImage.BeginInit();
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.StreamSource = memoryStream;
-                bitmapImage.EndInit();
-            }
-            
+                var bitmapImage = new BitmapImage();
+                using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
+                {
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapImage.StreamSource = memoryStream;
+                    bitmapImage.EndInit();
+                }
 
-            img_image.Source = bitmapImage;
+
+                img_image.Source = bitmapImage;
+            }
             //else
             //    HelpClass.getLocalImg("Item", item.Image, img_image);
         }

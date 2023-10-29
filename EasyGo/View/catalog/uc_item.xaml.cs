@@ -299,15 +299,15 @@ namespace EasyGo.View.catalog
                             else
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await Search();
-                                FillCombo.itemsList = items.ToList();
+                                
                                 long itemId = long.Parse(res);
                                 if (openFileDialog.FileName != "")
                                 {
                                     string b = await item.UploadImage(imgFileName, Md5Encription.MD5Hash("Inc-m" + itemId.ToString()), itemId);
                                    
                                 }
-
+                                await RefreshItemsList();
+                                await Search();
                             }
                         }
                     }
