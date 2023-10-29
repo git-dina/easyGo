@@ -55,6 +55,7 @@ namespace EasyGo.Classes.ApiClasses
         public string Notes { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<long> ItemUnitId { get; set; }
+        public string UnitName { get; set; }
         public bool IsActive { get; set; } = true;
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
