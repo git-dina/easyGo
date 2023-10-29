@@ -143,6 +143,35 @@ namespace EasyGo.Classes.ApiClasses
             return await APIResult.post(method, parameters);
         }
 
+        public async Task<byte[]> DownloadImage(string imageName)
+        {
+            byte[] byteImg = null;
+            if (imageName != "")
+            {
+                byteImg = await APIResult.getImage("Item/GetImage", imageName);
+
+                string dir = Directory.GetCurrentDirectory();
+                string tmpPath = Path.Combine(dir, Global.TMPItemFolder);
+                if (!Directory.Exists(tmpPath))
+                    Directory.CreateDirectory(tmpPath);
+                tmpPath = Path.Combine(tmpPath, imageName);
+                if (System.IO.File.Exists(tmpPath))
+                {
+                    System.IO.File.Delete(tmpPath);
+                }
+                if (byteImg != null)
+                {
+                    using (FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.ReadWrite))
+                    {
+                        fs.Write(byteImg, 0, byteImg.Length);
+                    }
+                }
+
+            }
+
+            return byteImg;
+
+        }
         public async Task<string> Delete(long itemId, long userId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();

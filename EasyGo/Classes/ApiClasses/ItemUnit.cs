@@ -23,6 +23,7 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<decimal> Price { get; set; }
         public Nullable<decimal> Cost { get; set; }
         public string Barcode { get; set; }
+        public string Notes { get; set; }
         public Nullable<bool> IsActive { get; set; } = true;
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }

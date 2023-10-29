@@ -219,7 +219,7 @@ namespace EasyGo.View.catalog
 
                         item.Code = tb_Code.Text;
                         item.Name = tb_Name.Text;
-                        if (cb_CategoryId.SelectedIndex > 0)
+                        if (cb_CategoryId.SelectedIndex > -1)
                             item.CategoryId = (int)cb_CategoryId.SelectedValue;
                         item.Type = cb_Type.SelectedValue.ToString();
                         item.IsExpired = (bool)tgl_isExpired.IsChecked ? true : false;
@@ -281,7 +281,7 @@ namespace EasyGo.View.catalog
                         {
                             item.Code = tb_Code.Text;
                             item.Name = tb_Name.Text;
-                            if (cb_CategoryId.SelectedIndex > 0)
+                            if (cb_CategoryId.SelectedIndex > -1)
                                 item.CategoryId = (int)cb_CategoryId.SelectedValue;
                             item.Type = cb_Type.SelectedValue.ToString();
                             item.IsExpired = (bool)tgl_isExpired.IsChecked ? true : false; 
