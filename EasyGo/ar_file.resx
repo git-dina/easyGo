@@ -502,7 +502,7 @@
     <value>العدد...</value>
   </data>
   <data name="trCountUnit" xml:space="preserve">
-    <value>عدد الوحدة</value>
+    <value>عدد الوحدات</value>
   </data>
   <data name="trIsDefaultPurchases" xml:space="preserve">
     <value>الوحدة الافتراضية للشراء </value>

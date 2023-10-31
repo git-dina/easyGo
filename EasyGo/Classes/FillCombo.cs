@@ -24,13 +24,26 @@ namespace EasyGo.Classes
 
         static public async Task FillUnits(ComboBox cmb)
         {
-            #region Fill Active Units
             if (unitsList is null)
                 await RefreshUnits();
             cmb.ItemsSource = unitsList.ToList();
             cmb.SelectedValuePath = "UnitId";
             cmb.DisplayMemberPath = "Name";
-            #endregion
+        }
+        static public async Task FillUnitsWithDefault(ComboBox cmb)
+        {
+            if (unitsList is null)
+                await RefreshUnits();
+
+            var lst = unitsList.ToList();
+            var cat = new Unit();
+            cat.UnitId = 0;
+            cat.Name = "-";
+            lst.Insert(0, cat);
+
+            cmb.ItemsSource = lst;
+            cmb.SelectedValuePath = "UnitId";
+            cmb.DisplayMemberPath = "Name";
         }
         #endregion
         #region Category

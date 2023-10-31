@@ -553,8 +553,9 @@ VerticalAlignment="Center" Width="15"  Height="15"
                     BorderThickness="1" Opacity="1" Margin="5,5,5,5"  />
                         <Border Grid.Row="1" Grid.ColumnSpan="3">
                             <Button x:Name="btn_unit"  materialDesign:ButtonAssist.CornerRadius="7"
-        Background="{StaticResource MainColor}" BorderBrush="{x:Null}"
-        Margin="1,1,1,5" Click="Btn_unit_Click" Foreground="White" >
+                                    IsEnabled="false"
+                                    Background="{StaticResource MainColor}" BorderBrush="{x:Null}"
+                                    Margin="1,1,1,5" Click="Btn_unit_Click" Foreground="White" >
                                 <TextBlock Name="txt_unitButton" Text="unit" Foreground="White" VerticalAlignment="Center"/>
                             </Button>
                             <Border.ToolTip>

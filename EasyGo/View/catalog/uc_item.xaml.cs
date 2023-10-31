@@ -144,6 +144,7 @@ namespace EasyGo.View.catalog
                 {
                     item  = itemCards.item;
                     this.DataContext = item;
+                    btn_unit.IsEnabled = true;
                     getImg();
                 }
                
@@ -487,7 +488,7 @@ namespace EasyGo.View.catalog
         {
             item = new Item();
             this.DataContext = item;
-            //dg_item.SelectedIndex = -1;
+            btn_unit.IsEnabled = false;
 
             #region image
             HelpClass.clearImg(btn_image);

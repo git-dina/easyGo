@@ -91,9 +91,7 @@ namespace EasyGo.View.catalog
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
             dg_unit.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_unit.Columns[1].Header = AppSettings.resourcemanager.GetString("trMobile");
-            dg_unit.Columns[2].Header = AppSettings.resourcemanager.GetString("trAddress");
-            dg_unit.Columns[3].Header = AppSettings.resourcemanager.GetString("trNotes");
+            dg_unit.Columns[1].Header = AppSettings.resourcemanager.GetString("trNotes");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
 

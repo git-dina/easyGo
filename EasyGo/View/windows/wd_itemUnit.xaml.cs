@@ -70,11 +70,11 @@ namespace EasyGo.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "UnitId", "UnitValue", "SubUnitId", "Barcode","Price","PurchasePrice" };
+                requiredControlList = new List<string> { "UnitId", "UnitValue", "SubUnitId", "Barcode","Price","PurchasePrice" ,"Cost"};
 
                 translate();
 
-                await FillCombo.FillUnits(cb_UnitId);
+                await FillCombo.FillUnitsWithDefault(cb_UnitId);
                 await RefreshItemUnitsList();
                 await Search();
 
@@ -512,6 +512,7 @@ namespace EasyGo.View.windows
                 if (dg_itemUnit.SelectedIndex != -1)
                 {
                     itemUnit = dg_itemUnit.SelectedItem as ItemUnit;
+                    this.DataContext = itemUnit;
                 }
                 HelpClass.clearValidate(requiredControlList, this);
                 HelpClass.EndAwait(grid_main);
@@ -551,15 +552,26 @@ namespace EasyGo.View.windows
         }
         async Task<IEnumerable<ItemUnit>> RefreshItemUnitsList()
         {
-             await FillCombo.RefreshItemUnit();
+            if (FillCombo.itemUnitList is null)
+                itemUnits = await FillCombo.RefreshItemUnit();
+            var itemUnitLst = await FillCombo.itemUnit.GetItemUnit(item.ItemId);
+            //await FillCombo.RefreshItemUnit();
+            //itemUnits = FillCombo.itemUnitList;
+            //itemUnits = itemUnits.Where(x => x.ItemId == item.ItemId);
+            var lstToReplace = FillCombo.itemUnitList.Where(x => x.ItemId == item.ItemId).ToList();
+            foreach(var itemUnit in lstToReplace)
+            {
+                FillCombo.itemUnitList.Remove(itemUnit);
+            }
+            FillCombo.itemUnitList.AddRange(itemUnitLst) ;
             itemUnits = FillCombo.itemUnitList;
-            itemUnits = itemUnits.Where(x => x.ItemId == item.ItemId);
             return itemUnits;
         }
         void RefreshItemUnitsView()
         {
             itemUnitsQuery = itemUnits;
             dg_itemUnit.ItemsSource = itemUnitsQuery;
+            dg_itemUnit.Items.Refresh();
         }
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
@@ -567,6 +579,9 @@ namespace EasyGo.View.windows
         {
             itemUnit = new ItemUnit();
             this.DataContext = itemUnit;
+            dg_itemUnit.SelectedIndex = -1;
+           // tb_UnitValue.Text = "";
+            cb_SubUnitId.SelectedIndex = -1;
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -844,7 +859,8 @@ namespace EasyGo.View.windows
                 if (cb_UnitId.SelectedIndex != -1 && cb_SubUnitId.SelectedIndex != -1)
                 {
                     if ((int)cb_UnitId.SelectedValue == (int)cb_SubUnitId.SelectedValue)
-                        tb_UnitValue.Text = "1";
+                        itemUnit.UnitValue = 1;
+                        //tb_UnitValue.Text = "1";
                 }
             }
             catch (Exception ex)
@@ -897,7 +913,17 @@ namespace EasyGo.View.windows
 
         private void Tb_UnitValue_TextChanged(object sender, TextChangedEventArgs e)
         {
+            try
+            {
+                if (cb_UnitId.SelectedIndex != -1 && cb_SubUnitId.SelectedIndex != -1 && (int)cb_UnitId.SelectedValue == (int)cb_SubUnitId.SelectedValue)
+                {
+                    itemUnit.UnitValue = 1;
+                }
+            }
+            catch
+            {
 
+            }
         }
     }
 }

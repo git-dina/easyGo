@@ -18,8 +18,8 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<int> UnitId { get; set; }
         public Nullable<int> SubUnitId { get; set; }
         public Nullable<int> UnitValue { get; set; }
-        public Nullable<bool> IsDefaultSale { get; set; }
-        public Nullable<bool> IsDefaultPurchase { get; set; }
+        public Nullable<bool> IsDefaultSale { get; set; } = false;
+        public Nullable<bool> IsDefaultPurchase { get; set; } = false;
         public Nullable<decimal> Price { get; set; }
         public Nullable<decimal> Cost { get; set; }
         public string Barcode { get; set; }
@@ -31,11 +31,12 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<long> UpdateUserId { get; set; }
         public Nullable<decimal> PurchasePrice { get; set; }
         public Nullable<decimal> PackCost { get; set; }
+        public int UnitCount { get; set; }
 
         //extra
         public string ItemName { get; set; }
         public string ItemCode { get; set; }
-        public string MainUnit { get; set; }
+        public string UnitName { get; set; }
         public string SmallUnit { get; set; }
         public string ItemType { get; set; }
         public Nullable<long> Quantity { get; set; }
@@ -58,6 +59,23 @@ namespace EasyGo.Classes.ApiClasses
             }
             return itemUnits;
         }
+         public async Task<List<ItemUnit>> GetItemUnit(long itemId)
+        {
+            List<ItemUnit> itemUnits = new List<ItemUnit>();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("itemId", itemId.ToString());
+            IEnumerable<Claim> claims = await APIResult.getList("ItemUnit/GetItemUnit",parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    itemUnits.Add(JsonConvert.DeserializeObject<ItemUnit>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return itemUnits;
+        }
 
         public async Task<string> Save(ItemUnit itemUnit)
         {
@@ -65,7 +83,7 @@ namespace EasyGo.Classes.ApiClasses
             string method = "ItemUnit/Save";
 
             var myContent = JsonConvert.SerializeObject(itemUnit);
-            parameters.Add("itemObject", myContent);
+            parameters.Add("Object", myContent);
             return await APIResult.post(method, parameters);
         }
 

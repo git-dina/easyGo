@@ -517,7 +517,7 @@
     <value>Count...</value>
   </data>
   <data name="trCountUnit" xml:space="preserve">
-    <value>Count Unit</value>
+    <value>Unit Count</value>
   </data>
   <data name="trIsDefaultSales" xml:space="preserve">
     <value>Is Default sales</value>
