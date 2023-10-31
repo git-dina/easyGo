@@ -171,6 +171,29 @@ namespace EasyGo.Classes.ApiClasses
             string method = "Category/UpdateImage";
             return await APIResult.post(method, parameters);
         }
+
+        public async Task<List<Category>> GetCategoryPath(int categoryId)
+        {
+            if (FillCombo.categoriesList is null)
+                await FillCombo.RefreshCategoriesList();
+
+            List<Category> treecat = new List<Category>();
+            var category = FillCombo.categoriesList.Where(c => c.CategoryId == categoryId).FirstOrDefault();
+            treecat.Add(category);
+
+            while (category.ParentId != null)
+            {
+                category = getParentCategory((int)category.ParentId);
+                treecat.Add(category);
+            }
+            return treecat;
+        }
+
+        private Category getParentCategory(int categoryId)
+        {
+            var category = FillCombo.categoriesList.Where(c => c.CategoryId == categoryId).FirstOrDefault();
+            return category;
+        }
         #endregion
     }
 }

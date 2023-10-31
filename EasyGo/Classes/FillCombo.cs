@@ -49,10 +49,13 @@ namespace EasyGo.Classes
         #region Category
         static public Category category = new Category();
         static public List<Category> categoriesList;
+        static public List<Category> categoriesFirstLevelList;
 
         static public async Task<IEnumerable<Category>> RefreshCategoriesList()
         {
             categoriesList = await category.Get();
+            if (categoriesList != null)
+                categoriesFirstLevelList = categoriesList.Where(x => x.ParentId == null).ToList();
             return categoriesList;
         }
         static public async Task FillCategories(ComboBox cb)
@@ -79,6 +82,8 @@ namespace EasyGo.Classes
             cb.SelectedValuePath = "CategoryId";
             cb.DisplayMemberPath = "Name";
         }
+
+      
         #endregion
 
         #region Item Types

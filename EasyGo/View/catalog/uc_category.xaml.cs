@@ -189,6 +189,7 @@ namespace EasyGo.View.catalog
                            else
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
+                                await FillCombo.RefreshCategoriesList(); 
                                 await Search();
                                 FillCombo.categoriesList = categorys.ToList();
 

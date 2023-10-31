@@ -548,6 +548,8 @@ namespace EasyGo.View.windows
             //search
             if (itemUnits is null)
                 await RefreshItemUnitsList();
+
+            itemUnitsQuery = itemUnits.Where(s => s.UnitName.ToLower().Contains(tb_search.Text));
             RefreshItemUnitsView();
         }
         async Task<IEnumerable<ItemUnit>> RefreshItemUnitsList()
@@ -570,7 +572,6 @@ namespace EasyGo.View.windows
         }
         void RefreshItemUnitsView()
         {
-            itemUnitsQuery = itemUnits;
             dg_itemUnit.ItemsSource = itemUnitsQuery;
             dg_itemUnit.Items.Refresh();
         }
