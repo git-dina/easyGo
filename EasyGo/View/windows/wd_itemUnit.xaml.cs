@@ -555,6 +555,7 @@ namespace EasyGo.View.windows
             if (FillCombo.itemUnitList is null)
                 itemUnits = await FillCombo.RefreshItemUnit();
             var itemUnitLst = await FillCombo.itemUnit.GetItemUnit(item.ItemId);
+            item.ItemUnits = itemUnitLst; //refresh item units
             //await FillCombo.RefreshItemUnit();
             //itemUnits = FillCombo.itemUnitList;
             //itemUnits = itemUnits.Where(x => x.ItemId == item.ItemId);
