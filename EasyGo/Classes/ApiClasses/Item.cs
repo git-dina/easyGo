@@ -181,6 +181,15 @@ namespace EasyGo.Classes.ApiClasses
             string method = "Item/Delete";
             return await APIResult.post(method, parameters);
         }
+
+        public async Task<List<Item>> GetCategoryItems(int categoryId)
+        {
+            if (FillCombo.itemsList is null)
+                await FillCombo.RefreshItems();
+
+            var items = FillCombo.itemsList.Where(x => x.CategoryId == categoryId).ToList();
+            return items;
+        }
         #endregion
     }
 }
