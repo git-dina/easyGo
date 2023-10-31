@@ -73,7 +73,57 @@ namespace EasyGo.View.purchase
 
         private void translate()
         {
-            
+            txt_invoiceTitle.Text = AppSettings.resourcemanager.GetString("trInvoice"); 
+
+            dg_invoiceDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNo.");
+            dg_invoiceDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");
+            dg_invoiceDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
+            dg_invoiceDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trAmount");
+            dg_invoiceDetails.Columns[5].Header = AppSettings.resourcemanager.GetString("trPrice");
+            dg_invoiceDetails.Columns[6].Header = AppSettings.resourcemanager.GetString("trTotal");
+
+            txt_supplier.Text = AppSettings.resourcemanager.GetString("trSupplier");
+            txt_discount.Text = AppSettings.resourcemanager.GetString("trDiscount");
+            txt_tax.Text = AppSettings.resourcemanager.GetString("trTax");
+
+            txt_Count.Text = AppSettings.resourcemanager.GetString("trCount");
+            txt_SupTotalTitle.Text = AppSettings.resourcemanager.GetString("trSum");
+            txt_taxValueTitle.Text = AppSettings.resourcemanager.GetString("trTaxPercentage");
+            txt_total.Text = AppSettings.resourcemanager.GetString("trTotal");
+
+            //txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseBill");
+            //txt_store.Text = AppSettings.resourcemanager.GetString("trStore/Branch");
+            //txt_vendor.Text = AppSettings.resourcemanager.GetString("trVendor");
+            //txt_vendorIvoiceDetails.Text = AppSettings.resourcemanager.GetString("trVendorDetails");
+
+            //txt_printInvoice.Text = AppSettings.resourcemanager.GetString("trPrint");
+            //txt_preview.Text = AppSettings.resourcemanager.GetString("trPreview");
+            //txt_invoiceImages.Text = AppSettings.resourcemanager.GetString("trImages");
+            //txt_items.Text = AppSettings.resourcemanager.GetString("trItems");
+            //txt_drafts.Text = AppSettings.resourcemanager.GetString("trDrafts");
+            //txt_newDraft.Text = AppSettings.resourcemanager.GetString("trNew");
+            //txt_payments.Text = AppSettings.resourcemanager.GetString("trPayments");
+            //txt_returnInvoice.Text = AppSettings.resourcemanager.GetString("trReturn");
+            //txt_invoices.Text = AppSettings.resourcemanager.GetString("trInvoices");
+            //txt_purchaseOrder.Text = AppSettings.resourcemanager.GetString("trOrders");
+            //txt_totalDescount.Text = AppSettings.resourcemanager.GetString("trDiscount");
+            //txt_shippingCost.Text = AppSettings.resourcemanager.GetString("shippingAmount");
+
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_barcode, AppSettings.resourcemanager.GetString("trBarcodeHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discount, AppSettings.resourcemanager.GetString("trDiscountHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_typeDiscount, AppSettings.resourcemanager.GetString("trDiscountTypeHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_branch, AppSettings.resourcemanager.GetString("trStore/BranchHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_vendor, AppSettings.resourcemanager.GetString("trVendorHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_desrvedDate, AppSettings.resourcemanager.GetString("trDeservedDateHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_invoiceNumber, AppSettings.resourcemanager.GetString("trInvoiceNumberHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(dp_invoiceDate, AppSettings.resourcemanager.GetString("trInvoiceDateHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_notes, AppSettings.resourcemanager.GetString("trNoteHint"));
+            //MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_shippingCost, AppSettings.resourcemanager.GetString("shippingAmount"));
+
+            //tt_error_previous.Content = AppSettings.resourcemanager.GetString("trPrevious");
+            //tt_error_next.Content = AppSettings.resourcemanager.GetString("trNext");
+
+            btn_save.Content = AppSettings.resourcemanager.GetString("trBuy");
         }
       
        

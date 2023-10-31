@@ -851,7 +851,7 @@ l0.3,260.4L348.9,261.7z"  />
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn IsReadOnly="True" Header="Num"  Binding="{Binding Path=ID}"/>
                                 <DataGridTextColumn IsReadOnly="True"  Width="*"   Header="Item" Binding="{Binding Path=Product}"/>
-                                <DataGridTemplateColumn Width="20" Header="" IsReadOnly="True" >
+                                <DataGridTemplateColumn Width="20" Header="UnitName" IsReadOnly="True" >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Margin="0"   Click="unitRowFromInvoiceItems"
