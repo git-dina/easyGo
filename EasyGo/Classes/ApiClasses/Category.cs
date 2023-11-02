@@ -194,6 +194,27 @@ namespace EasyGo.Classes.ApiClasses
             var category = FillCombo.categoriesList.Where(c => c.CategoryId == categoryId).FirstOrDefault();
             return category;
         }
+
+        public async Task<List<Category>> GetCategoryChilds(int categoryId)
+        {
+            if (FillCombo.categoriesList is null)
+                await FillCombo.RefreshCategoriesList();
+
+            List<Category> treecat = new List<Category>();
+            var category = FillCombo.categoriesList.Where(c => c.ParentId == categoryId).FirstOrDefault();
+            while (category != null)
+            {
+                category = getChildCategory((int)category.CategoryId);
+                treecat.Add(category);
+            }
+            return treecat;
+        }
+
+        private Category getChildCategory(int categoryId)
+        {
+            var category = FillCombo.categoriesList.Where(c => c.ParentId == categoryId).FirstOrDefault();
+            return category;
+        }
         #endregion
     }
 }
