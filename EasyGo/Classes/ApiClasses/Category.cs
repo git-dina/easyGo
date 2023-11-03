@@ -202,18 +202,17 @@ namespace EasyGo.Classes.ApiClasses
 
             List<Category> treeCat = new List<Category>();
             var category = FillCombo.categoriesList.Where(c => c.CategoryId == categoryId).FirstOrDefault();
-            while (category != null)
-            {
-                category = getChildCategory((int)category.CategoryId);
-                if(category != null)
-                    treeCat.Add(category);
-            }
+
+            var categories = getChildCategory((int)category.CategoryId);
+            if(categories != null)
+                treeCat.AddRange(categories);
+
             return treeCat;
         }
 
-        private Category getChildCategory(int categoryId)
+        private List<Category> getChildCategory(int categoryId)
         {
-            var category = FillCombo.categoriesList.Where(c => c.ParentId == categoryId).FirstOrDefault();
+            var category = FillCombo.categoriesList.Where(c => c.ParentId == categoryId).ToList();
             return category;
         }
         #endregion

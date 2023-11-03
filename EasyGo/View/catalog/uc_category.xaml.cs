@@ -60,9 +60,9 @@ namespace EasyGo.View.catalog
 
                 Keyboard.Focus(tb_Name);
                 await Search();
-                await FillCombo.FillCategoriesWithDefault(cb_ParentId);
+               // await FillCombo.FillCategoriesWithDefault(cb_ParentId);
 
-                Clear();
+               await Clear();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -122,7 +122,7 @@ namespace EasyGo.View.catalog
 
                         category.Name = tb_Name.Text;
                         category.Code = tb_Code.Text;
-                        if(cb_ParentId.SelectedValue != null)
+                        if(cb_ParentId.SelectedIndex > 0)
                             category.ParentId = (int) cb_ParentId.SelectedValue;
                         category.Details = tb_Details.Text;
                         category.Notes = tb_Notes.Text;
@@ -140,9 +140,10 @@ namespace EasyGo.View.catalog
 
 
 
-                            Clear();
                             await FillCombo.RefreshCategoriesList();
                             await Search();
+                            Clear();
+
                             FillCombo.categoriesList = categorys.ToList();
                         }
 
@@ -174,7 +175,7 @@ namespace EasyGo.View.catalog
                         {
                             category.Name = tb_Name.Text;
                             category.Code = tb_Code.Text;
-                            if (cb_ParentId.SelectedValue != null)
+                            if (cb_ParentId.SelectedIndex > 0)
                                 category.ParentId = (int)cb_ParentId.SelectedValue; ;
                             category.Details = tb_Details.Text;
                             category.Notes = tb_Notes.Text;
@@ -189,7 +190,7 @@ namespace EasyGo.View.catalog
                            else
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
-                                await FillCombo.RefreshCategoriesList(); 
+                                await FillCombo.RefreshCategoriesList();
                                 await Search();
                                 FillCombo.categoriesList = categorys.ToList();
 
@@ -242,7 +243,7 @@ namespace EasyGo.View.catalog
                                 await FillCombo.RefreshCategoriesList();
                                 await Search();
                                 Clear();
-                                FillCombo.categoriesList = categorys.ToList();
+                              //  FillCombo.categoriesList = categorys.ToList();
                             }
                         }
 
@@ -376,10 +377,11 @@ namespace EasyGo.View.catalog
         }
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
-        void Clear()
+        async Task Clear()
         {
             category = new Category();
             this.DataContext = category;
+            await FillCombo.FillCategoriesWithDefault(cb_ParentId);
             /*
             dg_category.SelectedIndex = -1;
             */
@@ -711,6 +713,8 @@ namespace EasyGo.View.catalog
                 setSelectedStyleTreeViewItem();
                 category = treeViewItem.DataContext as Category;
                 this.DataContext = category;
+
+                await FillCombo.FillCategoriesWithDefault(cb_ParentId, category.CategoryId);
                 //await FillCombo.fillCategorysWithDefault(cb_CategoryParentId, category.CategoryId);
             }
             treeViewItem.IsExpanded = true;

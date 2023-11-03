@@ -67,12 +67,17 @@ namespace EasyGo.Classes
             cb.SelectedValuePath = "CategoryId";
             cb.DisplayMemberPath = "Name";
         }
-        static public async Task FillCategoriesWithDefault(ComboBox cb)
+        static public async Task FillCategoriesWithDefault(ComboBox cb, int? categoryId =null)
         {
             if (categoriesList == null)
                await RefreshCategoriesList();
 
             var lst = categoriesList.ToList();
+
+            if (categoryId != null)
+                lst = lst.Where(x => x.CategoryId != categoryId).ToList();
+
+
             var cat = new Category();
             cat.CategoryId = 0;
             cat.Name = "-";
