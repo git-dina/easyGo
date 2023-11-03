@@ -123,7 +123,7 @@ namespace EasyGo.View.catalog
                         category.Name = tb_Name.Text;
                         category.Code = tb_Code.Text;
                         if(cb_ParentId.SelectedValue != null)
-                            category.ParentId = (int) cb_ParentId.SelectedValue; ;
+                            category.ParentId = (int) cb_ParentId.SelectedValue;
                         category.Details = tb_Details.Text;
                         category.Notes = tb_Notes.Text;
 
