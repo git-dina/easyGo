@@ -92,7 +92,7 @@ namespace EasyGo.View.purchase
             txt_Count.Text = AppSettings.resourcemanager.GetString("trCount");
             txt_SupTotalTitle.Text = AppSettings.resourcemanager.GetString("trSum");
             txt_taxValueTitle.Text = AppSettings.resourcemanager.GetString("trTaxPercentage");
-            txt_total.Text = AppSettings.resourcemanager.GetString("trTotal");
+            txt_totalTitle.Text = AppSettings.resourcemanager.GetString("trTotal");
 
             //txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseBill");
             //txt_store.Text = AppSettings.resourcemanager.GetString("trStore/Branch");
