@@ -417,7 +417,6 @@ BorderBrush="{StaticResource LightGrey}"/>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock  Text="taxValue" 
       x:Name="txt_taxValueTitle" 
@@ -431,6 +430,29 @@ BorderBrush="{StaticResource LightGrey}"/>
       Foreground="{StaticResource textColor}" 
        FontSize="12"  
       Margin="5 0"/>
+                            </Grid>
+                            <Border   Grid.RowSpan="2" Grid.Column="4" 
+Margin="5"  CornerRadius="0,0,0,0"  
+       Width="1" BorderThickness="0" Background="{StaticResource MainColor}" />
+
+                            <Grid x:Name="grid_taxRate">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  Text="taxRate" 
+      x:Name="txt_taxRateTitle" 
+                  VerticalAlignment="Center"
+      Foreground="{StaticResource MainColor}" 
+      FontWeight="Bold" FontSize="12" 
+      />
+                                <TextBlock  Text="0.00" Grid.Row="0" Grid.Column="1"
+      x:Name="txt_taxRate" 
+      VerticalAlignment="Center"
+      Foreground="{StaticResource textColor}" 
+       FontSize="12"  
+      Margin="5 0"/>
                                 <materialDesign:PackIcon Grid.Column="2" Foreground="{StaticResource textColor}" Kind="PercentOutline"   
                                        Width="15" Height="15"
                        Margin="0 0 5 0"
@@ -438,28 +460,55 @@ BorderBrush="{StaticResource LightGrey}"/>
 
                             </Grid>
                             <Border   Grid.RowSpan="2" Grid.Column="4" 
-Margin="5"  CornerRadius="0,0,0,0"  
-       Width="1" BorderThickness="0" Background="{StaticResource MainColor}" />
+                            Margin="5"  CornerRadius="0,0,0,0"  
+                                 Width="1" BorderThickness="0" Background="{StaticResource MainColor}" />
 
-                            <Grid x:Name="AutoDiscount">
+                            <Grid x:Name="grid_discountValue">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock  Text="AutoDiscount" 
-                            x:Name="txt_AutoDiscountTitle" 
+                                <TextBlock  Text="discountValue" 
+                            x:Name="txt_discountValueTitle" 
                                         VerticalAlignment="Center"
                             Foreground="{StaticResource MainColor}" 
                             FontWeight="Bold" FontSize="12" 
                             />
                                 <TextBlock  Text="0.00" Grid.Row="0" Grid.Column="1"
-                            x:Name="txt_AutoDiscount" 
+                            x:Name="txt_discountValue" 
                             VerticalAlignment="Center"
                             Foreground="{StaticResource textColor}" 
                              FontSize="12"  
                             Margin="5 0"/>
                             </Grid>
-                         
+                            <Border   Grid.RowSpan="2" Grid.Column="4" 
+Margin="5"  CornerRadius="0,0,0,0"  
+       Width="1" BorderThickness="0" Background="{StaticResource MainColor}" />
+
+                            <Grid x:Name="grid_discountRate">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock  Text="discountRate" 
+                                    x:Name="txt_discountRateTitle" 
+                                                VerticalAlignment="Center"
+                                    Foreground="{StaticResource MainColor}" 
+                                    FontWeight="Bold" FontSize="12" 
+                                    />
+                                     <TextBlock  Text="0.00" Grid.Row="0" Grid.Column="1"
+                                    x:Name="txt_discountRate" 
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource textColor}" 
+                                     FontSize="12"  
+                                    Margin="5 0"/>  
+                                <materialDesign:PackIcon Grid.Column="2" Foreground="{StaticResource textColor}" Kind="PercentOutline"   
+                                 Width="15" Height="15"
+                 Margin="0 0 5 0"
+                                 HorizontalAlignment="Right" VerticalAlignment="Center" />
+
+                            </Grid>
                         </StackPanel>
 
 
