@@ -362,18 +362,13 @@ namespace EasyGo.View.purchase
 
                     // categoryItem
                     categoryItem = await FillCombo.category.GetCategoryChilds(item.CategoryId);
-                    if (categoryItem.Count != 0)
-                    {
-
                         buildCategoryItem(categoryItem);
                         // categoryPath
                         categoryPath = await FillCombo.category.GetCategoryPath(item.CategoryId);
                         buildCategoryPath(categoryPath);
-                        // itemsCard
-                        items = await FillCombo.item.GetCategoryItems(item.CategoryId);
-                        buildItemCards(items);
-
-                    }
+                    // itemsCard
+                    items = await FillCombo.item.GetCategoryItems(item.CategoryId);
+                    buildItemCards(items);
 
                 }
             }
