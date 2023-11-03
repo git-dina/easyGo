@@ -1,8 +1,11 @@
 ﻿using EasyGo.Classes;
 using EasyGo.Classes.ApiClasses;
+using EasyGo.Template;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -237,52 +240,79 @@ namespace EasyGo.View.purchase
 
        
         #region category
+        List<Category> categoryPath = new List<Category>();
+        List<Category> categoryItem = new List<Category>();
+        List<Item> items = new List<Item>();
+        Item selectedItem = new Item();
         private async void btn_allItems_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-             
-                /*
+                HelpClass.StartAwait(grid_main);
+
                 // categoryPath
                 categoryPath.Clear();
                 buildCategoryPath(categoryPath);
-                */
-               
+                // categoryItem
+                if (FillCombo.categoriesFirstLevelList is null)
+                   await FillCombo.RefreshCategoriesList();
+                categoryItem = FillCombo.categoriesFirstLevelList.ToList();
+                buildCategoryItem(categoryItem);
+                // itemsCard
+                if (FillCombo.itemsList is null)
+                    await FillCombo.RefreshItems();
+                items =  FillCombo.itemsList.ToList();
+                buildItemCards(items);
+
+
+                HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
             {
+                HelpClass.EndAwait(grid_main);
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
-        /*
-        List<CategoryModel> categoryPath = new List<CategoryModel>();
-        void buildCategoryPath(List<CategoryModel> categories)
+        void buildCategoryPath(List<Category> categories)
         {
             sp_categoryPath.Children.Clear();
+            int counter = 1;
+            bool isLast = false;
             foreach (var item in categories)
             {
+                if (counter == categories.Count)
+                    isLast = true;
+                else
+                    isLast = false;
 
                 #region borderMain
                 Border borderMain = new Border();
-
                 borderMain.Margin = new Thickness(0);
                 borderMain.Padding = new Thickness(0);
                 borderMain.MinWidth = 50;
-                borderMain.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                borderMain.Background = Application.Current.Resources["White"] as SolidColorBrush;
                 #region buttonMain
                 Button buttonMain = new Button();
-                buttonMain.Tag = item.id;
                 buttonMain.DataContext = item;
-                buttonMain.Padding = new Thickness(0);
                 buttonMain.BorderBrush = null;
                 buttonMain.Background = null;
-                buttonMain.Height = 50;
+                buttonMain.Height = 40;
+                buttonMain.Padding = new Thickness(0);
 
-                buttonMain.Click += btn_categoryPath_Click;
+                buttonMain.Click += Btn_category_Click;
                 #region textName
+                
                 TextBlock textName = new TextBlock();
-                textName.Text = ">" + item.name;
-                textName.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                if (isLast)
+                {
+                    textName.Text = item.Name;
+                    textName.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                }
+                else
+                {
+                    textName.Text = item.Name + ">";
+                    textName.Foreground = Application.Current.Resources["Grey"] as SolidColorBrush;
+                }
                 textName.Margin = new Thickness(5);
                 buttonMain.Content = textName;
                 #endregion
@@ -290,10 +320,35 @@ namespace EasyGo.View.purchase
                 #endregion
                 sp_categoryPath.Children.Add(borderMain);
                 #endregion
+                counter++;
             }
 
         }
-        private async void btn_categoryPath_Click(object sender, RoutedEventArgs e)
+        void buildCategoryItem(List<Category> categories)
+        {
+            sp_categoryItem.Children.Clear();
+            foreach (var item in categories)
+            {
+
+            
+                #region buttonMain
+                Button buttonMain = new Button();
+                buttonMain.DataContext = item;
+                buttonMain.Content = item.Name;
+                buttonMain.Margin = new Thickness(5);
+                MaterialDesignThemes.Wpf.ButtonAssist.SetCornerRadius(buttonMain,new CornerRadius(7));
+                buttonMain.Background = Application.Current.Resources["White"] as SolidColorBrush;
+                buttonMain.BorderBrush = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                buttonMain.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                buttonMain.BorderThickness = new Thickness(1);
+
+                buttonMain.Click += Btn_category_Click;
+                sp_categoryItem.Children.Add(buttonMain);
+                #endregion
+            }
+
+        }
+        private async void Btn_category_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -301,19 +356,24 @@ namespace EasyGo.View.purchase
                 if (button.DataContext != null)
                 {
 
-                    switchGrid1_1("mainItemsCatalog");
 
 
-                    var item = button.DataContext as CategoryModel;
-                    // categoryPath
-                    //categoryPath.Add(item);
+                    var item = button.DataContext as Category;
 
-                    categoryPath = _itemService.getCategoryPath(item.id).ToList();
-                    buildCategoryPath(categoryPath);
+                    // categoryItem
+                    categoryItem = await FillCombo.category.GetCategoryChilds(item.CategoryId);
+                    if (categoryItem.Count != 0)
+                    {
 
-                    // itemsCard
-                    items = _itemService.getCatItems(item.id);
-                    await buildItemsCard(items);
+                        buildCategoryItem(categoryItem);
+                        // categoryPath
+                        categoryPath = await FillCombo.category.GetCategoryPath(item.CategoryId);
+                        buildCategoryPath(categoryPath);
+                        // itemsCard
+                        items = await FillCombo.item.GetCategoryItems(item.CategoryId);
+                        buildItemCards(items);
+
+                    }
 
                 }
             }
@@ -322,7 +382,47 @@ namespace EasyGo.View.purchase
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
-        */
+        
+        #region ItemCards
+        void buildItemCards(List<Item> list)
+        {
+            wp_itemsCard.Children.Clear();
+            foreach (var item in list)
+            {
+                #region mco_itemCards
+                uc_itemCards mco_itemCards = new uc_itemCards();
+                mco_itemCards.item = item;
+                mco_itemCards.Color = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                mco_itemCards.Click += Btn_itemCards_Click;
+                wp_itemsCard.Children.Add(mco_itemCards);
+                #endregion
+            }
+        }
+        private void Btn_itemCards_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
+                var itemCards = sender as uc_itemCards;
+                if (itemCards != null)
+                {
+                    selectedItem = itemCards.item;
+                    MessageBox.Show("I'm item num:" + selectedItem.ItemId);
+                }
+
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch
+            {
+                HelpClass.EndAwait(grid_main);
+
+            }
+        }
+
+
+        #endregion
+
         #endregion
 
 
