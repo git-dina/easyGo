@@ -245,6 +245,7 @@
     <Compile Include="converters\accuracyConverter.cs" />
     <Compile Include="converters\castcateLongTextConverter.cs" />
     <Compile Include="converters\Class1.cs" />
+    <Compile Include="converters\twoStringsConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="Template\uc_itemCards.xaml.cs">
       <DependentUpon>uc_itemCards.xaml</DependentUpon>

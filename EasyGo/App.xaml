@@ -10,6 +10,7 @@
         <ResourceDictionary>
             <converters:castcateLongTextConverter x:Key="castcateLongTextConverter"/>
             <converters:accuracyConverter x:Key="accuracyConverter"/>
+            <converters:accuracyConverter x:Key="twoStringsConverter"/>
            
 
             <!--#region Fonts-->
