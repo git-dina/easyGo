@@ -32,12 +32,14 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<decimal> PurchasePrice { get; set; }
         public Nullable<decimal> PackCost { get; set; }
         public int UnitCount { get; set; }
+        public Nullable<int> SmallestUnitId { get; set; }
 
         //extra
         public string ItemName { get; set; }
         public string ItemCode { get; set; }
         public string UnitName { get; set; }
         public string SmallUnit { get; set; }
+        public string SmallestUnitName { get; set; }
         public string ItemType { get; set; }
         public Nullable<long> Quantity { get; set; }
         #endregion

@@ -163,7 +163,14 @@
                                                 </Style>
                                             </DataGridTextColumn.ElementStyle>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="*"  Header="Count Unit" Binding="{Binding Path=UnitCount}"/>
+                                        <DataGridTextColumn Width="*"  Header="Count Unit">
+                                            <DataGridTextColumn.Binding >
+                                                <MultiBinding Converter="{StaticResource twoStringsConverter}" >
+                                                    <Binding Path="UnitCount" />
+                                                    <Binding Path="SmallestUnitName" />
+                                                </MultiBinding>
+                                            </DataGridTextColumn.Binding>
+                                        </DataGridTextColumn>
                                         <DataGridTextColumn Width="*"  Header="PurchasePrice"  Binding="{Binding Path =PurchasePrice,Converter={StaticResource accuracyConverter }}">
                                             <DataGridTextColumn.ElementStyle>
                                                 <Style TargetType="{x:Type TextBlock}">
