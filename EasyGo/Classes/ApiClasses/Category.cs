@@ -177,16 +177,18 @@ namespace EasyGo.Classes.ApiClasses
             if (FillCombo.categoriesList is null)
                 await FillCombo.RefreshCategoriesList();
 
-            List<Category> treecat = new List<Category>();
+            List<Category> treeCat = new List<Category>();
             var category = FillCombo.categoriesList.Where(c => c.CategoryId == categoryId).FirstOrDefault();
-            treecat.Add(category);
+            treeCat.Add(category);
 
             while (category.ParentId != null)
             {
                 category = getParentCategory((int)category.ParentId);
-                treecat.Add(category);
+                treeCat.Add(category);
             }
-            return treecat;
+
+            treeCat.Reverse();
+            return treeCat;
         }
 
         private Category getParentCategory(int categoryId)
