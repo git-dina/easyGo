@@ -926,5 +926,10 @@ namespace EasyGo.View.windows
 
             }
         }
+
+        private void Btn_refreshBarcode_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
