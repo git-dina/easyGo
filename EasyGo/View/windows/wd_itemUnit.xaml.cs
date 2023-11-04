@@ -555,19 +555,17 @@ namespace EasyGo.View.windows
         async Task<IEnumerable<ItemUnit>> RefreshItemUnitsList()
         {
             if (FillCombo.itemUnitList is null)
-                itemUnits = await FillCombo.RefreshItemUnit();
+                 await FillCombo.RefreshItemUnit();
             var itemUnitLst = await FillCombo.itemUnit.GetItemUnit(item.ItemId);
             item.ItemUnits = itemUnitLst; //refresh item units
-            //await FillCombo.RefreshItemUnit();
-            //itemUnits = FillCombo.itemUnitList;
-            //itemUnits = itemUnits.Where(x => x.ItemId == item.ItemId);
+
             var lstToReplace = FillCombo.itemUnitList.Where(x => x.ItemId == item.ItemId).ToList();
             foreach(var itemUnit in lstToReplace)
             {
                 FillCombo.itemUnitList.Remove(itemUnit);
             }
             FillCombo.itemUnitList.AddRange(itemUnitLst) ;
-            itemUnits = FillCombo.itemUnitList;
+            itemUnits = FillCombo.itemUnitList.Where(x => x.ItemId == item.ItemId).ToList();
             return itemUnits;
         }
         void RefreshItemUnitsView()
@@ -861,8 +859,8 @@ namespace EasyGo.View.windows
                 if (cb_UnitId.SelectedIndex != -1 && cb_SubUnitId.SelectedIndex != -1)
                 {
                     if ((int)cb_UnitId.SelectedValue == (int)cb_SubUnitId.SelectedValue)
-                        itemUnit.UnitValue = 1;
-                        //tb_UnitValue.Text = "1";
+                        //itemUnit.UnitValue = 1;
+                        tb_UnitValue.Text = "1";
                 }
             }
             catch (Exception ex)
@@ -919,7 +917,8 @@ namespace EasyGo.View.windows
             {
                 if (cb_UnitId.SelectedIndex != -1 && cb_SubUnitId.SelectedIndex != -1 && (int)cb_UnitId.SelectedValue == (int)cb_SubUnitId.SelectedValue)
                 {
-                    itemUnit.UnitValue = 1;
+                    tb_UnitValue.Text = "1";
+                    //itemUnit.UnitValue = 1;
                 }
             }
             catch
