@@ -39,6 +39,7 @@ namespace EasyGo.Classes.ApiClasses
 
         //extra
         public List<ItemUnit> ItemUnits { get; set; }
+        public List<Item> PackageItems { get; set; }
         #endregion
 
         #region Methods
@@ -48,6 +49,21 @@ namespace EasyGo.Classes.ApiClasses
             List<Item> items = new List<Item>();
 
             IEnumerable<Claim> claims = await APIResult.getList("Item/Get");
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<Item>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
+        public async Task<List<Item>> GetWithUnits()
+        {
+            List<Item> items = new List<Item>();
+
+            IEnumerable<Claim> claims = await APIResult.getList("Item/GetWithUnits");
 
             foreach (Claim c in claims)
             {
@@ -184,10 +200,10 @@ namespace EasyGo.Classes.ApiClasses
 
         public async Task<List<Item>> GetCategoryItems(int categoryId)
         {
-            if (FillCombo.itemsList is null)
-                await FillCombo.RefreshItems();
+            if (FillCombo.itemsHasUnitsList is null)
+                await FillCombo.RefreshItemsHasUnits();
 
-            var items = FillCombo.itemsList.Where(x => x.CategoryId == categoryId).ToList();
+            var items = FillCombo.itemsHasUnitsList.Where(x => x.CategoryId == categoryId).ToList();
             return items;
         }
         #endregion

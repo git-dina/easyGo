@@ -66,6 +66,8 @@ namespace EasyGo.Classes
             paramarr.Add(new ReportParameter("trNoData", AppSettings.resourcemanagerreport.GetString("thereArenodata")));
 
         }
+
+      
         public static void InvoiceHeader(List<ReportParameter> paramarr)
         {
 
@@ -117,6 +119,113 @@ namespace EasyGo.Classes
 
             paramarr.Add(new ReportParameter("com_mobile", AppSettings.Mobile.Replace("--", "")));
             paramarr.Add(new ReportParameter("com_mobile_icon", "file:\\" + rep.GetIconImagePath("mobile")));
+        }
+
+        public List<PayedInvclass> cashPayedinvoice(List<PayedInvclass> PayedInvclassList, PurchaseInvoice prInvoice)
+        {
+            ReportCls reportclass = new ReportCls();
+            List<PayedInvclass> mainPayedList = new List<PayedInvclass>();
+            PayedInvclass newRow = new PayedInvclass();
+            foreach (var p in PayedInvclassList)
+            {
+                //  newRow = new PayedInvclass();
+                //add main row
+                newRow = new PayedInvclass();
+                if (p.ProcessType == "cash")
+                {
+                    newRow.Cash = decimal.Parse(HelpClass.DecTostring(p.Cash));
+                  
+                    newRow.CardName = AppSettings.resourcemanagerEn.GetString("trCashType");
+
+                }
+                else
+                {
+                    newRow.Cash = decimal.Parse(HelpClass.DecTostring(p.Cash));
+                    newRow.CardName = p.CardName;
+                }
+
+                newRow.CardId = p.CardId;
+                newRow.ProcessType = p.ProcessType;
+
+                newRow.CommissionRatio = p.CommissionRatio;
+                newRow.CommissionValue = p.CommissionValue;
+                newRow.DocNum = p.DocNum;
+                //  // check if card And  has processNum for border
+                if (p.CardId > 0 && p.DocNum != null && p.DocNum != "")
+                {
+                    newRow.Sequenc = -1;
+                }
+                mainPayedList.Add(newRow);
+                //end add main row
+
+
+            }
+            return mainPayedList;
+
+        }
+
+        public static void purchaseInvoiceReport(List<PurInvoiceItem> invoiceItems, LocalReport rep, string reppath)
+        {
+
+            List<string> tmpserialLst = new List<string>();
+            PurInvoiceItem itemtrTemp = new PurInvoiceItem();
+            List<PurInvoiceItem> MaininvoiceItems = new List<PurInvoiceItem>();
+           // int totalserialscount = 0;
+           // int seq = 0;
+            foreach (var i in invoiceItems)
+            {
+                //check item quantity
+                if (i.Quantity > 0)
+                {
+                    //int num = 0;
+                    i.Price = decimal.Parse(HelpClass.DecTostring(i.Price));
+                    //add item row
+                    //seq++;
+                    itemtrTemp = i;
+                    //itemtrTemp.newLocked = seq;
+                    //if (i.PackageItems == null || i.PackageItems.Count() == 0)
+                    //{
+                    //    //normal 
+                    //    //check if has sub rows
+                    //    if ((i.packageItems == null || i.packageItems.Count() == 0) && //normal item
+                    //        (!(i.itemSerials == null || i.itemSerials.Count() == 0) //has serial
+                    //        || (i.warrantyName != null && i.warrantyName != "") // or has warranty
+                    //            || (i.offerValue != null && i.offerValue > 0))) // or hasOffer
+                    //    {
+                    //        itemtrTemp.lockedQuantity = 1;// to hide bottom border 
+                    //    }
+                    //}
+                    //else
+                    //{
+
+                    //    itemtrTemp.itemUnitId = -5;//for main package
+
+                    //    itemtrTemp.lockedQuantity = 1;// to hide bottom border 
+                    //}
+
+                    if (itemtrTemp.UnitName == "package")
+                    {
+
+
+                        itemtrTemp.ItemUnitId = -5;//for main package
+                    }
+
+
+
+                    MaininvoiceItems.Add(itemtrTemp);
+                    //normal item
+
+                }
+                //end foreach
+
+
+            }
+
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetItemTransfer", MaininvoiceItems));
+            rep.EnableExternalImages = true;
+
         }
         public static void HeaderNoLogo(List<ReportParameter> paramarr)
         {

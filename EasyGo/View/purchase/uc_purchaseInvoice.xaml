@@ -600,7 +600,7 @@ Margin="5"  CornerRadius="0,0,0,0"
                 <StackPanel Grid.Column="0" Margin="5 0" Orientation="Horizontal"
     VerticalAlignment="Center">
                     <Button Grid.Column="1" DockPanel.Dock="Right" BorderBrush="{x:Null}" Padding="0"  Margin="5,10,5,0" Height="auto"
-Background="{x:Null}" x:Name="btn_newInvoice" Click="btn_printInvoice_Click"  >
+Background="{x:Null}" x:Name="btn_newInvoice" Click="btn_newInvoice_Click"  >
                         <StackPanel>
                             <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
    Height="30" Width="30" FlowDirection="LeftToRight"
@@ -898,8 +898,8 @@ l0.3,260.4L348.9,261.7z"  />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn IsReadOnly="True" Header="Num"  Binding="{Binding Path=ID}"/>
-                                <DataGridTextColumn IsReadOnly="True"  Width="*"   Header="Item" Binding="{Binding Path=Product}"/>
+                                <DataGridTextColumn IsReadOnly="True" Header="Num"  Binding="{Binding Path=Index}"/>
+                                <DataGridTextColumn IsReadOnly="True"  Width="*"   Header="Item" Binding="{Binding Path=ItemName}"/>
                                 <DataGridTemplateColumn Width="20" Header="UnitName" IsReadOnly="True" >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -909,7 +909,7 @@ l0.3,260.4L348.9,261.7z"  />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn  Header="Amount"  Width="*"  Binding="{Binding Path=Count}"/>
+                                <DataGridTextColumn  Header="Amount"  Width="*"  Binding="{Binding Path=Quantity}"/>
                                 <DataGridTextColumn  Header="Price"  Width="*"  Binding="{Binding Path=Price}"/>
                                 <DataGridTextColumn Width="*"  Header="Total" IsReadOnly="True"   Binding="{Binding Path = Total,Converter={StaticResource accuracyConverter }}"/>
                             </DataGrid.Columns>

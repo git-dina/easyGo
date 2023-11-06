@@ -8,7 +8,7 @@ namespace EasyGo.Classes.ApiClasses
 {
     public class Pos
     {
-        public long PosId { get; set; }
+        public int PosId { get; set; }
 
     }
 }

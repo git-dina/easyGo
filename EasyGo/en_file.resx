@@ -3767,7 +3767,7 @@ Please add Email in setting</value>
     <value>Tax %</value>
   </data>
   <data name="trTaxValue" xml:space="preserve">
-    <value>Tax value</value>
+    <value>Tax Value</value>
   </data>
   <data name="trTotalInvoice" xml:space="preserve">
     <value>Total net</value>
@@ -5166,5 +5166,11 @@ Please add Email in setting</value>
   </data>
   <data name="trPurchasePriceHint" xml:space="preserve">
     <value>Purchase Price...</value>
+  </data>
+  <data name="trDiscountRate" xml:space="preserve">
+    <value>Discount Rate</value>
+  </data>
+  <data name="trTaxRate" xml:space="preserve">
+    <value>Tax Rate</value>
   </data>
 </root>

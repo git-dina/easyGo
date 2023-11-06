@@ -117,11 +117,20 @@ namespace EasyGo.Classes
         #region Item
         static public Item item = new Item();
         static public List<Item> itemsList;
+        static public List<Item> itemsHasUnitsList;
 
         static public async Task<IEnumerable<Item>> RefreshItems()
         {
             itemsList = await item.Get();
+            if (itemsHasUnitsList != null)
+                itemsHasUnitsList = itemsList.Where(x => x.ItemUnits != null && x.ItemUnits.Count > 0).ToList();
             return itemsList;
+        }
+
+        static public async Task<IEnumerable<Item>> RefreshItemsHasUnits()
+        {
+            itemsHasUnitsList = await item.GetWithUnits();
+            return itemsHasUnitsList;
         }
         #endregion
 
@@ -169,5 +178,26 @@ namespace EasyGo.Classes
         }
         #endregion
 
+        #region Cards
+        static public Card card = new Card();
+        static public List<Card> cardsList;
+        static public async Task<IEnumerable<Card>> RefreshCards()
+        {
+            cardsList = await card.Get();
+            return cardsList;
+        }
+        #endregion
+
+        #region Branch
+        static public Branch branch = new Branch();
+        static public List<Branch> branchsList;
+
+        static public async Task<IEnumerable<Branch>> RefreshBranchs()
+        {
+            branchsList = await branch.Get();
+            return branchsList;
+        }
+        #endregion
+       
     }
 }

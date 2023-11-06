@@ -18,7 +18,7 @@ using System.Xml;
 
 namespace EasyGo.Classes
 {
-    public class reportsize
+    public class ReportSize
     {
 
         public int width { get; set; }
@@ -27,7 +27,7 @@ namespace EasyGo.Classes
         public LocalReport rep { get; set; }
         public string printerName { get; set; }
         public string paperSize { get; set; }
-
+        public string reppath { get; set; }
     }
     //public class resultmessage
     //{
@@ -222,50 +222,217 @@ namespace EasyGo.Classes
         }
 
 
-        public string DecTostring(decimal? dec)
+        public ReportSize GetpayInvoiceRdlcpath(PurchaseInvoice invoice, int itemscount, string PaperSize)
         {
-            string sdc = "0";
-            if (dec == null)
+            string addpath="";
+            string isArabic = ReportCls.checkInvLang();
+            ReportSize rs = new ReportSize();
+            if (isArabic == "ar")
             {
-
-            }
-            else
-            {
-                decimal dc = decimal.Parse(dec.ToString());
-                if (dc == 0)
+                if (invoice.InvType == "or" || invoice.InvType == "po" || invoice.InvType == "pos" || invoice.InvType == "pod" || invoice.InvType == "ors")
                 {
-                    sdc = "0";
+                    //order Ar
+                    if (PaperSize == "5.7cm")
+                    {
+                        addpath = @"\Reports\Purchase\Ar\SmallPurOrder.rdlc";
+                        rs.width = 224;//224 =5.7cm
+                        rs.height = GetpageHeight(itemscount , 500);
+
+                    }
+                    else //MainWindow.salePaperSize == "A4"
+                    {
+
+                        addpath = @"\Reports\Purchase\Ar\ArInvPurOrderReport.rdlc";
+                    }
                 }
                 else
                 {
-                    switch (AppSettings.accuracy)
+                    if (PaperSize == "5.7cm")
                     {
-                        case "0":
-                            sdc = string.Format("{0:F0}", dc);
-                            break;
-                        case "1":
-                            sdc = string.Format("{0:F1}", dc);
-                            break;
-                        case "2":
-                            sdc = string.Format("{0:F2}", dc);
-                            break;
-                        case "3":
-                            sdc = string.Format("{0:F3}", dc);
-                            break;
-                        default:
-                            sdc = string.Format("{0:F1}", dc);
-                            break;
+                        addpath = @"\Reports\Purchase\Ar\SmallPur.rdlc";
+                        rs.width = 224;//224 =5.7cm
+                        rs.height = GetpageHeight(itemscount , 500);
+                    }
+                    else //PaperSize == "A4"
+                    {
+
+                        addpath = @"\Reports\Purchase\Ar\ArInvPurReport.rdlc";
                     }
                 }
-                //sdc = dc.ToString("0.00");
-
-
             }
+            else if (isArabic == "en")
+            {
+                if (invoice.InvType == "or" || invoice.InvType == "po" || invoice.InvType == "pos" || invoice.InvType == "pod" || invoice.InvType == "ors")
+                {
+                    //order Ar
+                    if (PaperSize == "5.7cm")
+                    {
+                        addpath = @"\Reports\Purchase\En\SmallPurOrder.rdlc";
+                        rs.width = 224;//224 =5.7cm
+                        rs.height = GetpageHeight(itemscount , 500);
+                    }
+                    else //PaperSize == "A4"
+                    {
 
+                        addpath = @"\Reports\Purchase\En\InvPurOrderReport.rdlc";
+                    }
+                }
+                else
+                {
+                    if (PaperSize == "5.7cm")
+                    {
+                        addpath = @"\Reports\Purchase\En\SmallPur.rdlc";
+                        rs.width = 224;//224 =5.7cm
+                        rs.height = GetpageHeight(itemscount , 500);
+                    }
+                    else //PaperSize == "A4"
+                    {
 
-            return sdc;
+                        addpath = @"\Reports\Purchase\En\InvPurReport.rdlc";
+                    }
+                }
+            }
+           
+            //
+            string reppath = PathUp(Directory.GetCurrentDirectory(), 2, addpath);
+            rs.reppath = reppath;
+            rs.paperSize = PaperSize;
+            return rs;
         }
 
+        public List<ReportParameter> fillPurInvReport(PurchaseInvoice invoice, List<ReportParameter> paramarr)
+        {
+            string lang = checkInvLang();
+
+
+            invoice.DiscountType = "1";
+
+
+            string userName = invoice.UserName + " " + invoice.UserLastName;
+           
+            string agentName = ((invoice.SupplierName != null && invoice.SupplierName != "") ? invoice.SupplierName.Trim()
+                : (invoice.SupplierCompany != null && invoice.SupplierCompany != "") ? invoice.SupplierCompany.Trim() : "-");
+
+            //discountType
+            paramarr.Add(new ReportParameter("invNumber", invoice.InvNumber == null ? "-" : invoice.InvNumber.ToString()));//paramarr[6]
+            paramarr.Add(new ReportParameter("invoiceId", invoice.InvoiceId.ToString()));
+            paramarr.Add(new ReportParameter("invDate", DateToString(invoice.UpdateDate) == null ? "-" : DateToString(invoice.UpdateDate)));
+            paramarr.Add(new ReportParameter("invTime", invoice.UpdateDate == null ? "-" : TimeToString(((DateTime)(invoice.UpdateDate)).TimeOfDay)));
+            paramarr.Add(new ReportParameter("vendorInvNum", invoice.SupplierCode == "-" ? "-" : invoice.SupplierCode.ToString()));
+            paramarr.Add(new ReportParameter("agentName", agentName));
+            paramarr.Add(new ReportParameter("total", HelpClass.DecTostring(invoice.Total) == null ? "-" : HelpClass.DecTostring(invoice.Total)));
+
+            //  paramarr.Add(new ReportParameter("discountValue", DecTostring(disval) == null ? "-" : DecTostring(disval)));
+            paramarr.Add(new ReportParameter("discountValue",  HelpClass.DecTostring(invoice.DiscountValue)));
+            paramarr.Add(new ReportParameter("discountType", invoice.DiscountType == null ? "1" : invoice.DiscountType.ToString()));
+
+            paramarr.Add(new ReportParameter("totalNet", HelpClass.DecTostring(invoice.TotalNet) == null ? "-" : HelpClass.DecTostring(invoice.TotalNet)));
+            paramarr.Add(new ReportParameter("paid", HelpClass.DecTostring(invoice.Paid) == null ? "-" : HelpClass.DecTostring(invoice.Paid)));
+            paramarr.Add(new ReportParameter("deserved", HelpClass.DecTostring(invoice.Deserved) == null ? "-" : HelpClass.DecTostring(invoice.Deserved)));
+            paramarr.Add(new ReportParameter("remain",  "0" ));
+            paramarr.Add(new ReportParameter("deservedDate", invoice.DeservedDate.ToString() == null ? "-" : DateToString(invoice.DeservedDate)));
+            paramarr.Add(new ReportParameter("tax", invoice.Tax == null ? "0" : HelpClass.PercentageDecTostring(invoice.Tax)));
+            string invNum = invoice.InvNumber == null ? "-" : invoice.InvNumber.ToString();
+            paramarr.Add(new ReportParameter("barcodeimage", "file:\\" + BarcodeToImage(invNum, "invnum")));
+            paramarr.Add(new ReportParameter("Currency", AppSettings.Currency));
+            paramarr.Add(new ReportParameter("logoImage", "file:\\" + GetLogoImagePath()));
+            paramarr.Add(new ReportParameter("branchName", invoice.BranchCreatorName == null ? "-" : invoice.BranchCreatorName));
+            paramarr.Add(new ReportParameter("branchReciever", invoice.BranchName == null ? "-" : invoice.BranchName));
+            paramarr.Add(new ReportParameter("deserveDate", invoice.DeservedDate == null ? "-" : DateToString(invoice.DeservedDate)));
+            paramarr.Add(new ReportParameter("venInvoiceNumber", (invoice.VendorInvNum == null || invoice.VendorInvNum == "") ? "-" : invoice.VendorInvNum.ToString()));//paramarr[6]
+            paramarr.Add(new ReportParameter("trTheRemine", AppSettings.resourcemanagerreport.GetString("trTheRemine")));
+            paramarr.Add(new ReportParameter("trReceiverName", AppSettings.resourcemanagerreport.GetString("receiverName")));
+            paramarr.Add(new ReportParameter("trDepartment", AppSettings.resourcemanagerreport.GetString("Purchases Department")));
+
+
+
+            paramarr.Add(new ReportParameter("userName", userName.Trim()));
+            if (invoice.InvType == "pd" ||invoice.InvType == "pbd" || invoice.InvType == "pod"
+                    || invoice.InvType == "imd" || invoice.InvType == "exd" || invoice.InvType == "isd")
+            {
+
+                paramarr.Add(new ReportParameter("watermark", "1"));
+                paramarr.Add(new ReportParameter("isSaved", "n"));
+            }
+            else
+            {
+                paramarr.Add(new ReportParameter("watermark", "0"));
+                paramarr.Add(new ReportParameter("isSaved", "y"));
+            }
+            if (invoice.InvType == "pbd" || invoice.InvType == "pb" || invoice.InvType == "pbw")
+            {
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPurchaseReturnInvTitle")));
+                paramarr.Add(new ReportParameter("TitleAr", AppSettings.resourcemanagerAr.GetString("trPurchaseReturnInvTitle")));
+            }
+            else if (invoice.InvType == "p" || invoice.InvType == "pd" || invoice.InvType == "pw" || invoice.InvType == "pwd")
+            {
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPurchasesInvoice")));
+                paramarr.Add(new ReportParameter("TitleAr", AppSettings.resourcemanagerAr.GetString("trPurchasesInvoice")));
+            }
+            else if (invoice.InvType == "is" || invoice.InvType == "isd")
+            {
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trDirectEntry")));
+                paramarr.Add(new ReportParameter("TitleAr", AppSettings.resourcemanagerAr.GetString("trDirectEntry")));
+            }
+            else if (invoice.InvType == "pod" || invoice.InvType == "po" || invoice.InvType == "ors" || invoice.InvType == "pos" )
+            {
+                paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trPurchaceOrder")));
+                paramarr.Add(new ReportParameter("TitleAr", AppSettings.resourcemanagerAr.GetString("trPurchaceOrder")));
+            }
+            //trPurchaceOrder
+
+            paramarr.Add(new ReportParameter("trDraftInv", AppSettings.resourcemanagerreport.GetString("trDraft")));
+
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trItem", AppSettings.resourcemanagerreport.GetString("trDescription")));
+            paramarr.Add(new ReportParameter("trUnit", AppSettings.resourcemanagerreport.GetString("trUnit")));
+            paramarr.Add(new ReportParameter("trQTR", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trPrice", AppSettings.resourcemanagerreport.GetString("trPrice")));
+            paramarr.Add(new ReportParameter("trTotal", AppSettings.resourcemanagerreport.GetString("trTotal")));
+            paramarr.Add(new ReportParameter("trSerials", AppSettings.resourcemanagerreport.GetString("trSerials")));
+            paramarr.Add(new ReportParameter("By", AppSettings.resourcemanagerreport.GetString("By")));
+           // paramarr.Add(new ReportParameter("isArchived", invoice.isArchived.ToString()));
+            paramarr.Add(new ReportParameter("trArchived", AppSettings.resourcemanagerreport.GetString("trArchived")));
+            paramarr.Add(new ReportParameter("mainInvNumber", invoice.MainInvNumber));
+            paramarr.Add(new ReportParameter("trRefNo", AppSettings.resourcemanagerreport.GetString("trRefNo.")));
+            paramarr.Add(new ReportParameter("invType", invoice.InvType));
+            paramarr.Add(new ReportParameter("trUpdatedInvoice", AppSettings.resourcemanagerreport.GetString("UpdatedInvoice")));
+            //
+            paramarr.Add(new ReportParameter("trInvoiceCharp", AppSettings.resourcemanagerreport.GetString("trInvoiceCharp")));
+            paramarr.Add(new ReportParameter("trDate", AppSettings.resourcemanagerreport.GetString("trDate")));
+            paramarr.Add(new ReportParameter("trBranchStore", AppSettings.resourcemanagerreport.GetString("trBranch/Store")));
+            paramarr.Add(new ReportParameter("trCreator", AppSettings.resourcemanagerreport.GetString("trCreator")));
+            paramarr.Add(new ReportParameter("Receiver", AppSettings.resourcemanagerreport.GetString("Receiver")));
+            paramarr.Add(new ReportParameter("trCompany", AppSettings.resourcemanagerreport.GetString("trCompany")));
+            paramarr.Add(new ReportParameter("trVendor", AppSettings.resourcemanagerreport.GetString("trVendor")));
+            paramarr.Add(new ReportParameter("trPayments", AppSettings.resourcemanagerreport.GetString("trPayments")));
+            paramarr.Add(new ReportParameter("trCashPaid", AppSettings.resourcemanagerreport.GetString("trCashPaid")));
+            paramarr.Add(new ReportParameter("trDeservedDate", AppSettings.resourcemanagerreport.GetString("trDeservedDate")));
+            paramarr.Add(new ReportParameter("trSum", AppSettings.resourcemanagerreport.GetString("trSum")));
+            paramarr.Add(new ReportParameter("trDiscount", AppSettings.resourcemanagerreport.GetString("trDiscount")));
+            paramarr.Add(new ReportParameter("trTax", AppSettings.resourcemanagerreport.GetString("trTax")));
+            paramarr.Add(new ReportParameter("trShippingAmount", AppSettings.resourcemanagerreport.GetString("trShippingAmount")));
+            paramarr.Add(new ReportParameter("trBranch", AppSettings.resourcemanagerreport.GetString("trBranch")));
+            paramarr.Add(new ReportParameter("trTo", AppSettings.resourcemanagerreport.GetString("trTo")));
+            paramarr.Add(new ReportParameter("trDeserved", AppSettings.resourcemanagerreport.GetString("deserved")));
+
+            string agentMobile = (invoice.SupplierMobile == null || invoice.SupplierMobile == "") ? "" : invoice.SupplierMobile;
+            agentMobile = agentMobile.Length <= 7 ? "" : agentMobile;
+            paramarr.Add(new ReportParameter("agentMobile", agentMobile));
+            paramarr.Add(new ReportParameter("trAgentMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
+            paramarr.Add(new ReportParameter("trReceiverName", AppSettings.resourcemanagerreport.GetString("receiverName")));
+            paramarr.Add(new ReportParameter("trDepartment", AppSettings.resourcemanagerreport.GetString("purchasesDepartment")));
+            paramarr.Add(new ReportParameter("taxValue", invoice.Tax == null ? "0" : HelpClass.DecTostring(invoice.Tax)));
+
+
+           
+            paramarr.Add(new ReportParameter("Notes", (invoice.Notes == null || invoice.Notes == "") ? "" : invoice.Notes.Trim()));
+            paramarr.Add(new ReportParameter("invoiceMainId", invoice.InvoiceMainId == null ? "0" : invoice.InvoiceMainId.ToString()));
+            //paramarr.Add(new ReportParameter("isUpdated", invoice.ChildInvoice == null ? (0).ToString() : (1).ToString()));
+            paramarr.Add(new ReportParameter("shippingCost", HelpClass.DecTostring(invoice.ShippingCost)));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            return paramarr;
+        }
         public string BarcodeToImage(string barcodeStr, string imagename)
         {
             // create encoding object
@@ -1450,13 +1617,13 @@ namespace EasyGo.Classes
         //    rs.paperSize = PaperSize;
         //    return rs;
         //}
-        public reportsize GetKitchenRdlcpath(string PaperSize, int itemscount, LocalReport rep)
+        public ReportSize GetKitchenRdlcpath(string PaperSize, int itemscount, LocalReport rep)
         {
             PaperSize = "5.7cm";
             // LocalReport rep = new LocalReport();
             string addpath;
             string isArabic = ReportCls.checkInvLang();
-            reportsize rs = new reportsize();
+            ReportSize rs = new ReportSize();
             rs.rep = rep;
             if (itemscount > 3)
             {

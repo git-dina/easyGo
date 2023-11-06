@@ -33,8 +33,8 @@ namespace EasyGo
     {
         internal static UserLog userLog;
         internal static User userLogin = new User();
-        internal static Pos posLogin;
-        //internal static Branch branchLogin;
+        internal static Pos posLogin = new Pos();
+        internal static Branch branchLogin = new Branch();
 
         public static Boolean go_out = false;
 

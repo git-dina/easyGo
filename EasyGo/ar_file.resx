@@ -5141,4 +5141,10 @@
   <data name="trPurchasePriceHint" xml:space="preserve">
     <value>سعر الشراء...</value>
   </data>
+  <data name="trDiscountRate" xml:space="preserve">
+    <value>نسبة الحسم</value>
+  </data>
+  <data name="trTaxRate" xml:space="preserve">
+    <value>نسبة الضريبة</value>
+  </data>
 </root>

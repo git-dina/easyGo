@@ -62,6 +62,14 @@ namespace EasyGo.Classes
         public static string show_header;
         public static string rep_printer_name;
         public static string rep_print_count;
+        public static string sale_printer_name;
+        public static string salePaperSize = "5.7cm";
+        #endregion
+
+        public static decimal PosBalance;
+        // invoices count for logged user
+        #region notification
+        public static int PurchaseDraftCount;
         #endregion
     }
 }

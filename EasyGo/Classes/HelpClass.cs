@@ -1145,6 +1145,57 @@ namespace EasyGo.Classes
             return data;
         }
 
+        public static string getdefaultPrinters()
+        {
+            PrinterSettings settings = new PrinterSettings();
+            string defaultPrinterName = settings.PrinterName;
+            return defaultPrinterName;
+        }
+
+        public static string DecTostring(decimal? dec)
+        {
+            string sdc = "0";
+            if (dec == null)
+            {
+
+            }
+            else
+            {
+                decimal dc = decimal.Parse(dec.ToString());
+
+                switch (AppSettings.accuracy)
+                {
+                    case "0":
+                        sdc = string.Format("{0:F0}", dc);
+                        break;
+                    case "1":
+                        sdc = string.Format("{0:F1}", dc);
+                        break;
+                    case "2":
+                        sdc = string.Format("{0:F2}", dc);
+
+                        break;
+                    case "3":
+                        sdc = string.Format("{0:F3}", dc);
+                        break;
+                    default:
+                        sdc = string.Format("{0:F1}", dc);
+                        break;
+                }
+                if (dc == 0)
+                    sdc = string.Format("{0:G29}", decimal.Parse(sdc));
+            }
+
+
+            return sdc;
+        }
+        public static string PercentageDecTostring(decimal? dec)
+        {
+            string sdc = DecTostring(dec);
+
+            sdc = string.Format("{0:G29}", decimal.Parse(sdc));
+            return sdc;
+        }
         //static public void ClearTmpFiles()
         //{
         //    string dir = System.IO.Directory.GetCurrentDirectory();

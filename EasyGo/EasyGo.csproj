@@ -225,11 +225,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ar_file.Designer.cs" />
+    <Compile Include="Classes\ApiClasses\Branch.cs" />
+    <Compile Include="Classes\ApiClasses\Card.cs" />
+    <Compile Include="Classes\ApiClasses\CashTransfer.cs" />
     <Compile Include="Classes\ApiClasses\Category.cs" />
     <Compile Include="Classes\ApiClasses\Customer.cs" />
     <Compile Include="Classes\ApiClasses\APIResult.cs" />
+    <Compile Include="Classes\ApiClasses\InvoiceResult.cs" />
     <Compile Include="Classes\ApiClasses\Item.cs" />
     <Compile Include="Classes\ApiClasses\ItemUnit.cs" />
+    <Compile Include="Classes\ApiClasses\Notification.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
     <Compile Include="Classes\ApiClasses\PurchaseInvoice.cs" />
     <Compile Include="Classes\ApiClasses\Unit.cs" />

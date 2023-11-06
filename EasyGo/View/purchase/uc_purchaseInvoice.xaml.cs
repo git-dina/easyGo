@@ -1,6 +1,9 @@
 ﻿using EasyGo.Classes;
 using EasyGo.Classes.ApiClasses;
 using EasyGo.Template;
+using EasyGo.View.windows;
+using Microsoft.Reporting.WinForms;
+using netoaster;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,6 +47,9 @@ namespace EasyGo.View.purchase
 
         public static List<string> requiredControlList;
         PurchaseInvoice invoice = new PurchaseInvoice();
+        PurchaseInvoice invoiceModel = new PurchaseInvoice();
+        CashTransfer cashTransfer = new CashTransfer();
+        string _InvoiceType = "pd";
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             //Instance = null;
@@ -89,9 +96,12 @@ namespace EasyGo.View.purchase
             txt_discount.Text = AppSettings.resourcemanager.GetString("trDiscount");
             txt_tax.Text = AppSettings.resourcemanager.GetString("trTax");
 
-            txt_Count.Text = AppSettings.resourcemanager.GetString("trCount");
+            txt_CountTitle.Text = AppSettings.resourcemanager.GetString("trCount");
             txt_SupTotalTitle.Text = AppSettings.resourcemanager.GetString("trSum");
-            txt_taxValueTitle.Text = AppSettings.resourcemanager.GetString("trTaxPercentage");
+            txt_taxValueTitle.Text = AppSettings.resourcemanager.GetString("trTaxValue");
+            txt_taxRateTitle.Text = AppSettings.resourcemanager.GetString("trTaxRate");
+            txt_discountValueTitle.Text = AppSettings.resourcemanager.GetString("trDiscountValue");
+            txt_discountRateTitle.Text = AppSettings.resourcemanager.GetString("trDiscountRate");
             txt_totalTitle.Text = AppSettings.resourcemanager.GetString("trTotal");
 
             //txt_payInvoice.Text = AppSettings.resourcemanager.GetString("trPurchaseBill");
@@ -259,9 +269,9 @@ namespace EasyGo.View.purchase
                 categoryItem = FillCombo.categoriesFirstLevelList.ToList();
                 buildCategoryItem(categoryItem);
                 // itemsCard
-                if (FillCombo.itemsList is null)
-                    await FillCombo.RefreshItems();
-                items =  FillCombo.itemsList.ToList();
+                if (FillCombo.itemsHasUnitsList is null)
+                    await FillCombo.RefreshItemsHasUnits();
+                items =  FillCombo.itemsHasUnitsList.ToList();
                 buildItemCards(items);
 
 
@@ -402,7 +412,9 @@ namespace EasyGo.View.purchase
                 if (itemCards != null)
                 {
                     selectedItem = itemCards.item;
-                    MessageBox.Show("I'm item num:" + selectedItem.ItemId);
+                    AddItemToInvoice(selectedItem);
+
+                   MessageBox.Show("I'm item num:" + selectedItem.ItemId);
                 }
 
 
@@ -446,6 +458,7 @@ namespace EasyGo.View.purchase
                         PurInvoiceItem row = (PurInvoiceItem)dg_invoiceDetails.SelectedItems[0];
                         invoiceDetailsList.Remove(row);
 
+                        refreshInvoiceDetails();
                     }
 
                 HelpClass.EndAwait(grid_main);
@@ -460,9 +473,118 @@ namespace EasyGo.View.purchase
         #endregion
         List<PurInvoiceItem> invoiceDetailsList = new List<PurInvoiceItem>();
 
+        #region Invoice Operations
+
+        private void refreshInvoiceDetails()
+        {
+            try
+            {
+                int index = 1;
+                foreach (var item in invoiceDetailsList)
+                {
+                    item.Index = index;
+                    index++;
+                }
+                dg_invoiceDetails.ItemsSource = invoiceDetailsList;
+                dg_invoiceDetails.Items.Refresh();
+            }
+            catch { }
+        }
+        private void AddItemToInvoice(Item item)
+        {
+            long defaultUnitId = 0;
+
+            var defaultUnit = item.ItemUnits.Where(x => x.IsDefaultPurchase == true).FirstOrDefault();
+            if (defaultUnit != null)
+            {
+                defaultUnitId = defaultUnit.ItemUnitId;
+                var itemInInvoice = invoiceDetailsList.Where(x => x.ItemUnitId == defaultUnitId).FirstOrDefault();
+                if (itemInInvoice != null)
+                {
+                    itemInInvoice.Quantity++;
+                    itemInInvoice.Total = itemInInvoice.Quantity * itemInInvoice.Price;
+                }
+                else
+                {
+
+                    invoiceDetailsList.Add(new PurInvoiceItem()
+                    {
+                        ItemName = item.Name,
+                        Quantity = 1,
+                        Price = (decimal)defaultUnit.PurchasePrice,
+                        Total = (decimal)defaultUnit.PurchasePrice,
+                    });
+                }
+            }
+            else
+            {
+                invoiceDetailsList.Add(new PurInvoiceItem()
+                {
+                    ItemName = item.Name,
+                    Quantity = 1,
+                    Price = 0,
+                    Total = 0,
+                });
+            }
+
+            refreshInvoiceDetails();
+            CalculateInvoiceValues();
+        }
+
+        private void CalculateInvoiceValues()
+        {
+            decimal total = invoiceDetailsList.Select(x => x.Total).Sum();
+
+
+            #region tax
+            decimal taxAmount = 0;
+            decimal taxPercentage = 0;
+
+           
+            //taxAmount = HelpClass.calcPercentage(total, (decimal)invoice.Tax);//tax value
+           // taxPercentage = 
+
+            #endregion
+            decimal totalAfterTax = total + taxAmount;
+
+            #region discount
+
+            decimal manualDiscount = 0;
+            decimal manualDiscountRate = 0;
+
+            if (invoice.DiscountType == "rate" )
+            {
+                manualDiscount = HelpClass.calcPercentage(totalAfterTax, (decimal)invoice.DiscountPercentage);
+                manualDiscountRate = (decimal)invoice.DiscountPercentage;
+            }
+            else
+            {
+                manualDiscount = invoice.DiscountValue;
+                manualDiscountRate = (manualDiscount * 100) / totalAfterTax;
+            }
+
+
+            #endregion
+
+            decimal totalNet = totalAfterTax - manualDiscount;
+
+
+            //display
+            invoice.Count = invoiceDetailsList.Select(x => x.Quantity).Sum();
+            invoice.Total = invoiceDetailsList.Select(x => x.Total).Sum();
+            //tax
+            invoice.Tax = taxAmount;
+            invoice.TaxPercentage = taxPercentage;
+
+            invoice.DiscountValue = manualDiscount;
+            invoice.DiscountPercentage = manualDiscountRate;
+            invoice.TotalNet = totalNet;
+        }
+
+        #endregion
 
         #region search
-       
+
         private void Btn_search_Click(object sender, RoutedEventArgs e)
         {
            
@@ -498,11 +620,543 @@ namespace EasyGo.View.purchase
         {
 
         }
+
+        #region Save
+        List<CashTransfer> listPayments;
         private void Btn_save_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        
+     
+        private async void btn_newInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender != null)
+                    HelpClass.StartAwait(grid_main);
+
+                if (invoiceDetailsList.Count > 0  && (_InvoiceType == "pd" || _InvoiceType == "pbd"))
+                {
+                    bool valid = validateItemUnits();
+                    if (valid)
+                    {
+                        #region Accept
+                        MainWindow.mainWindow.Opacity = 0.2;
+                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                        w.contentText = AppSettings.resourcemanager.GetString("trSaveInvoiceNotification");
+                        w.ShowDialog();
+                        MainWindow.mainWindow.Opacity = 1;
+                        #endregion
+                        if (w.isOk)
+                        {
+                            await addInvoice(_InvoiceType);
+                        }
+                        clearInvoice();
+                        _InvoiceType = "pd";
+                    }
+                    else if (invoiceDetailsList.Count == 0)
+                    {
+                        clearInvoice();
+                        _InvoiceType = "pd";
+                    }
+                }
+                else
+                    clearInvoice();
+
+                //setNotifications();
+
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                if (sender != null)
+                    HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+
+        private bool validateItemUnits()
+        {
+            bool valid = true;
+            for (int i = 0; i < invoiceDetailsList.Count; i++)
+            {
+                if (invoiceDetailsList[i].ItemUnitId == 0)
+                {
+                    valid = false;
+                    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trItemWithNoUnit"), animation: ToasterAnimation.FadeIn);
+
+                    return valid;
+                }
+            }
+            return valid;
+        }
+
+        private async Task addInvoice(string invType)
+        {
+            InvoiceResult invoiceResult = new InvoiceResult();
+
+            #region invoice object
+            if ((invoice.InvType == "p" || invoice.InvType == "pw") && (invType == "pbw" || invType == "pbd")) // invoice is purchase and will be bounce purchase  or purchase bounce draft , save another invoice in db
+            {
+                invoice.InvoiceMainId = invoice.InvoiceId;
+                invoice.InvoiceId = 0;
+                invoice.InvNumber = "pb";
+                invoice.BranchCreatorId = MainWindow.branchLogin.BranchId;
+                invoice.PosId = MainWindow.posLogin.PosId;
+            }
+            else if (invoice.InvType == "po")
+            {
+                invoice.InvNumber = "pi";
+            }
+            else if (invType == "pd" && invoice.InvoiceId == 0)
+                invoice.InvNumber = "pd";
+
+            if (invoice.BranchCreatorId == 0 || invoice.BranchCreatorId == null)
+            {
+                invoice.BranchCreatorId = MainWindow.branchLogin.BranchId;
+                invoice.PosId = MainWindow.posLogin.PosId;
+            }
+
+            if (invoice.InvType != "pw" || invoice.InvoiceId == 0)
+            {
+                invoice.InvType = invType;
+                //if (!tb_discount.Text.Equals(""))
+                //    invoice.discountValue = decimal.Parse(tb_discount.Text);
+
+                //if (!tb_shippingCost.Text.Equals(""))
+                //    invoice.shippingCost = decimal.Parse(tb_shippingCost.Text);
+
+                //if (cb_typeDiscount.SelectedIndex != -1)
+                //    invoice.discountType = cb_typeDiscount.SelectedValue.ToString();
+
+
+                //invoice.total = _Sum;
+                //invoice.totalNet = decimal.Parse(tb_total.Text);
+                //if (cb_vendor.SelectedValue != null && cb_vendor.SelectedValue.ToString() != "0")
+                //    invoice.agentId = (int)cb_vendor.SelectedValue;
+                //invoice.DeservedDate = dp_desrvedDate.SelectedDate;
+                //invoice.VendorInvNum = tb_invoiceNumber.Text;
+                //invoice.VendorInvDate = dp_invoiceDate.SelectedDate;
+                //invoice.Notes = tb_note.Text;
+                //invoice.TaxType = "";
+                //if (tb_taxValue.Text != "" && AppSettings.invoiceTax_bool == true)
+                //{
+                //    invoice.tax = decimal.Parse(tb_taxValue.Text);
+                //    invoice.taxValue = _TaxValue;
+                //}
+                //else
+                //{
+                //    invoice.tax = 0;
+                //    invoice.taxValue = 0;
+                //}
+
+                invoice.Paid = 0;
+                invoice.Deserved = invoice.TotalNet;            
+
+                //invoice.BranchId = (int)cb_branch.SelectedValue;
+               
+               
+
+                invoice.CreateUserId = MainWindow.userLogin.UserId;
+                invoice.UpdateUserId = MainWindow.userLogin.UserId;
+ 
+                if (invType == "pw" || invType == "p")
+                    invoice.InvNumber = "pi";
+                #endregion
+            
+                // save invoice in DB
+                switch (invType)
+                {
+                    case "pbw":
+                        #region notification Object
+                        Notification not = new Notification()
+                        {
+                            Title = "trPurchaseReturnInvoiceAlertTilte",
+                            Ncontent = "trPurchaseReturnInvoiceAlertContent",
+                            MsgType = "alert",
+                            ObjectName = "storageAlerts_ctreatePurchaseReturnInvoice",
+                            BranchId = (int)invoice.BranchCreatorId,
+                            Prefix = MainWindow.branchLogin.Name,
+                            CreateUserId = MainWindow.userLogin.UserId,
+                            UpdateUserId = MainWindow.userLogin.UserId,
+                        };
+                        #endregion
+                        #region posCash posCash with type inv
+                        var cashT = invoice.posCashTransfer(invoice, "pb");
+                        #endregion
+                        invoiceResult = await invoiceModel.savePurchaseBounce(invoice, listPayments, cashT, not, MainWindow.posLogin.PosId, MainWindow.branchLogin.BranchId);
+                        break;
+                    case "p":
+                    case "pw":
+                        #region notification Object
+                        Notification amountNot = new Notification()
+                        {
+                            Title = "trExceedMaxLimitAlertTilte",
+                            Ncontent = "trExceedMaxLimitAlertContent",
+                            MsgType = "alert",
+                            ObjectName = "storageAlerts_minMaxItem",
+                            BranchId = MainWindow.branchLogin.BranchId,
+                            CreateUserId = MainWindow.userLogin.UserId,
+                            UpdateUserId = MainWindow.userLogin.UserId,
+                        };
+                        #endregion
+
+                        #region purchase wait alert
+                        //int branchId = 0;
+                        //if ((int)cb_branch.SelectedValue != MainWindow.branchID)
+                        //    branchId = (int)cb_branch.SelectedValue;
+                        //Notification waitNot = new Notification()
+                        //{
+                        //    title = "trPurchaseInvoiceAlertTilte",
+                        //    ncontent = "trPurchaseInvoiceAlertContent",
+                        //    msgType = "alert",
+                        //    objectName = "storageAlerts_ctreatePurchaseInvoice",
+                        //    Prefix = MainWindow.loginBranch.name,
+                        //    branchId = branchId,
+                        //    createUserId = MainWindow.userID.Value,
+                        //    updateUserId = MainWindow.userID.Value,
+                        //};
+                        #endregion
+
+                        #region posCash
+                        CashTransfer posCashTransfer = invoice.posCashTransfer(invoice, "pi");
+                        #endregion
+                        invoiceResult = await invoiceModel.savePurchaseInvoice(invoice, amountNot,  posCashTransfer, listPayments, MainWindow.posLogin.PosId);
+
+                        break;
+
+                    default:
+                        invoiceResult = await invoiceModel.savePurchaseDraft(invoice,  MainWindow.posLogin.PosId);
+                        break;
+                };
+
+                if (invoiceResult.Result > 0) // success
+                {
+                   // prInvoiceId = invoiceResult.Result;
+                    invoice.InvoiceId = invoiceResult.Result;
+                    invoice.InvNumber = invoiceResult.Message;
+                    invoice.UpdateDate = invoiceResult.UpdateDate;
+                    TimeSpan ts;
+                    TimeSpan.TryParse(invoiceResult.InvTime, out ts);
+                    invoice.InvTime = ts;
+
+                    AppSettings.PurchaseDraftCount = invoiceResult.PurchaseDraftCount;
+                    AppSettings.PosBalance = invoiceResult.PosBalance;
+                   // MainWindow.setBalance();
+
+                    Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
+
+                    #region print
+                    ///////////////////////////////////////
+
+                    if (invoice.InvType == "pw" || invoice.InvType == "p")
+                    {
+                       // if (AppSettings.print_on_save_pur == "1")
+                        {
+                            Thread t1 = new Thread(async () =>
+                            {
+                                string msg = "";
+                                List<PayedInvclass> payedlist = new List<PayedInvclass>();
+                                payedlist = await cashTransfer.PayedBycashlist(listPayments);
+                                msg = await printPurInvoice(invoice, invoice.InvoiceItems, payedlist);
+                                if (msg == "")
+                                {
+
+                                }
+                                else
+                                {
+                                    this.Dispatcher.Invoke(() =>
+                                    {
+                                        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(msg), animation: ToasterAnimation.FadeIn);
+                                    });
+                                }
+                            });
+                            t1.Start();
+                        }
+                       // if (AppSettings.email_on_save_pur == "1")
+                        //{
+                        //    Thread t2 = new Thread(async () =>
+                        //    {
+                        //        string msg = "";
+                        //        List<PayedInvclass> payedlist = new List<PayedInvclass>();
+                        //        payedlist = await cashTransfer.PayedBycashlist(listPayments);
+                        //        if (invoice.InvDate == null)
+                        //        {
+                        //            invoice.InvDate = DateTime.Now;
+                        //        }
+                        //        msg = await sendPurEmail(invoice, invoice.InvoiceItems, payedlist);
+                        //        this.Dispatcher.Invoke(() =>
+                        //        {
+
+                        //            if (msg == "")
+                        //            {
+                        //                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMailNotSent"), animation: ToasterAnimation.FadeIn);
+                        //            }
+                        //            else if (msg == "trTheCustomerHasNoEmail")
+                        //            {
+
+                        //            }
+                        //            else if (msg == "trMailSent")
+                        //            {
+                        //                Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trMailSent"), animation: ToasterAnimation.FadeIn);
+
+                        //            }
+                        //            else
+                        //            {
+                        //                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString(msg), animation: ToasterAnimation.FadeIn);
+
+                        //            }
+                        //        });
+                        //    });
+                        //    t2.Start();
+                        //}
+
+                    }
+                    #endregion
+
+                    //MainWindow.InvoiceGlobalItemUnitsList = await itemUnitModel.Getall();
+
+                    clearInvoice();
+                   // setNotifications();
+
+                }
+                else if (invoiceResult.Result.Equals(-2))// رصيد pos غير كاف
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
+                else if (invoiceResult.Result == -10) // كمية الخصائص المرجعة غير كافية
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("PropertiesNotAvailable"), animation: ToasterAnimation.FadeIn);
+                else if (invoiceResult.Result == -9)// الكمية المرجعة أكبر من الكمية المشتراة
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
+                else if (invoiceResult.Result.Equals(-3))// الكمية في المخزن غير كافية في حالة الإرجاع
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotAvailableFromToolTip") + " " + invoiceResult.Message, animation: ToasterAnimation.FadeIn);
+                //else if (invoiceResult.Result == -4) // رصيد المورد غير كاف في حالة الإرجاع
+                //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorMaxDeservedExceeded"), animation: ToasterAnimation.FadeIn);
+                else
+                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+
+            }
+
+        }
+        #endregion
+
+        #region Print
+        LocalReport rep = new LocalReport();
+        ReportCls reportclass = new ReportCls();
+        public async Task<string> printPurInvoice(PurchaseInvoice prInvoice, List<PurInvoiceItem> invoiceItems, List<PayedInvclass> payedList)
+        {
+            string msg = "";
+            try
+            {
+                if (prInvoice.InvoiceId > 0)
+                {
+                    if (prInvoice.InvType == "pd"  || prInvoice.InvType == "pbd")
+                    {
+                        msg = "trPrintDraftInvoice";
+                    }
+                    else
+                    {
+                        List<ReportParameter> paramarr = new List<ReportParameter>();
+
+
+                        if (prInvoice.InvoiceId > 0)
+                        {
+                            //user
+                            User employ = new User();
+
+                            if (FillCombo.usersList is null)
+                            { await FillCombo.RefreshUsers(); }
+                            employ = FillCombo.usersList.Where(u => u.UserId == (long)prInvoice.UpdateUserId).FirstOrDefault();
+
+                            prInvoice.UserName = employ.FirstName;
+                            prInvoice.UserLastName = employ.LastName;
+                            //supplier
+                            if (prInvoice.SupplierId != null)
+                            {
+                                Supplier agentinv = new Supplier();
+                                if (FillCombo.suppliersList is null)
+                                { await FillCombo.RefreshSuppliers(); }
+                                agentinv = FillCombo.suppliersList.Where(X => X.SupplierId == prInvoice.SupplierId).FirstOrDefault();
+
+                                prInvoice.SupplierCode = agentinv.Code;
+                                prInvoice.SupplierName = agentinv.Name;
+                                prInvoice.SupplierCompany = agentinv.Company;
+                                prInvoice.SupplierMobile = agentinv.Mobile;
+                            }
+                            else
+                            {
+
+                                prInvoice.SupplierCode = "-";
+                                prInvoice.SupplierName = "-";
+                                prInvoice.SupplierCompany = "-";
+                                prInvoice.SupplierMobile = "-";
+                            }
+
+                            //branch
+                            Branch branch = new Branch();
+                            if (FillCombo.branchsList is null)
+                            { await FillCombo.RefreshBranchs(); }
+                            branch = FillCombo.branchsList.Where(b => b.BranchId == (int)prInvoice.BranchCreatorId).FirstOrDefault();
+
+                            if (branch.BranchId > 0)
+                            {
+                                prInvoice.BranchCreatorName = branch.Name;
+                            }
+                            //branch reciver
+                            if (prInvoice.BranchId != null)
+                            {
+                                if (prInvoice.BranchId > 0)
+                                {
+                                    if (FillCombo.branchsList is null)
+                                    { await FillCombo.RefreshBranchs(); }
+                                    branch = FillCombo.branchsList.Where(b => b.BranchId == (int)prInvoice.BranchId).FirstOrDefault();
+
+                                    prInvoice.BranchName = branch.Name;
+                                }
+                                else
+                                {
+                                    prInvoice.BranchName = "-";
+                                }
+
+                            }
+                            else
+                            {
+                                prInvoice.BranchName = "-";
+                            }
+                            // end branch reciever
+
+                            ReportCls.checkInvLang();
+                            foreach (var i in invoiceItems)
+                            {
+                                i.Price = decimal.Parse(HelpClass.DecTostring(i.Price));
+                                i.Total = decimal.Parse(HelpClass.DecTostring(i.Total));
+                            }
+                            ReportSize repsize = new ReportSize();
+                            int itemscount = 0;
+                            ReportConfig.purchaseInvoiceReport(invoiceItems, rep, "");
+                            itemscount = invoiceItems.Count();
+                            //printer
+                            ReportConfig clsrep = new ReportConfig();
+                            ReportSize repsset = new ReportSize{
+                                    paperSize = AppSettings.salePaperSize,
+                                    printerName ="",};
+                            repsize.paperSize = repsset.paperSize;
+                            repsize = reportclass.GetpayInvoiceRdlcpath(prInvoice, itemscount, repsize.paperSize);
+                            repsize.printerName = repsset.printerName;
+                            //end 
+
+                            string reppath = repsize.reppath;
+                            rep.ReportPath = reppath;
+                            ReportConfig.setInvoiceLanguage(paramarr);
+
+                            ReportConfig.InvoiceHeader(paramarr);
+
+                            multiplePaytable(paramarr, prInvoice);
+                            paramarr = reportclass.fillPurInvReport(prInvoice, paramarr);
+
+                            rep.SetParameters(paramarr);
+                            rep.Refresh();
+
+
+                            //copy count
+                            if ( prInvoice.InvType == "p" || prInvoice.InvType == "pb" || prInvoice.InvType == "pw" || prInvoice.InvType == "pbw")
+                            {
+
+                                //paramarr.Add(new ReportParameter("isOrginal", prInvoice.isOrginal.ToString()));
+
+                                rep.SetParameters(paramarr);
+                                rep.Refresh();
+                                if (repsize.printerName == "")
+                                {
+                                    if (AppSettings.sale_printer_name == "")
+                                    {
+                                        repsize.printerName = HelpClass.getdefaultPrinters();
+                                    }
+                                    else
+                                    {
+                                        repsize.printerName = AppSettings.sale_printer_name;
+                                    }
+
+                                }
+                                // if (int.Parse(AppSettings.Allow_print_inv_count) > prInvoice.printedcount)
+                                {
+                                      
+                                    if (repsize.paperSize == "A4")
+                                    {
+                                        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, repsize.printerName, 1);
+                                    }
+                                    else
+                                    {
+                                        LocalReportExtensions.customPrintToPrinter(rep, repsize.printerName, 1, repsize.width, repsize.height);
+                                    }
+
+                                }
+
+                            }
+                            //else
+                            //{
+
+
+                            //    if (repsize.paperSize == "A4")
+                            //    {
+
+                            //        LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, repsize.printerName, short.Parse(AppSettings.pur_copy_count));
+
+                            //    }
+                            //    else
+                            //    {
+                            //        LocalReportExtensions.customPrintToPrinter(rep, repsize.printerName, short.Parse(AppSettings.pur_copy_count), repsize.width, repsize.height);
+
+                            //    }
+
+                            //}
+                            // end copy count
+
+                           
+                        }
+                    }
+
+                    //
+                }
+            }
+            catch
+            {
+                
+                msg = "trNotCompleted";
+
+            }
+            return msg;
+        }
+        List<PayedInvclass> mailpayedList = new List<PayedInvclass>();
+        public void multiplePaytable(List<ReportParameter> paramarr, PurchaseInvoice prInvoice)
+        {
+
+            CashTransfer cachModel = new CashTransfer();
+            List<PayedInvclass> payedList = new List<PayedInvclass>();
+
+            payedList = prInvoice.cachTrans;
+            payedList = payedList == null ? new List<PayedInvclass>() : payedList;//
+            mailpayedList = payedList;
+            decimal sump = payedList.Sum(x => x.Cash);
+            decimal deservd = (decimal)prInvoice.TotalNet - sump;
+            prInvoice.Deserved = deservd;
+            ReportConfig clsrep = new ReportConfig();
+            List<PayedInvclass> repPayedList = clsrep.cashPayedinvoice(payedList, prInvoice);
+            //convertter
+            foreach (var p in payedList)
+            {
+
+                 p.Cash = decimal.Parse(HelpClass.DecTostring(p.Cash ));
+
+            }
+            paramarr.Add(new ReportParameter("cashTr", AppSettings.resourcemanagerreport.GetString("trCashType")));
+
+            paramarr.Add(new ReportParameter("sumP", HelpClass.DecTostring(sump)));
+            paramarr.Add(new ReportParameter("deserved", HelpClass.DecTostring(deservd)));
+            rep.DataSources.Add(new ReportDataSource("DataSetPayedInvclass", repPayedList));
+
+
+        }
+        #endregion
     }
 }
