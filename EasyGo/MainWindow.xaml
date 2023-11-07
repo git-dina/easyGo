@@ -51,6 +51,14 @@
                             HorizontalAlignment="Right"
                     Orientation="Horizontal" >
 
+                        <StackPanel>
+                            <TextBlock Name="txt_cashTitle" Text="cash"   HorizontalAlignment="Left"   Foreground="{StaticResource MainColor}"  FontSize="14" ></TextBlock>
+                            <DockPanel HorizontalAlignment="Left" Margin="0 -5 0 0" >
+                                <TextBlock Name="txt_cashValue"  Text="0.00" Foreground="{StaticResource MainColor}"   HorizontalAlignment="Center"  FontSize="12" />
+                                <TextBlock Name="txt_cashSympol" Text="KWD"  Foreground="{StaticResource MainColor}" HorizontalAlignment="Center"  FontSize="12" Margin="5,0,5,0"/>
+                            </DockPanel>
+                        </StackPanel>
+                        <Border Grid.Column="8" Height="30" BorderBrush="{StaticResource MainColor}" BorderThickness="1,0,0,0" Margin="5" VerticalAlignment="Center" ></Border>
                         <!--<StackPanel x:Name="sp_posName" VerticalAlignment="Center" Orientation="Vertical" 
                                 Grid.Column="3" Margin="5 0">
                         <TextBlock x:Name="txt_posNameTitle"  Text="POS Name" FontSize="14" Foreground="White" HorizontalAlignment="Center" />
