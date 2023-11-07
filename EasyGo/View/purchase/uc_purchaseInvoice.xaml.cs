@@ -440,6 +440,122 @@ namespace EasyGo.View.purchase
         {
 
         }
+        private async void Dg_invoiceDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            /*
+            try
+            {
+
+                TextBox t = e.EditingElement as TextBox;  // Assumes columns are all TextBoxes
+                var columnName = e.Column.Header.ToString();
+
+                BillDetailsPurchase row = e.Row.Item as BillDetailsPurchase;
+                int index = billDetails.IndexOf(billDetails.Where(p => p.itemUnitId == row.itemUnitId && p.OrderId == row.OrderId).FirstOrDefault());
+
+                TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
+                if (elapsed.TotalMilliseconds < 100)
+                {
+                    if (columnName == AppSettings.resourcemanager.GetString("trQTR"))
+                        t.Text = billDetails[index].Count.ToString();
+                    else if (columnName == AppSettings.resourcemanager.GetString("trPrice"))
+                        t.Text = HelpClass.DecTostring(billDetails[index].Price);
+
+                }
+                else
+                {
+                    int oldCount = 0;
+                    long newCount = 0;
+                    decimal oldPrice = 0;
+                    decimal newPrice = 0;
+
+                    //"tb_amont"
+                    if (columnName == AppSettings.resourcemanager.GetString("trQTR"))
+                    {
+                        if (!t.Text.Equals(""))
+                            newCount = int.Parse(t.Text);
+                        else
+                            newCount = 0;
+                        if (newCount < 0)
+                        {
+                            newCount = 0;
+                            t.Text = "0";
+                        }
+                    }
+                    else
+                        newCount = row.Count;
+
+                    oldCount = row.Count;
+                    oldPrice = row.Price;
+                  
+                    #region if return invoice
+                    if (_InvoiceType == "pbd" || _InvoiceType == "pbw")
+                    {
+                        var selectedItemUnitId = row.itemUnitId;
+
+                        var itemUnitsIds = FillCombo.itemUnitList.Where(x => x.itemId == row.itemId).Select(x => x.itemUnitId).ToList();
+
+                        #region caculate available amount in this bil
+                        int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(row.itemUnitId, MainWindow.branchLogin.branchId);
+                        int amountInBill = await getAmountInBill(row.itemId, row.itemUnitId, row.ID);
+                        int availableAmount = availableAmountInBranch - amountInBill;
+                        #endregion
+                        #region calculate amount in purchase invoice
+                        var items = mainInvoiceItems.ToList().Where(i => itemUnitsIds.Contains((long)i.itemUnitId));
+                        int purchasedAmount = 0;
+                        foreach (ItemTransfer it in items)
+                        {
+                            if (selectedItemUnitId == (long)it.itemUnitId)
+                                purchasedAmount += (int)it.quantity;
+                            else
+                                purchasedAmount += await FillCombo.itemUnit.fromUnitToUnitQuantity((int)it.quantity, row.itemId, (long)it.itemUnitId, selectedItemUnitId);
+                        }
+                        #endregion
+                        if (newCount > (purchasedAmount - amountInBill) || newCount > availableAmount)
+                        {
+                            // return old value 
+                            t.Text = (purchasedAmount - amountInBill) > availableAmount ? availableAmount.ToString() : (purchasedAmount - amountInBill).ToString();
+
+                            newCount = (purchasedAmount - amountInBill) > availableAmount ? availableAmount : (purchasedAmount - amountInBill);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
+                    #endregion
+                    if (columnName == AppSettings.resourcemanager.GetString("trPrice") && !t.Text.Equals(""))
+                        newPrice = decimal.Parse(t.Text);
+                    else
+                        newPrice = row.Price;
+
+
+
+                    // old total for changed item
+                    decimal total = oldPrice * oldCount;
+                    _Sum -= total;
+
+                    // new total for changed item
+                    total = newCount * newPrice;
+                    _Sum += total;
+
+                    //refresh total cell
+                    TextBlock tb = dg_billDetails.Columns[6].GetCellContent(dg_billDetails.Items[index]) as TextBlock;
+                    tb.Text = HelpClass.DecTostring(total);
+
+                    //  refresh sum and total text box
+                    refreshTotalValue();
+
+                    // update item in billdetails           
+                    billDetails[index].Count = (int)newCount;
+                    billDetails[index].Price = newPrice;
+                    billDetails[index].Total = total;
+                }
+                refrishBillDetails();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+            */
+        }
+
         private void unitRowFromInvoiceItems(object sender, RoutedEventArgs e)
         {
 

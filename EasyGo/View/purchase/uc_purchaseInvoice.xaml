@@ -869,7 +869,9 @@ l0.3,260.4L348.9,261.7z"  />
                             <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                             <DataGrid  Margin="5,5,5,5" Grid.Row="1"  IsReadOnly="False"   HeadersVisibility="Column"
-                       x:Name="dg_invoiceDetails" SelectionChanged="Dg_invoiceDetails_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
+                       x:Name="dg_invoiceDetails" SelectionChanged="Dg_invoiceDetails_SelectionChanged" 
+                                       CellEditEnding="Dg_invoiceDetails_CellEditEnding"
+                                       AutoGenerateColumns="False"   Background="White"
                         AlternatingRowBackground="#f3f3f3" AlternationCount="2"
                                       ColumnWidth="Auto" MaxColumnWidth="200"  >
                             <DataGrid.OpacityMask>
@@ -885,7 +887,7 @@ l0.3,260.4L348.9,261.7z"  />
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns >
-                                <DataGridTemplateColumn Width="20" Header="" IsReadOnly="True" >
+                                <DataGridTemplateColumn Width="20" Header=""  >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Margin="-10"   Click="deleteRowFromInvoiceItems"
@@ -898,9 +900,9 @@ l0.3,260.4L348.9,261.7z"  />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn IsReadOnly="True" Header="Num"  Binding="{Binding Path=Index}"/>
-                                <DataGridTextColumn IsReadOnly="True"  Width="*"   Header="Item" Binding="{Binding Path=ItemName}"/>
-                                <DataGridTemplateColumn Width="20" Header="UnitName" IsReadOnly="True" >
+                                <DataGridTextColumn  Header="Num"  Binding="{Binding Path=Index}"/>
+                                <DataGridTextColumn   Width="*"   Header="Item" Binding="{Binding Path=ItemName}"/>
+                                <DataGridTemplateColumn Width="20" Header="UnitName"  >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Margin="0"   Click="unitRowFromInvoiceItems"
@@ -911,239 +913,10 @@ l0.3,260.4L348.9,261.7z"  />
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn  Header="Amount"  Width="*"  Binding="{Binding Path=Quantity}"/>
                                 <DataGridTextColumn  Header="Price"  Width="*"  Binding="{Binding Path=Price}"/>
-                                <DataGridTextColumn Width="*"  Header="Total" IsReadOnly="True"   Binding="{Binding Path = Total,Converter={StaticResource accuracyConverter }}"/>
+                                <DataGridTextColumn Width="*"  Header="Total"    Binding="{Binding Path = Total,Converter={StaticResource accuracyConverter }}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-
-                            <!--<ScrollViewer Margin="0,10" Background="White"  
-                                  Grid.Row="1"  
-                                          HorizontalScrollBarVisibility="Auto"
-                                  VerticalScrollBarVisibility="Auto"  
-                                  >
-                                <Grid >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid  >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol1, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol2, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol3, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol4, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol5, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol6, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol7, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol8, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol9, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol10, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol11, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <ColumnDefinition Width="{Binding ElementName=cl_invDetBigCol12, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock  Grid.Column="0"
-                                        Text="index" 
-                                            FontWeight="SemiBold"
-                                                Foreground="{StaticResource MainColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                        <TextBlock   Grid.Column="1"
-                                        Text="id" 
-                                                FontWeight="SemiBold"
-                                                Foreground="{StaticResource MainColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                        <TextBlock   Grid.Column="2"
-                                        Text="item" 
-                                                FontWeight="SemiBold"
-                                                Foreground="{StaticResource MainColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                        <TextBlock   Grid.Column="3"
-                                        Text="unit" 
-                                                FontWeight="SemiBold"
-                                                Foreground="{StaticResource MainColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                        <TextBlock   Grid.Column="4"
-                                        Text="discount" 
-                                                FontWeight="SemiBold"
-                                                Foreground="{StaticResource MainColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                        <TextBlock   Grid.Column="7"
-                                        Text="count" 
-                                                FontWeight="SemiBold"
-                                                Foreground="{StaticResource MainColor}"  
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                        <TextBlock   Grid.Column="8"
-                                        Text="price" 
-                                                FontWeight="SemiBold"
-                                                Foreground="{StaticResource MainColor}"  
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                        <TextBlock   Grid.Column="9"
-                                        Text="total" 
-                                               FontWeight="SemiBold"
-                                                Foreground="{StaticResource MainColor}"  
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                        <TextBlock   Grid.Column="10"
-                                        Text="item location" 
-                                               FontWeight="SemiBold"
-                                                Foreground="{StaticResource MainColor}"  
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-
-                                    </Grid>
-                                    -->
-                            <!--<ScrollViewer Margin="0,10" Background="White"  
-                                  Grid.Row="1"  HorizontalScrollBarVisibility="Disabled"
-                                  VerticalScrollBarVisibility="Auto"  
-                                  >-->
-                            <!--
-                                        <Grid  x:Name="grid_invoiceDetailsBigRows"
-                                               Grid.Row="1"
-                                                Margin="0,10" Background="White"  
-                                    >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol1"  MinWidth="35" Width="*"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol2"  MinWidth="35" Width="*"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol3"  MinWidth="35" Width="*"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol4"  MinWidth="35" Width="*"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol5"  MinWidth="35" Width="*"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol6"   Width="auto"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol7"   Width="auto"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol8"  MinWidth="35" Width="*"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol9"  MinWidth="35" Width="*"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol10" MinWidth="35" Width="*"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol11" MinWidth="35" Width="*"/>
-                                                <ColumnDefinition x:Name="cl_invDetBigCol12" MinWidth="35" Width="30"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock  Grid.Column="0"
-                                        Text="#51561" 
-                                                Foreground="{StaticResource textColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                            <TextBlock   Grid.Column="1"
-                                        Text="25" 
-                                                Foreground="{StaticResource textColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                            <TextBlock   Grid.Column="2"
-                                        Text="item" 
-                                                Foreground="{StaticResource textColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                             <TextBlock   Grid.Column="3"
-                                        Text="unit" 
-                                                Foreground="{StaticResource textColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                            <TextBlock   Grid.Column="4"
-                                        Text="15" 
-                                                Foreground="{StaticResource textColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-
-                                            <TextBlock   Grid.Column="7"
-                                        Text="19" 
-                                                Foreground="{StaticResource textColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                            <TextBlock   Grid.Column="8"
-                                        Text="price" 
-                                                Foreground="{StaticResource textColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                            <TextBlock   Grid.Column="9"
-                                        Text="112" 
-                                                Foreground="{StaticResource textColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                            <TextBlock   Grid.Column="10"
-                                        Text="-" 
-                                                Foreground="{StaticResource textColor}" 
-                                                FontSize="12"  
-                                   VerticalAlignment="Top"
-                                       HorizontalAlignment="Center" Margin="2.5"
-                                    TextWrapping="WrapWithOverflow"
-                                    TextAlignment="Center"/>
-                                            <Button Grid.Column="11"  
-                                            Tag="1"
-                                            Margin="2.5"
-                                    Height="25" Width="25"  Padding="0"
-                                            VerticalAlignment="Top"
-                                                BorderThickness="1"
-                                                materialDesign:ButtonAssist.CornerRadius="25"
-                                                BorderBrush="{StaticResource LightGrey}"
-                                        Background="{StaticResource Red}">
-                                                <Path Fill="{StaticResource White}" 
-                                                  Stretch="Fill" 
-                                                  Height="15"  Width="15" 
-                                              Data="{StaticResource close}"  />
-                                            </Button>
-                                        </Grid>
-                                    -->
-                            <!--</ScrollViewer>-->
-                            <!--
-                                </Grid>
-                            </ScrollViewer>-->
-                        </Grid>
+                    </Grid>
                 </Grid>
             </Border>
             <Grid x:Name="brd_grid2_2" Grid.Row="2" Grid.Column="1" >
