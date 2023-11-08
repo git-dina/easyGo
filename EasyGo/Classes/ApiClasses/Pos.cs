@@ -10,5 +10,6 @@ namespace EasyGo.Classes.ApiClasses
     {
         public int PosId { get; set; }
 
+        public decimal Balance { get; set; }
     }
 }

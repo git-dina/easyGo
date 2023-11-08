@@ -565,6 +565,13 @@ namespace EasyGo
 
         #endregion
 
-       
+
+        #region pos Balance
+        public static void setBalance()
+        {
+            mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogin.Balance);
+            mainWindow.txt_cashSympol.Text = AppSettings.Currency;
+        }
+        #endregion
     }
 }
