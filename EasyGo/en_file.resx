@@ -367,7 +367,7 @@
     <value>Stores</value>
   </data>
   <data name="trSuppliers" xml:space="preserve">
-    <value>Vendors</value>
+    <value>Suppliers</value>
   </data>
   <data name="trUnitName" xml:space="preserve">
     <value>Unit name</value>

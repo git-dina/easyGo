@@ -406,6 +406,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="Reports\SectionData\Persons\Ar\ArSuppliers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\Persons\En\EnSuppliers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\socialMedia\email.png" />
     <Resource Include="pic\socialMedia\facebook.png" />
     <Resource Include="pic\socialMedia\fax.png" />
@@ -430,6 +436,7 @@
     <Resource Include="fonts\cairo-font\Cairo Regular 400.ttf" />
     <None Include="EasyGo_TemporaryKey.pfx" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.orderPreparingStatus.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Supplier.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.BalanceSTS.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.CardsSts.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.InventoryClass.datasource" />

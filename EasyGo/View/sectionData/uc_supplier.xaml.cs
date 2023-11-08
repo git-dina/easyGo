@@ -516,7 +516,7 @@ namespace EasyGo.View.sectionData
             //end filter
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
-            //ReportConfig.SupplierReport(suppliersQuery, rep, reppath, paramarr);
+            ReportConfig.SupplierReport(suppliersQuery, rep, reppath, paramarr);
             ReportConfig.setReportLanguage(paramarr);
             ReportConfig.Header(paramarr);
 
