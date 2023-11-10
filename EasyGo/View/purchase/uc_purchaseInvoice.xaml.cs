@@ -694,6 +694,9 @@ namespace EasyGo.View.purchase
             invoice.DiscountValue = manualDiscount;
             invoice.DiscountPercentage = manualDiscountRate;
             invoice.TotalNet = totalNet;
+
+            this.DataContext = null;
+            this.DataContext = invoice;
         }
 
         #endregion
