@@ -869,7 +869,9 @@ l0.3,260.4L348.9,261.7z"  />
                             <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
                             Background="White"/>
                             <DataGrid  Margin="5,5,5,5" Grid.Row="1"  IsReadOnly="False"   HeadersVisibility="Column"
-                       x:Name="dg_invoiceDetails" SelectionChanged="Dg_invoiceDetails_SelectionChanged" 
+                       x:Name="dg_invoiceDetails" 
+                                       CanUserAddRows="False" CanUserSortColumns="False"
+                                       CanUserReorderColumns="False" 
                                        CellEditEnding="Dg_invoiceDetails_CellEditEnding"
                                        AutoGenerateColumns="False"   Background="White"
                         AlternatingRowBackground="#f3f3f3" AlternationCount="2"
@@ -900,20 +902,20 @@ l0.3,260.4L348.9,261.7z"  />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn  Header="Num"  Binding="{Binding Path=Index}"/>
-                                <DataGridTextColumn   Width="*"   Header="Item" Binding="{Binding Path=ItemName}"/>
-                                <DataGridTemplateColumn Width="20" Header="UnitName"  >
+                                <DataGridTextColumn  Header="Num"  Binding="{Binding Path=Index, Mode=OneWay}"/>
+                                <DataGridTextColumn   Width="*"   Header="Item" Binding="{Binding Path=ItemName, Mode=OneWay}"/>
+                                <DataGridTemplateColumn  Header="UnitName"  >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Margin="0"   Click="unitRowFromInvoiceItems"
                                          Padding="0" Content="{Binding Path=UnitName}"
-                                      Background="{x:Null}" BorderBrush="{x:Null}"/>
+                                      />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn  Header="Amount"  Width="*"  Binding="{Binding Path=Quantity}"/>
                                 <DataGridTextColumn  Header="Price"  Width="*"  Binding="{Binding Path=Price}"/>
-                                <DataGridTextColumn Width="*"  Header="Total"    Binding="{Binding Path = Total,Converter={StaticResource accuracyConverter }}"/>
+                                <DataGridTextColumn Width="*"  Header="Total"    Binding="{Binding Path = Total, Mode=OneWay,Converter={StaticResource accuracyConverter }}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

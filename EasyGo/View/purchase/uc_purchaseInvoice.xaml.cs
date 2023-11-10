@@ -439,10 +439,7 @@ namespace EasyGo.View.purchase
 
 
         #region invoiceDetails
-        private void Dg_invoiceDetails_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+      
         private async void Dg_invoiceDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             try
