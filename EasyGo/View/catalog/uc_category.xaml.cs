@@ -487,23 +487,21 @@ namespace EasyGo.View.catalog
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\SectionData\Persons\Ar\ArCategorys.rdlc";
+                addpath = @"\Reports\Catalog\Ar\ArCategory.rdlc";
             }
             else
             {
-                addpath = @"\Reports\SectionData\Persons\En\EnCategorys.rdlc";
+                addpath = @"\Reports\Catalog\En\EnCategory.rdlc";
             }
             string searchval = "";
             //filter   
-            // paramarr.Add(new ReportParameter("stateval", stateval));
-            // paramarr.Add(new ReportParameter("trActiveState", AppSettings.resourcemanagerreport.GetString("trState")));
             paramarr.Add(new ReportParameter("trSearch", AppSettings.resourcemanagerreport.GetString("trSearch")));
             searchval = tb_search.Text;
             paramarr.Add(new ReportParameter("searchVal", searchval));
             //end filter
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
-            //ReportConfig.CategoryReport(categorysQuery, rep, reppath, paramarr);
+            ReportConfig.CategoryReport(categorysQuery, rep, reppath, paramarr);
             ReportConfig.setReportLanguage(paramarr);
             ReportConfig.Header(paramarr);
 

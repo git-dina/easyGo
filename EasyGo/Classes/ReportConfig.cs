@@ -227,6 +227,21 @@ namespace EasyGo.Classes
             rep.EnableExternalImages = true;
 
         }
+
+        #region    Catalog
+        public static void CategoryReport(IEnumerable<Category> categoryQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+            rep.DataSources.Add(new ReportDataSource("DataSetCategory", categoryQuery));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trCategories")));
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
+        }
+        #endregion
         public static void HeaderNoLogo(List<ReportParameter> paramarr)
         {
 
@@ -1254,6 +1269,22 @@ namespace EasyGo.Classes
             paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
             paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trCompany", AppSettings.resourcemanagerreport.GetString("trCompany")));
+            paramarr.Add(new ReportParameter("trMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+
+        }
+        public static void CustomerReport(IEnumerable<Customer> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetAgent", Query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trCustomers")));
+            //table columns
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trEmail", AppSettings.resourcemanagerreport.GetString("trEmail")));
             paramarr.Add(new ReportParameter("trMobile", AppSettings.resourcemanagerreport.GetString("trMobile")));
             paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
 
