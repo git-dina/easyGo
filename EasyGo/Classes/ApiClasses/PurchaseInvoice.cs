@@ -2,7 +2,9 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,7 +61,6 @@ namespace EasyGo.Classes.ApiClasses
         public List<PayedInvclass> cachTrans { get; set; }
         public int Count { get; set; }
         #endregion
-
         #region Methods
 
         public CashTransfer posCashTransfer(PurchaseInvoice invoice, string invType)
@@ -182,14 +183,54 @@ namespace EasyGo.Classes.ApiClasses
         #endregion
     }
 
-    public class PurInvoiceItem
+    public class PurInvoiceItem : INotifyPropertyChanged
     {
         public int InvItemId { get; set; }
         public Nullable<long> InvoiceId { get; set; }
-        public int Quantity { get; set; }
+
+        //public int Quantity { get; set; }
+        private int _Quantity;
+        public int Quantity
+        {
+            get => _Quantity;
+            set
+            {
+                if (_Quantity == value) return;
+
+                _Quantity = value;
+                OnPropertyChanged();
+                Total = Quantity * Price;
+            }
+        }
+
         public string Notes { get; set; }
-        public decimal Price { get; set; }
-        public decimal Total { get; set; }
+        //public decimal Price { get; set; }
+        private decimal _Price;
+        public decimal Price
+        {
+            get => _Price;
+            set
+            {
+                if (_Price == value) return;
+
+                _Price = value;
+                OnPropertyChanged();
+                Total = Quantity * Price;
+            }
+        }
+        //public decimal Total { get; set; }
+        private decimal _Total;
+        public decimal Total
+        {
+            get => _Total;
+            set
+            {
+                if (_Total == value) return;
+
+                _Total = value;
+                OnPropertyChanged();
+            }
+        }
         public Nullable<long> ItemUnitId { get; set; }
         public string UnitName { get; set; }
         public bool IsActive { get; set; } = true;
@@ -203,5 +244,16 @@ namespace EasyGo.Classes.ApiClasses
         public int Index { get; set; }
         public string ItemName { get; set; }
         public List<Item> PackageItems { get; set; }
+
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(
+            [CallerMemberName]  string propertyName = null) 
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
     }
 }
