@@ -147,7 +147,8 @@ namespace EasyGo.View.catalog
                     btn_unit.IsEnabled = true;
                     getImg();
                 }
-               
+
+                HelpClass.clearValidate(requiredControlList, this);
 
                 HelpClass.EndAwait(grid_main);
             }
