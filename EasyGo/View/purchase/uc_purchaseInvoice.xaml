@@ -519,7 +519,6 @@ Margin="5"  CornerRadius="0,0,0,0"
 
                     </Grid>
                 </Border>
-
                 <Border x:Name="brd_total"
                         MinWidth="{Binding ElementName=brd_total, Path=ActualHeight}"
                         Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" 
@@ -573,8 +572,6 @@ Margin="5"  CornerRadius="0,0,0,0"
 
                     </Grid>
                 </Border>
-
-
             </Grid>
 
         </Grid>
@@ -874,9 +871,9 @@ l0.3,260.4L348.9,261.7z"  />
                             Background="White"/>
                             <DataGrid  Margin="5,5,5,5" Grid.Row="1"  IsReadOnly="False"   HeadersVisibility="Column"
                        x:Name="dg_invoiceDetails" 
+                                       CellEditEnding="Dg_invoiceDetails_CellEditEnding"
                                        CanUserAddRows="False" CanUserSortColumns="False"
                                        CanUserReorderColumns="False" 
-                                       CellEditEnding="Dg_invoiceDetails_CellEditEnding"
                                        AutoGenerateColumns="False"   Background="White"
                         AlternatingRowBackground="#f3f3f3" AlternationCount="2"
                                       ColumnWidth="Auto" MaxColumnWidth="200"  >

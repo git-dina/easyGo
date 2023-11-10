@@ -442,6 +442,7 @@ namespace EasyGo.View.purchase
       
         private async void Dg_invoiceDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
+            /*
             try
             {
 
@@ -552,9 +553,28 @@ namespace EasyGo.View.purchase
             {
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
-    
+            */
+            try
+            {
+                await Task.Delay(0050);
+                CalculateInvoiceValues();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
-
+        private void dg_invoiceDetails_CurrentCellChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                CalculateInvoiceValues();
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
         private void unitRowFromInvoiceItems(object sender, RoutedEventArgs e)
         {
 
@@ -1277,5 +1297,7 @@ namespace EasyGo.View.purchase
 
         }
         #endregion
+
+        
     }
 }
