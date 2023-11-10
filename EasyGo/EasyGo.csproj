@@ -412,6 +412,18 @@
     <Content Include="Reports\SectionData\Persons\En\EnSuppliers.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\SectionData\Persons\En\EnCustomers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\Persons\Ar\ArCustomers.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\Ar\ArCategory.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\En\EnCategory.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\socialMedia\email.png" />
     <Resource Include="pic\socialMedia\facebook.png" />
     <Resource Include="pic\socialMedia\fax.png" />
@@ -435,6 +447,8 @@
     </Content>
     <Resource Include="fonts\cairo-font\Cairo Regular 400.ttf" />
     <None Include="EasyGo_TemporaryKey.pfx" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Category.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Customer.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.orderPreparingStatus.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Supplier.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.BalanceSTS.datasource" />

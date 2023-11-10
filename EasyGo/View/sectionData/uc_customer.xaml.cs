@@ -506,16 +506,14 @@ namespace EasyGo.View.sectionData
                 addpath = @"\Reports\SectionData\Persons\En\EnCustomers.rdlc";
             }
             string searchval = "";
-            //filter   
-            // paramarr.Add(new ReportParameter("stateval", stateval));
-            // paramarr.Add(new ReportParameter("trActiveState", AppSettings.resourcemanagerreport.GetString("trState")));
+            //filter             
             paramarr.Add(new ReportParameter("trSearch", AppSettings.resourcemanagerreport.GetString("trSearch")));
             searchval = tb_search.Text;
             paramarr.Add(new ReportParameter("searchVal", searchval));
             //end filter
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
-            //ReportConfig.CustomerReport(customersQuery, rep, reppath, paramarr);
+            ReportConfig.CustomerReport(customersQuery, rep, reppath, paramarr);
             ReportConfig.setReportLanguage(paramarr);
             ReportConfig.Header(paramarr);
 
