@@ -424,6 +424,18 @@
     <Content Include="Reports\Catalog\En\EnCategory.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Catalog\Ar\ArItem.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\En\EnItem.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\Ar\ArUnit.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Catalog\En\EnUnit.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\socialMedia\email.png" />
     <Resource Include="pic\socialMedia\facebook.png" />
     <Resource Include="pic\socialMedia\fax.png" />
@@ -449,8 +461,10 @@
     <None Include="EasyGo_TemporaryKey.pfx" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Category.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Customer.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Item.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.orderPreparingStatus.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Supplier.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Unit.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.BalanceSTS.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.CardsSts.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.InventoryClass.datasource" />

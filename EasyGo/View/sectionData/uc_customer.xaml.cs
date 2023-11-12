@@ -640,15 +640,15 @@ namespace EasyGo.View.sectionData
                     BuildReport();
 
                     LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                    //wd_previewPdf w = new wd_previewPdf();
-                    //w.pdfPath = pdfpath;
-                    //if (!string.IsNullOrEmpty(w.pdfPath))
-                    //{
-                    //    w.ShowDialog();
-                    //    w.wb_pdfWebViewer.Dispose();
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
 
 
-                    //}
+                    }
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
                 }

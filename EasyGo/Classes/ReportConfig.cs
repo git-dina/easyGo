@@ -241,6 +241,42 @@ namespace EasyGo.Classes
             paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
             paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
         }
+
+        public static void ItemReport(IEnumerable<Item> Query, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            List<Item> items = JsonConvert.DeserializeObject<List<Item>>(JsonConvert.SerializeObject(Query));
+
+            itemdata(items, rep, reppath, paramarr);
+
+
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trItems")));
+        }
+
+        public static void itemdata(IEnumerable<Item> items, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+
+            rep.DataSources.Add(new ReportDataSource("DataSetItem", items));
+
+            paramarr.Add(new ReportParameter("trCode", AppSettings.resourcemanagerreport.GetString("trCode")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trDetails", AppSettings.resourcemanagerreport.GetString("trDetails")));
+            paramarr.Add(new ReportParameter("trCategory", AppSettings.resourcemanagerreport.GetString("trCategorie")));
+        }
+
+        public static void UnitReport(IEnumerable<Unit> unitQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetUnit", unitQuery));
+            paramarr.Add(new ReportParameter("Title", AppSettings.resourcemanagerreport.GetString("trUnits")));
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trUnitName")));
+            paramarr.Add(new ReportParameter("trNotes", AppSettings.resourcemanagerreport.GetString("trNote")));
+
+        }
         #endregion
         public static void HeaderNoLogo(List<ReportParameter> paramarr)
         {
@@ -653,57 +689,7 @@ namespace EasyGo.Classes
         }
       
        
-        public static string CategoryConv(string categoryName)
-        {
-            if (categoryName == "appetizers")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("trAppetizers");
-            }
-            else if (categoryName == "beverages")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("trBeverages");
-            }
-            else if (categoryName == "fastFood")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("trFastFood");
-            }
-            else if (categoryName == "mainCourses")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("trMainCourses"); ;
-            }
-            else if (categoryName == "desserts")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("trDesserts");
-            }
-            else if (categoryName == "package")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("trPackages");
-            }
-            else if (categoryName == "RawMaterials")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("trRawMaterials");
-            }
-            else if (categoryName == "Vegetables")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("trVegetables");
-            }
-            else if (categoryName == "Meat")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("trMeat");
-            }
-            else if (categoryName == "Drinks")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("trDrinks");
-            }
-            else if (categoryName == "extraOrders")
-            {
-                categoryName = AppSettings.resourcemanagerreport.GetString("extraOrders");
-            }
-
-            return categoryName;
-        }
-      
-       
+     
         public static string forAgentsConverters(string forAgents)
         {
             try

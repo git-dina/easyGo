@@ -596,23 +596,21 @@ namespace EasyGo.View.catalog
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\SectionData\Persons\Ar\ArItems.rdlc";
+                addpath = @"\Reports\Catalog\Ar\ArItem.rdlc";
             }
             else
             {
-                addpath = @"\Reports\SectionData\Persons\En\EnItems.rdlc";
+                addpath = @"\Reports\Catalog\En\EnItem.rdlc";
             }
             string searchval = "";
-            //filter   
-            // paramarr.Add(new ReportParameter("stateval", stateval));
-            // paramarr.Add(new ReportParameter("trActiveState", AppSettings.resourcemanagerreport.GetString("trState")));
+            //filter     
             paramarr.Add(new ReportParameter("trSearch", AppSettings.resourcemanagerreport.GetString("trSearch")));
             searchval = tb_search.Text;
             paramarr.Add(new ReportParameter("searchVal", searchval));
             //end filter
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
-            //ReportConfig.ItemReport(itemsQuery, rep, reppath, paramarr);
+            ReportConfig.ItemReport(itemsQuery, rep, reppath, paramarr);
             ReportConfig.setReportLanguage(paramarr);
             ReportConfig.Header(paramarr);
 
@@ -739,15 +737,15 @@ namespace EasyGo.View.catalog
                     BuildReport();
 
                     LocalReportExtensions.ExportToPDF(rep, pdfpath);
-                    //wd_previewPdf w = new wd_previewPdf();
-                    //w.pdfPath = pdfpath;
-                    //if (!string.IsNullOrEmpty(w.pdfPath))
-                    //{
-                    //    w.ShowDialog();
-                    //    w.wb_pdfWebViewer.Dispose();
+                    wd_previewPdf w = new wd_previewPdf();
+                    w.pdfPath = pdfpath;
+                    if (!string.IsNullOrEmpty(w.pdfPath))
+                    {
+                        w.ShowDialog();
+                        w.wb_pdfWebViewer.Dispose();
 
 
-                    //}
+                    }
                     Window.GetWindow(this).Opacity = 1;
                     #endregion
                 }

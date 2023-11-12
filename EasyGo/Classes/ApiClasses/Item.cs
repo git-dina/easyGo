@@ -40,6 +40,7 @@ namespace EasyGo.Classes.ApiClasses
         //extra
         public List<ItemUnit> ItemUnits { get; set; }
         public List<Item> PackageItems { get; set; }
+        public string CategoryName { get; set; }
         #endregion
 
         #region Methods
