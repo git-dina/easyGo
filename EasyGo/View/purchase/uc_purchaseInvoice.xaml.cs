@@ -442,7 +442,7 @@ namespace EasyGo.View.purchase
       
         private async void Dg_invoiceDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            /*
+          
             try
             {
 
@@ -529,15 +529,14 @@ namespace EasyGo.View.purchase
 
                     // old total for changed item
                     decimal total = oldPrice * oldCount;
-                    //_Sum -= total;
 
                     // new total for changed item
                     total = newCount * newPrice;
-                   // _Sum += total;
+
 
                     //refresh total cell
-                    TextBlock tb = dg_invoiceDetails.Columns[6].GetCellContent(dg_invoiceDetails.Items[index]) as TextBlock;
-                    tb.Text = HelpClass.DecTostring(total);
+                    //TextBlock tb = dg_invoiceDetails.Columns[6].GetCellContent(dg_invoiceDetails.Items[index]) as TextBlock;
+                    //tb.Text = HelpClass.DecTostring(total);
 
                     //  refresh sum and total text box
                     CalculateInvoiceValues();
@@ -553,7 +552,7 @@ namespace EasyGo.View.purchase
             {
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
-            */
+          
             try
             {
                 await Task.Delay(0050);
