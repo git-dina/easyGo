@@ -11,6 +11,7 @@
             <converters:castcateLongTextConverter x:Key="castcateLongTextConverter"/>
             <converters:accuracyConverter x:Key="accuracyConverter"/>
             <converters:twoStringsConverter x:Key="twoStringsConverter"/>
+            <converters:purchaseInvoiceTypeConverter x:Key="purchaseInvoiceTypeConverter"/>
            
 
             <!--#region Fonts-->
