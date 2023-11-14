@@ -734,10 +734,6 @@ namespace EasyGo.View.purchase
 
         #endregion
 
-        private void btn_discount_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
        
         private void btn_printInvoice_Click(object sender, RoutedEventArgs e)
@@ -1295,8 +1291,99 @@ namespace EasyGo.View.purchase
 
 
         }
+
         #endregion
 
-        
+        private void btn_supplier_Click(object sender, RoutedEventArgs e)
+        {
+           try
+            {
+                HelpClass.StartAwait(MainWindow.mainWindow.grid_mainWindow);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_selectSupplier w = new wd_selectSupplier();
+                w.ShowDialog();
+                if (w.isOk)
+                {
+
+                }
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+
+        private void btn_discount_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(MainWindow.mainWindow.grid_mainWindow);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_selectDiscount w = new wd_selectDiscount();
+                w.ShowDialog();
+                if (w.isOk)
+                {
+
+                }
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+
+        private void btn_tax_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(MainWindow.mainWindow.grid_mainWindow);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_selectTax w = new wd_selectTax();
+                w.ShowDialog();
+                if (w.isOk)
+                {
+
+                }
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+
+        private void btn_invoiceNumber_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HelpClass.StartAwait(MainWindow.mainWindow.grid_mainWindow);
+                Window.GetWindow(this).Opacity = 0.2;
+                wd_purchaseInvoice w = new wd_purchaseInvoice();
+                w.ShowDialog();
+                if (w.isOk)
+                {
+
+                }
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
+            }
+            catch (Exception ex)
+            {
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
     }
 }

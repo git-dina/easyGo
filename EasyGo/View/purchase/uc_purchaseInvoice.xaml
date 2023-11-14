@@ -122,7 +122,7 @@ Background="{x:Null}"  Height="40"
               Grid.Column="1"  
               VerticalScrollBarVisibility="Auto"   >
                         <StackPanel x:Name="sp_categoryPath" Orientation="Horizontal" >
-                            <Border 
+                            <!--<Border 
     Margin="0" Padding="0" MinWidth="50"
     Background="{StaticResource White}">
                 <Button  BorderBrush="{x:Null}"  
@@ -148,7 +148,7 @@ Background="{x:Null}"  Height="40"
                TextWrapping="WrapWithOverflow"
                TextAlignment="Center"/>
                 </Button>
-                </Border>
+                </Border>-->
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
@@ -159,7 +159,7 @@ BorderBrush="{StaticResource LightGrey}"/>
           Grid.Column="1"  
           VerticalScrollBarVisibility="Auto"   >
                         <StackPanel x:Name="sp_categoryItem" Orientation="Horizontal" >
-                            <Button  Grid.Row="1"
+                            <!--<Button  Grid.Row="1"
         Margin="5" Content="Clothes"
             materialDesign:ButtonAssist.CornerRadius="7"
                Background="{StaticResource White}"
@@ -182,7 +182,7 @@ BorderBrush="{StaticResource LightGrey}"/>
                BorderBrush="{StaticResource MainColor}"
                          BorderThickness="1"
                     Foreground="{StaticResource MainColor}"
-                   />
+                   />-->
                         </StackPanel>
                     </ScrollViewer>
 
@@ -244,16 +244,14 @@ BorderBrush="{StaticResource LightGrey}"/>
                                   HorizontalScrollBarVisibility="Auto" 
                               >
                         <StackPanel Orientation="Horizontal" Margin="0 0 0 -5">
-                            <Button  Grid.Row="1"
-                Margin="5"
-                            
-                    x:Name="btn_supplier"  materialDesign:ButtonAssist.CornerRadius="7"
-                       Background="{StaticResource White}" BorderBrush="{StaticResource MainColor}"
-                                 BorderThickness="1"
-                       Padding="0" 
-                           >
-                                <Grid 
-                            >
+                            <Button   x:Name="btn_supplier"  
+                                      Click="btn_supplier_Click"
+                                      Grid.Row="1"  Margin="5"
+                                     materialDesign:ButtonAssist.CornerRadius="7"
+                       Background="{StaticResource White}"
+                             BorderBrush="{StaticResource MainColor}"
+                                 BorderThickness="1" Padding="0" >
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="*"/>
@@ -295,10 +293,11 @@ BorderBrush="{StaticResource LightGrey}"/>
                               Grid.Column="1"      Margin="5"/>
                                 </Grid>
                             </Button>
-                            <Button  Grid.Row="1"
+                            <Button  x:Name="btn_tax" 
+                                     Click="btn_tax_Click"
+                                     Grid.Row="1"
                                  Margin="5"
-                         
-                 x:Name="btn_tax"  materialDesign:ButtonAssist.CornerRadius="7"
+                  materialDesign:ButtonAssist.CornerRadius="7"
                     Background="{StaticResource White}" BorderBrush="{StaticResource MainColor}"
                               BorderThickness="1"
                     Padding="0" 
@@ -832,7 +831,9 @@ l0.3,260.4L348.9,261.7z"  />
 
                         <Button  Grid.Column="2"
                                  Margin="0 5"
-                 x:Name="btn_invoiceNumber"  materialDesign:ButtonAssist.CornerRadius="7"
+                 x:Name="btn_invoiceNumber"  
+                                 Click="btn_invoiceNumber_Click"
+                                 materialDesign:ButtonAssist.CornerRadius="7"
                     Background="{StaticResource MainColor}" BorderBrush="{StaticResource MainColor}"
                               BorderThickness="1"
                     Padding="0" 
