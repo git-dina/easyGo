@@ -59,22 +59,29 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        
-                    <Border Grid.Row="0" CornerRadius="10" Margin="10,10,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
-                        <Grid   >
-                            <ComboBox x:Name="cb_discount"     
-                                  Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
-                                  materialDesign:HintAssist.Hint="discount..."  
-                                   Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                   Grid.Column="0" Height="40"  Margin="4,0"
-                                  BorderBrush="#737373" BorderThickness="0"  />
-                            <Path Fill="#E81123" x:Name="p_error_discount" Stretch="Fill" Margin="5,5,20,5"
-                              HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
-                         VerticalAlignment="Center" Width="15"  Height="15" 
-                              Data="{StaticResource infoCircle}"/>
-                        </Grid>
-                    </Border>
-                    <Border Grid.Row="0" Grid.Column="1" CornerRadius="10" Margin="5,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+
+                        <Border Grid.Row="8" CornerRadius="10" Margin="10,5,5,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid>
+                                <TextBox x:Name="tb_discount" Grid.Row="8"  Padding="10,0,5,0"  
+                       Text="{Binding discount, Mode=OneWay}"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                       materialDesign:HintAssist.Hint="discount..."    
+         Foreground="#4E4E4E"    
+                   BorderThickness="0" Tag="decimal"
+               BorderBrush="AliceBlue" MaxLength="100" 
+               PreviewTextInput="Number_PreviewTextInput"
+  materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+Height="40"   Margin="4,0"  PreviewKeyDown="Spaces_PreviewKeyDown" />
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5" x:Name="p_error_discount"
+                HorizontalAlignment="Right" Visibility="Collapsed"   
+       VerticalAlignment="Center" Width="15"  Height="15"
+           Data="{StaticResource infoCircle}">
+                                </Path>
+                            </Grid>
+
+                        </Border>
+
+                        <Border Grid.Row="0" Grid.Column="1" CornerRadius="10" Margin="5,10,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
                             <ComboBox x:Name="cb_discountType"     
                Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
