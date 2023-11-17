@@ -61,6 +61,7 @@ namespace EasyGo.View.windows
 
         public bool isOk { get; set; }
         public decimal taxValue { get; set; }
+        public decimal taxRate { get; set; }
         public string taxType { get; set; }
 
         public static List<string> requiredControlList = new List<string>();

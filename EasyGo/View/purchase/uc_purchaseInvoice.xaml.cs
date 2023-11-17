@@ -671,15 +671,16 @@ namespace EasyGo.View.purchase
 
 
             #region tax
-            decimal taxAmount = 0;
-            decimal taxPercentage = 0;
 
-           
-            //taxAmount = HelpClass.calcPercentage(total, (decimal)invoice.Tax);//tax value
-           // taxPercentage = 
+           if(invoice.TaxType.Equals("rate"))
+            {
+                invoice.Tax = HelpClass.calcPercentage(total, (decimal)invoice.TaxPercentage);//tax value
+            }
+           else if(total != 0)
+                invoice.TaxPercentage = (invoice.Tax * 100) / total;
 
             #endregion
-            decimal totalAfterTax = total + taxAmount;
+            decimal totalAfterTax = total + invoice.Tax;
 
             #region discount
 
@@ -706,9 +707,6 @@ namespace EasyGo.View.purchase
             //display
             invoice.Count = invoiceDetailsList.Select(x => x.Quantity).Sum();
             invoice.Total = invoiceDetailsList.Select(x => x.Total).Sum();
-            //tax
-            invoice.Tax = taxAmount;
-            invoice.TaxPercentage = taxPercentage;
 
             invoice.DiscountValue = manualDiscount;
             invoice.DiscountPercentage = manualDiscountRate;
@@ -1347,10 +1345,17 @@ namespace EasyGo.View.purchase
                 HelpClass.StartAwait(MainWindow.mainWindow.grid_mainWindow);
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_selectTax w = new wd_selectTax();
+                w.taxType = invoice.TaxType;
+                w.taxValue = invoice.Tax;
+                w.taxRate = invoice.TaxPercentage;
                 w.ShowDialog();
                 if (w.isOk)
                 {
+                    invoice.TaxType = w.taxType;
+                    invoice.Tax = w.taxValue;
+                    invoice.TaxPercentage = w.taxRate;
 
+                    CalculateInvoiceValues();
                 }
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);

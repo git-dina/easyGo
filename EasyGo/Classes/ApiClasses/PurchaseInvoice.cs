@@ -28,8 +28,8 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<System.DateTime> DeservedDate { get; set; }
         public Nullable<int> BranchCreatorId { get; set; }
         public Nullable<int> BranchId { get; set; }
-        public Nullable<decimal> Tax { get; set; } = 0;
-        public string TaxType { get; set; }
+        public decimal Tax { get; set; } = 0;
+        public string TaxType { get; set; } = "rate";
         public decimal TaxPercentage { get; set; } =0;
         public Nullable<System.DateTime> InvDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
