@@ -58,10 +58,10 @@ namespace EasyGo.View.windows
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
-        //public Tables table;
-        //List<Tables> tables = new List<Tables>();
-        public bool isOk { get; set; }
 
+        public bool isOk { get; set; }
+        public decimal taxValue { get; set; }
+        public string taxType { get; set; }
 
         public static List<string> requiredControlList = new List<string>();
 
@@ -75,6 +75,7 @@ namespace EasyGo.View.windows
 
                 translate();
 
+                FillCombo.fillTaxTypes(cb_taxType);
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -88,7 +89,7 @@ namespace EasyGo.View.windows
         private void translate()
         {
             //txt_title.Text = AppSettings.resourcemanager.GetString("tax");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_tax, AppSettings.resourcemanager.GetString("tax"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_taxType, AppSettings.resourcemanager.GetString("trTaxType"));
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
 

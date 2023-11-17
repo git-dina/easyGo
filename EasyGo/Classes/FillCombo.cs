@@ -198,6 +198,30 @@ namespace EasyGo.Classes
             return branchsList;
         }
         #endregion
-       
+
+        #region Tax Type
+
+        static public List<keyValueString> taxTypesList;
+        static public IEnumerable<keyValueString> RefreshTaxTypes()
+        {
+            itemTypesList = new List<keyValueString>() {
+                new keyValueString(){key="rate", value=AppSettings.resourcemanager.GetString("trRate") },
+                new keyValueString(){key="value", value=AppSettings.resourcemanager.GetString("trValue") },
+            };
+
+            return itemTypesList;
+        }
+
+        static public void fillTaxTypes(ComboBox combo)
+        {
+            if (taxTypesList is null)
+                RefreshTaxTypes();
+
+            combo.ItemsSource = taxTypesList;
+            combo.SelectedValuePath = "key";
+            combo.DisplayMemberPath = "value";
+            combo.SelectedIndex = -1;
+        }
+        #endregion
     }
 }
