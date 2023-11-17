@@ -5147,6 +5147,9 @@
   <data name="trTaxRate" xml:space="preserve">
     <value>نسبة الضريبة</value>
   </data>
+  <data name="trSupplierHint" xml:space="preserve">
+    <value>المورد...</value>
+  </data>
   <data name="trTaxTypeHint" xml:space="preserve">
     <value>نوع الضريبة...</value>
   </data>

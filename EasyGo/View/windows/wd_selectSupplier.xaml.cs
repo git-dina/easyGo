@@ -59,10 +59,9 @@ namespace EasyGo.View.windows
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
-        //public Tables table;
-        //List<Tables> tables = new List<Tables>();
-        public bool isOk { get; set; }
 
+        public bool isOk { get; set; }
+        public long? supplierId { get; set; }
 
         public static List<string> requiredControlList = new List<string>();
         
@@ -76,6 +75,9 @@ namespace EasyGo.View.windows
               
                 translate();
 
+                await FillCombo.fillSuppliersList(cb_supplier);
+
+                cb_supplier.SelectedValue = supplierId;
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -88,8 +90,8 @@ namespace EasyGo.View.windows
         }
         private void translate()
         {
-            //txt_title.Text = AppSettings.resourcemanager.GetString("supplier");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_supplier, AppSettings.resourcemanager.GetString("supplier"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trSupplier");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_supplier, AppSettings.resourcemanager.GetString("trSupplierHint"));
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
 
@@ -99,9 +101,10 @@ namespace EasyGo.View.windows
             {
                 if (HelpClass.validate(requiredControlList, this))
                 {
-
-
-
+                    if(cb_supplier.SelectedValue != null)
+                        supplierId =(long) cb_supplier.SelectedValue;
+                    isOk = true;
+                    this.Close();
                 }
             }
             catch (Exception ex)

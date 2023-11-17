@@ -1299,10 +1299,11 @@ namespace EasyGo.View.purchase
                 HelpClass.StartAwait(MainWindow.mainWindow.grid_mainWindow);
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_selectSupplier w = new wd_selectSupplier();
+                w.supplierId = invoice.SupplierId;
                 w.ShowDialog();
                 if (w.isOk)
                 {
-
+                    invoice.SupplierId = w.supplierId;
                 }
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);

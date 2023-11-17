@@ -176,6 +176,17 @@ namespace EasyGo.Classes
             suppliersList = await supplier.Get();
             return suppliersList;
         }
+
+        static public async Task fillSuppliersList(ComboBox combo)
+        {
+            if (suppliersList is null)
+                await RefreshSuppliers();
+
+            combo.ItemsSource = suppliersList;
+            combo.SelectedValuePath = "SupplierId";
+            combo.DisplayMemberPath = "Name";
+            combo.SelectedIndex = -1;
+        }
         #endregion
 
         #region Cards
