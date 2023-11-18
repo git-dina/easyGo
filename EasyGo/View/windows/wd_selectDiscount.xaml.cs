@@ -59,10 +59,10 @@ namespace EasyGo.View.windows
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
-        //public Tables table;
-        //List<Tables> tables = new List<Tables>();
         public bool isOk { get; set; }
-
+        public decimal discountValue { get; set; }
+        public decimal discountRate { get; set; }
+        public string discountType { get; set; }
 
         public static List<string> requiredControlList = new List<string>();
 
@@ -75,8 +75,8 @@ namespace EasyGo.View.windows
 
 
                 translate();
-
-
+                FillCombo.fillValueTypes(cb_discountType);
+                setDiscountValue();
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -88,18 +88,31 @@ namespace EasyGo.View.windows
         }
         private void translate()
         {
-            //txt_title.Text = AppSettings.resourcemanager.GetString("discount");
-            //MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discount, AppSettings.resourcemanager.GetString("discount"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trDiscount");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_discountType, AppSettings.resourcemanager.GetString("trTypeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_discount, AppSettings.resourcemanager.GetString("trDiscount"));
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
+        private void setDiscountValue()
+        {
+            cb_discountType.SelectedValue = discountType;
 
+            tb_discount.Text = discountType == "rate" ? HelpClass.DecTostring(discountRate) : HelpClass.DecTostring(discountValue);
+        }
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (HelpClass.validate(requiredControlList, this))
                 {
+                    if (cb_discountType.SelectedValue.ToString().Equals("rate"))
+                        discountRate = decimal.Parse(tb_discount.Text);
+                    else
+                        discountValue = decimal.Parse(tb_discount.Text);
 
+                    discountType = cb_discountType.SelectedValue.ToString();
+                    isOk = true;
+                    this.Close();
 
 
                 }

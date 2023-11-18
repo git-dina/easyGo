@@ -18,7 +18,7 @@ namespace EasyGo.Classes.ApiClasses
         public string InvNumber { get; set; }
         public string InvType { get; set; }
         public Nullable<long> SupplierId { get; set; }
-        public string DiscountType { get; set; }
+        public string DiscountType { get; set; } = "rate";
         public decimal DiscountValue { get; set; }
         public decimal DiscountPercentage { get; set; }
         public Nullable<decimal> Total { get; set; }
@@ -30,7 +30,7 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<int> BranchId { get; set; }
         public decimal Tax { get; set; } = 0;
         public string TaxType { get; set; } = "rate";
-        public decimal TaxPercentage { get; set; } =0;
+        public decimal TaxPercentage { get; set; } 
         public Nullable<System.DateTime> InvDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<long> CreateUserId { get; set; }

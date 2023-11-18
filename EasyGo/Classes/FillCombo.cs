@@ -210,25 +210,25 @@ namespace EasyGo.Classes
         }
         #endregion
 
-        #region Tax Type
+        #region Value Type
 
-        static public List<keyValueString> taxTypesList;
-        static public IEnumerable<keyValueString> RefreshTaxTypes()
+        static public List<keyValueString> valueTypesList;
+        static public IEnumerable<keyValueString> RefreshValueTypes()
         {
-            itemTypesList = new List<keyValueString>() {
+            valueTypesList = new List<keyValueString>() {
                 new keyValueString(){key="rate", value=AppSettings.resourcemanager.GetString("trRate") },
                 new keyValueString(){key="value", value=AppSettings.resourcemanager.GetString("trValue") },
             };
 
-            return itemTypesList;
+            return valueTypesList;
         }
 
-        static public void fillTaxTypes(ComboBox combo)
+        static public void fillValueTypes(ComboBox combo)
         {
-            if (taxTypesList is null)
-                RefreshTaxTypes();
+            if (valueTypesList is null)
+                RefreshValueTypes();
 
-            combo.ItemsSource = taxTypesList;
+            combo.ItemsSource = valueTypesList;
             combo.SelectedValuePath = "key";
             combo.DisplayMemberPath = "value";
             combo.SelectedIndex = -1;

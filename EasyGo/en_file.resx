@@ -5179,4 +5179,10 @@ Please add Email in setting</value>
   <data name="trTaxTypeHint" xml:space="preserve">
     <value>Tax Type...</value>
   </data>
+  <data name="trRate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="trTypeHint" xml:space="preserve">
+    <value>Type...</value>
+  </data>
 </root>

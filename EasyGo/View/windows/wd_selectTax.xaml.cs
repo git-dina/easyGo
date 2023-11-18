@@ -77,7 +77,8 @@ namespace EasyGo.View.windows
 
                 translate();
 
-                FillCombo.fillTaxTypes(cb_taxType);
+                FillCombo.fillValueTypes(cb_taxType);
+                setTaxValue();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -90,19 +91,32 @@ namespace EasyGo.View.windows
         }
         private void translate()
         {
-            //txt_title.Text = AppSettings.resourcemanager.GetString("tax");
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_taxType, AppSettings.resourcemanager.GetString("trTaxType"));
+            txt_title.Text = AppSettings.resourcemanager.GetString("trTax");
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_taxType, AppSettings.resourcemanager.GetString("trTypeHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(tb_tax, AppSettings.resourcemanager.GetString("trTaxHint"));
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }
 
+        private void setTaxValue()
+        {
+            cb_taxType.SelectedValue = taxType;
+
+            tb_tax.Text = taxType == "rate" ?  HelpClass.DecTostring(taxRate) : HelpClass.DecTostring(taxValue);
+        }
         private void Btn_select_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (HelpClass.validate(requiredControlList, this))
                 {
+                    if (cb_taxType.SelectedValue.ToString().Equals("rate"))
+                        taxRate = decimal.Parse( tb_tax.Text);
+                    else
+                        taxValue = decimal.Parse(tb_tax.Text);
 
-
+                    taxType = cb_taxType.SelectedValue.ToString();
+                    isOk = true;
+                    this.Close();
 
                 }
             }

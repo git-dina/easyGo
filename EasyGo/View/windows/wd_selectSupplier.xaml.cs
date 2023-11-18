@@ -70,7 +70,7 @@ namespace EasyGo.View.windows
             try
             {
                 HelpClass.StartAwait(grid_main);
-                requiredControlList = new List<string> { "supplier" };
+                requiredControlList = new List<string> {  };
 
               
                 translate();

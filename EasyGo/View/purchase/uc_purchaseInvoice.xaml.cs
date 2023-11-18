@@ -644,6 +644,8 @@ namespace EasyGo.View.purchase
                     invoiceDetailsList.Add(new PurInvoiceItem()
                     {
                         ItemName = item.Name,
+                        ItemUnitId = defaultUnitId,
+                        UnitName = defaultUnit.UnitName,
                         Quantity = 1,
                         Price = (decimal)defaultUnit.PurchasePrice,
                         Total = (decimal)defaultUnit.PurchasePrice,
@@ -677,7 +679,7 @@ namespace EasyGo.View.purchase
                 invoice.Tax = HelpClass.calcPercentage(total, (decimal)invoice.TaxPercentage);//tax value
             }
            else if(total != 0)
-                invoice.TaxPercentage = (invoice.Tax * 100) / total;
+                invoice.TaxPercentage = (invoice.Tax * 100) / total; //tax rate
 
             #endregion
             decimal totalAfterTax = total + invoice.Tax;
@@ -1323,10 +1325,17 @@ namespace EasyGo.View.purchase
                 HelpClass.StartAwait(MainWindow.mainWindow.grid_mainWindow);
                 Window.GetWindow(this).Opacity = 0.2;
                 wd_selectDiscount w = new wd_selectDiscount();
+                w.discountType = invoice.DiscountType;
+                w.discountRate = invoice.DiscountPercentage;
+                w.discountValue = invoice.DiscountValue;
                 w.ShowDialog();
                 if (w.isOk)
                 {
+                    invoice.DiscountValue = w.discountValue;
+                    invoice.DiscountPercentage = w.discountRate;
+                    invoice.DiscountType = w.discountType;
 
+                    CalculateInvoiceValues();
                 }
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
