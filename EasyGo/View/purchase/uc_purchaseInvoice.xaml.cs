@@ -1306,6 +1306,15 @@ namespace EasyGo.View.purchase
                 if (w.isOk)
                 {
                     invoice.SupplierId = w.supplierId;
+                    //yasin
+                    if (invoice.SupplierId != null)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
                 }
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
@@ -1336,6 +1345,16 @@ namespace EasyGo.View.purchase
                     invoice.DiscountType = w.discountType;
 
                     CalculateInvoiceValues();
+
+                    //yasin
+                    if (invoice.DiscountValue != 0)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
                 }
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
@@ -1366,6 +1385,16 @@ namespace EasyGo.View.purchase
                     invoice.TaxPercentage = w.taxRate;
 
                     CalculateInvoiceValues();
+
+                    //yasin
+                    if (invoice.Tax != 0)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
                 }
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
