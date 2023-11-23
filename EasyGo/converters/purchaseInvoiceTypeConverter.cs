@@ -15,17 +15,30 @@ namespace EasyGo.converters
         {
             try
             {
-                /*
+             
                 switch (value)
                 {
                     //مشتريات 
                     case "p":
                         value = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
                         break;
+                        //مسودة مشتريات
+                    case "pd":
+                        value = AppSettings.resourcemanager.GetString("trPurchaseDraft");
+                        break;
+
+                        //مرتجع شراء
+                    case "pb":
+                        value = AppSettings.resourcemanager.GetString("trPurchaseReturnInvoice");
+                        break;
+                        // مسودة مرتجع مشتريات
+                    case "pbd":
+                        value = AppSettings.resourcemanager.GetString("trPurchaseReturnDraft");
+                        break;
                    
                     default: break;
                 }
-                */
+             
                 return value;
             }
             catch

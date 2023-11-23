@@ -5185,4 +5185,7 @@ Please add Email in setting</value>
   <data name="trTypeHint" xml:space="preserve">
     <value>Type...</value>
   </data>
+  <data name="trPurchaseDraft" xml:space="preserve">
+    <value>Purchase Draft</value>
+  </data>
 </root>

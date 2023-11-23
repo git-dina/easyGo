@@ -5159,4 +5159,7 @@
   <data name="trRate" xml:space="preserve">
     <value>نسبة</value>
   </data>
+  <data name="trPurchaseDraft" xml:space="preserve">
+    <value>مسودة شراء</value>
+  </data>
 </root>
