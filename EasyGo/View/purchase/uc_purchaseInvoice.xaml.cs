@@ -592,10 +592,11 @@ namespace EasyGo.View.purchase
                         w.ShowDialog();
                         if (w.isOk)
                         {
-                            row.ItemUnitId = w.itemUnitId;                         
+                            row.ItemUnitId = w.itemUnitId;
+                            row.UnitName = w.unitName;
                         }
 
-                        //refreshInvoiceDetails();
+                        refreshInvoiceDetails();
                     }
 
                 HelpClass.EndAwait(grid_main);

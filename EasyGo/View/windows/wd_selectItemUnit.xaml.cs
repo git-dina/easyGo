@@ -63,6 +63,7 @@ namespace EasyGo.View.windows
 
         public bool isOk { get; set; }
         public long? itemUnitId { get; set; }
+        public string unitName { get; set; }
         public List<ItemUnit> itemUnitsList { get; set; }
 
         public static List<string> requiredControlList = new List<string>();
