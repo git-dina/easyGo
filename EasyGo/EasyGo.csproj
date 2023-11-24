@@ -310,6 +310,9 @@
     <Compile Include="View\windows\wd_selectTax.xaml.cs">
       <DependentUpon>wd_selectTax.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_selectItemUnit.xaml.cs">
+      <DependentUpon>wd_selectItemUnit.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -409,6 +412,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_selectTax.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_selectItemUnit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
