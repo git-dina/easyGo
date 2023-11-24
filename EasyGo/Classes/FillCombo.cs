@@ -187,6 +187,23 @@ namespace EasyGo.Classes
             combo.DisplayMemberPath = "Name";
             combo.SelectedIndex = -1;
         }
+        static public async Task fillSuppliersWithDefaultList(ComboBox combo)
+        {
+            if (suppliersList is null)
+                await RefreshSuppliers();
+
+            var lst = suppliersList.ToList();
+
+            var sup = new Supplier();
+            sup.SupplierId = 0;
+            sup.Name = "-";
+            lst.Insert(0, sup);
+
+            combo.ItemsSource = lst;
+            combo.SelectedValuePath = "SupplierId";
+            combo.DisplayMemberPath = "Name";
+            combo.SelectedIndex = -1;
+        }
         #endregion
 
         #region Cards

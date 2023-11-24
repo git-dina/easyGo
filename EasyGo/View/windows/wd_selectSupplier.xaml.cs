@@ -1,4 +1,5 @@
 ﻿using EasyGo.Classes;
+using EasyGo.Classes.ApiClasses;
 using EasyGo.Properties;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,7 @@ namespace EasyGo.View.windows
 
         public bool isOk { get; set; }
         public long? supplierId { get; set; }
+        public string supplierName { get; set; }
 
         public static List<string> requiredControlList = new List<string>();
         
@@ -75,7 +77,7 @@ namespace EasyGo.View.windows
               
                 translate();
 
-                await FillCombo.fillSuppliersList(cb_supplier);
+                await FillCombo.fillSuppliersWithDefaultList(cb_supplier);
 
                 cb_supplier.SelectedValue = supplierId;
 
@@ -101,8 +103,17 @@ namespace EasyGo.View.windows
             {
                 if (HelpClass.validate(requiredControlList, this))
                 {
-                    if(cb_supplier.SelectedValue != null)
-                        supplierId =(long) cb_supplier.SelectedValue;
+                    if ((long)cb_supplier.SelectedValue > 0)
+                    {
+                        supplierId = (long)cb_supplier.SelectedValue;
+                        var sup = (Supplier)cb_supplier.SelectedItem;
+                        supplierName = sup.Name;
+                    }
+                    else
+                    {
+                        supplierId = null;
+                        supplierName = null;
+                    }
                     isOk = true;
                     this.Close();
                 }

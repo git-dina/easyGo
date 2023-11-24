@@ -1325,6 +1325,7 @@ namespace EasyGo.View.purchase
                 if (w.isOk)
                 {
                     invoice.SupplierId = w.supplierId;
+                    invoice.SupplierName = w.supplierName;
                     //yasin
                     if (invoice.SupplierId != null)
                     {
