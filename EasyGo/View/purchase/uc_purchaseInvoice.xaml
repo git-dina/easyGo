@@ -248,21 +248,21 @@ BorderBrush="{StaticResource LightGrey}"/>
                                       Click="btn_supplier_Click"
                                       Grid.Row="1"  Margin="5"
                                      materialDesign:ButtonAssist.CornerRadius="7"
-                       Background="{StaticResource White}"
-                             BorderBrush="{StaticResource MainColor}"
+                       Background="{DynamicResource White}"
+                             BorderBrush="{DynamicResource MainColor}"
                                  BorderThickness="1" Padding="0" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Path Fill="{StaticResource MainColor}"  Stretch="Fill"  
+                                    <Path Fill="{DynamicResource MainColor}"  Stretch="Fill"  
              HorizontalAlignment="Center" Grid.Column="0"  
         VerticalAlignment="Center" Width="20" Height="20"
              Data="{StaticResource supplier}"
                       FlowDirection="LeftToRight"
                      Margin="5"/>
-                                    <TextBlock Text="supplier" Foreground="{StaticResource MainColor}" x:Name="txt_supplier"
+                                    <TextBlock Text="supplier" Foreground="{DynamicResource MainColor}" x:Name="txt_supplier"
                   HorizontalAlignment="Left" VerticalAlignment="Center" 
              Grid.Column="1"      Margin="5"/>
                                 </Grid>
@@ -271,7 +271,7 @@ BorderBrush="{StaticResource LightGrey}"/>
                                  Margin="5" 
                  x:Name="btn_discount"  Click="btn_discount_Click"
                                  materialDesign:ButtonAssist.CornerRadius="7"
-                    Background="{StaticResource White}" BorderBrush="{StaticResource MainColor}"
+                    Background="{DynamicResource White}" BorderBrush="{DynamicResource MainColor}"
                               BorderThickness="1"
                     Padding="0" 
                         >
@@ -282,13 +282,13 @@ BorderBrush="{StaticResource LightGrey}"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Path x:Name="path_discount"
-                                    Fill="{StaticResource MainColor}"  Stretch="Fill"  
+                                    Fill="{DynamicResource MainColor}"  Stretch="Fill"  
                               HorizontalAlignment="Center" Grid.Column="0"  
                          VerticalAlignment="Center" Width="20" Height="20"
                               Data="{StaticResource discount}"
                                        FlowDirection="LeftToRight"
                                       Margin="5"/>
-                                    <TextBlock x:Name="txt_discount" Text="discount" Foreground="{StaticResource MainColor}"
+                                    <TextBlock x:Name="txt_discount" Text="discount" Foreground="{DynamicResource MainColor}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"      Margin="5"/>
                                 </Grid>
@@ -298,7 +298,7 @@ BorderBrush="{StaticResource LightGrey}"/>
                                      Grid.Row="1"
                                  Margin="5"
                   materialDesign:ButtonAssist.CornerRadius="7"
-                    Background="{StaticResource White}" BorderBrush="{StaticResource MainColor}"
+                    Background="{DynamicResource White}" BorderBrush="{DynamicResource MainColor}"
                               BorderThickness="1"
                     Padding="0" 
                         >
@@ -308,13 +308,13 @@ BorderBrush="{StaticResource LightGrey}"/>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Path Fill="{StaticResource MainColor}"  Stretch="Fill"  
+                                    <Path Fill="{DynamicResource MainColor}"  Stretch="Fill"  
                               HorizontalAlignment="Center" Grid.Column="0"  
                          VerticalAlignment="Center" Width="20" Height="20"
                               Data="{StaticResource tax}"
                                        FlowDirection="LeftToRight"
                                       Margin="5"/>
-                                    <TextBlock Text="tax" Foreground="{StaticResource MainColor}" x:Name="txt_tax"
+                                    <TextBlock Text="tax" Foreground="{DynamicResource MainColor}" x:Name="txt_tax"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"      Margin="5"/>
                                 </Grid>
@@ -905,19 +905,19 @@ l0.3,260.4L348.9,261.7z"  />
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn  Header="Num"  Binding="{Binding Path=Index, Mode=OneWay}"/>
-                                <DataGridTextColumn   Width="*"   Header="Item" Binding="{Binding Path=ItemName, Mode=OneWay}"/>
+                                <DataGridTextColumn Width="*"  Header="Item" Binding="{Binding Path=ItemName, Mode=OneWay}"/>
                                 <DataGridTemplateColumn  Header="UnitName"  >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Margin="0"   Click="unitRowFromInvoiceItems"
-                                         Padding="0" Content="{Binding Path=UnitName}"
+                                            <Button Margin="-2.5 0"   Click="unitRowFromInvoiceItems"
+                                         Padding="2.5 0" Content="{Binding Path=UnitName}"
                                       />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn  Header="Amount"  Width="*"  Binding="{Binding Path=Quantity}"/>
-                                <DataGridTextColumn  Header="Price"  Width="*"  Binding="{Binding Path=Price}"/>
-                                <DataGridTextColumn Width="*"  Header="Total"    Binding="{Binding Path = Total, Mode=OneWay,Converter={StaticResource accuracyConverter }}"/>
+                                <DataGridTextColumn  Header="Amount"    Binding="{Binding Path=Quantity}"/>
+                                <DataGridTextColumn  Header="Price"    Binding="{Binding Path=Price}"/>
+                                <DataGridTextColumn  Header="Total"    Binding="{Binding Path = Total, Mode=OneWay,Converter={StaticResource accuracyConverter }}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

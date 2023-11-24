@@ -576,7 +576,26 @@ namespace EasyGo.View.purchase
         }
         private void unitRowFromInvoiceItems(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+
+                        PurInvoiceItem row = (PurInvoiceItem)dg_invoiceDetails.SelectedItems[0];
+
+                        //refreshInvoiceDetails();
+                    }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
         private void deleteRowFromInvoiceItems(object sender, RoutedEventArgs e)
         {
@@ -1309,11 +1328,11 @@ namespace EasyGo.View.purchase
                     //yasin
                     if (invoice.SupplierId != null)
                     {
-
+                        ActiveButton(btn_supplier, true, invoice.SupplierName);
                     }
                     else
                     {
-
+                        ActiveButton(btn_supplier,false, AppSettings.resourcemanager.GetString("trSupplier"));
                     }
                 }
                 Window.GetWindow(this).Opacity = 1;
@@ -1349,11 +1368,11 @@ namespace EasyGo.View.purchase
                     //yasin
                     if (invoice.DiscountValue != 0)
                     {
-
+                        ActiveButton(btn_discount, true);
                     }
                     else
                     {
-
+                        ActiveButton(btn_discount, false);
                     }
                 }
                 Window.GetWindow(this).Opacity = 1;
@@ -1389,11 +1408,11 @@ namespace EasyGo.View.purchase
                     //yasin
                     if (invoice.Tax != 0)
                     {
-
+                        ActiveButton(btn_tax, true);
                     }
                     else
                     {
-
+                        ActiveButton(btn_tax, false);
                     }
                 }
                 Window.GetWindow(this).Opacity = 1;
@@ -1407,6 +1426,45 @@ namespace EasyGo.View.purchase
             }
         }
 
+        void ActiveButton(Button button,bool isActive, string text ="")
+        {
+            if(isActive)
+            {
+                button.Background = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                button.BorderBrush = Application.Current.Resources["Grey"] as SolidColorBrush;
+
+                Path path = FindControls.FindVisualChildren<Path>(button).FirstOrDefault();
+                if (path != null)
+                    path.Fill = Application.Current.Resources["White"] as SolidColorBrush;
+
+                TextBlock textBlock = FindControls.FindVisualChildren<TextBlock>(button).FirstOrDefault();
+                if (textBlock != null)
+                {
+                    textBlock.Foreground = Application.Current.Resources["White"] as SolidColorBrush;
+                    if (!string.IsNullOrWhiteSpace(text))
+                        textBlock.Text = text;
+                }
+
+
+            }
+            else
+            {
+                button.Background = Application.Current.Resources["White"] as SolidColorBrush;
+                button.BorderBrush = Application.Current.Resources["MainColor"] as SolidColorBrush;
+
+                Path path = FindControls.FindVisualChildren<Path>(button).FirstOrDefault();
+                if (path != null)
+                    path.Fill = Application.Current.Resources["MainColor"] as SolidColorBrush;
+
+                TextBlock textBlock = FindControls.FindVisualChildren<TextBlock>(button).FirstOrDefault();
+                if (textBlock != null)
+                {
+                    textBlock.Foreground = Application.Current.Resources["MainColor"] as SolidColorBrush;
+                    if (!string.IsNullOrWhiteSpace(text))
+                        textBlock.Text = text;
+                }
+            }
+        }
         private void btn_invoiceNumber_Click(object sender, RoutedEventArgs e)
         {
             try
