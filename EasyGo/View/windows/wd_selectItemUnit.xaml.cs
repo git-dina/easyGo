@@ -94,7 +94,7 @@ namespace EasyGo.View.windows
         }
         private void translate()
         {
-            txt_title.Text = AppSettings.resourcemanager.GetString("trUnit");
+            txt_title.Text = AppSettings.resourcemanager.GetString("trItemUnits");
             MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_itemUnit, AppSettings.resourcemanager.GetString("trUnitHint"));
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
         }

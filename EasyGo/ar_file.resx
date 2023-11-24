@@ -5162,4 +5162,7 @@
   <data name="trPurchaseDraft" xml:space="preserve">
     <value>مسودة شراء</value>
   </data>
+  <data name="trItemUnits" xml:space="preserve">
+    <value>وحدات العنصر</value>
+  </data>
 </root>

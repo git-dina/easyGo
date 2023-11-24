@@ -5188,4 +5188,7 @@ Please add Email in setting</value>
   <data name="trPurchaseDraft" xml:space="preserve">
     <value>Purchase Draft</value>
   </data>
+  <data name="trItemUnits" xml:space="preserve">
+    <value>Item Units</value>
+  </data>
 </root>

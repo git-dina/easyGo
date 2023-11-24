@@ -232,6 +232,7 @@ namespace EasyGo.Classes.ApiClasses
             }
         }
         public Nullable<long> ItemUnitId { get; set; }
+        public long ItemId { get; set; }
         public string UnitName { get; set; }
         public bool IsActive { get; set; } = true;
         public Nullable<System.DateTime> CreateDate { get; set; }

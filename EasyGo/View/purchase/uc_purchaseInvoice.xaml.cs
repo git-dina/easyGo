@@ -585,6 +585,15 @@ namespace EasyGo.View.purchase
                     {
 
                         PurInvoiceItem row = (PurInvoiceItem)dg_invoiceDetails.SelectedItems[0];
+                        var item = FillCombo.itemsHasUnitsList.Where(x => x.ItemId == row.ItemId).FirstOrDefault();
+                        wd_selectItemUnit w = new wd_selectItemUnit();
+                        w.itemUnitsList = item.ItemUnits;
+                        w.itemUnitId = row.ItemUnitId;
+                        w.ShowDialog();
+                        if (w.isOk)
+                        {
+                            row.ItemUnitId = w.itemUnitId;                         
+                        }
 
                         //refreshInvoiceDetails();
                     }
@@ -664,6 +673,7 @@ namespace EasyGo.View.purchase
                     {
                         ItemName = item.Name,
                         ItemUnitId = defaultUnitId,
+                        ItemId = item.ItemId,
                         UnitName = defaultUnit.UnitName,
                         Quantity = 1,
                         Price = (decimal)defaultUnit.PurchasePrice,
