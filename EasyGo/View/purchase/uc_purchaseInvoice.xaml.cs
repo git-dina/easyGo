@@ -486,39 +486,39 @@ namespace EasyGo.View.purchase
 
                     oldCount = row.Quantity;
                     oldPrice = row.Price;
-                  
+
                     #region if return invoice
-                    //if (_InvoiceType == "pbd" || _InvoiceType == "pbw")
-                    //{
-                    //    var selectedItemUnitId = row.ItemUnitId;
+                    if (_InvoiceType == "pbd" || _InvoiceType == "pbw")
+                    {
+                        var selectedItemUnitId = row.ItemUnitId;
 
-                    //    var itemUnitsIds = FillCombo.itemUnitList.Where(x => x.ItemId == row.ItemId).Select(x => x.itemUnitId).ToList();
+                        var itemUnitsIds = FillCombo.itemUnitList.Where(x => x.ItemId == row.ItemId).Select(x => x.ItemUnitId).ToList();
 
-                    //    #region caculate available amount in this invoice 
-                    //    int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(row.itemUnitId, MainWindow.branchLogin.branchId);
-                    //    int amountInBill = await getAmountInBill(row.itemId, row.itemUnitId, row.ID);
-                    //    int availableAmount = availableAmountInBranch - amountInBill;
-                    //    #endregion
-                    //    #region calculate amount in purchase invoice
-                    //    var items = mainInvoiceItems.ToList().Where(i => itemUnitsIds.Contains((long)i.itemUnitId));
-                    //    int purchasedAmount = 0;
-                    //    foreach (var it in items)
-                    //    {
-                    //        if (selectedItemUnitId == (long)it.itemUnitId)
-                    //            purchasedAmount += (int)it.quantity;
-                    //        else
-                    //            purchasedAmount += await FillCombo.itemUnit.fromUnitToUnitQuantity((int)it.quantity, row.itemId, (long)it.itemUnitId, selectedItemUnitId);
-                    //    }
-                    //    #endregion
-                    //    if (newCount > (purchasedAmount - amountInBill) || newCount > availableAmount)
-                    //    {
-                    //        // return old value 
-                    //        t.Text = (purchasedAmount - amountInBill) > availableAmount ? availableAmount.ToString() : (purchasedAmount - amountInBill).ToString();
+                        #region caculate available amount in this invoice 
+                       // int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(row.ItemUnitId, MainWindow.branchLogin.BranchId);
+                        int amountInBill = await getAmountInBill(row.ItemId, (long)row.ItemUnitId, row.ID);
+                        int availableAmount = 0; //int availableAmount = availableAmountInBranch - amountInBill;
+                        #endregion
+                        #region calculate amount in purchase invoice
+                        var items = invoice.InvoiceItems.ToList().Where(i => itemUnitsIds.Contains((long)i.ItemUnitId));
+                        int purchasedAmount = 0;
+                        foreach (var it in items)
+                        {
+                            if (selectedItemUnitId == (long)it.ItemUnitId)
+                                purchasedAmount += (int)it.Quantity;
+                            else
+                                purchasedAmount +=  FillCombo.itemUnit.fromUnitToUnitQuantity((int)it.Quantity, row.ItemId, (long)it.ItemUnitId,(long) selectedItemUnitId);
+                        }
+                        #endregion
+                        if (newCount > (purchasedAmount - amountInBill) || newCount > availableAmount)
+                        {
+                            // return old value 
+                            t.Text = (purchasedAmount - amountInBill) > availableAmount ? availableAmount.ToString() : (purchasedAmount - amountInBill).ToString();
 
-                    //        newCount = (purchasedAmount - amountInBill) > availableAmount ? availableAmount : (purchasedAmount - amountInBill);
-                    //        Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
-                    //    }
-                    //}
+                            newCount = (purchasedAmount - amountInBill) > availableAmount ? availableAmount : (purchasedAmount - amountInBill);
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
+                        }
+                    }
                     #endregion
                     if (columnName == AppSettings.resourcemanager.GetString("trPrice") && !t.Text.Equals(""))
                         newPrice = decimal.Parse(t.Text);
@@ -562,6 +562,46 @@ namespace EasyGo.View.purchase
             {
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
+        }
+
+        private async Task<int> getAmountInBill(long itemId, long itemUnitId, long ID)
+        {
+            int quantity = 0;
+            var itemUnits = FillCombo.itemUnitList.Where(a => a.ItemId == itemId).ToList();
+
+            var smallUnits =  FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
+            foreach (ItemUnit u in itemUnits)
+            {
+                var isInBill = invoiceDetailsList.ToList().Find(x => x.ItemUnitId == (long)u.ItemUnitId && x.ID != ID); // unit exist in invoice
+                if (isInBill != null)
+                {
+                    var isSmall = smallUnits.Find(x => x.ItemUnitId == (long)u.ItemUnitId);
+                    int unitValue = 0;
+
+                    int index = invoiceDetailsList.IndexOf(invoiceDetailsList.Where(p => p.ItemUnitId == u.ItemUnitId).FirstOrDefault());
+                    int count = invoiceDetailsList[index].Quantity;
+                    if (itemUnitId == u.ItemUnitId)
+                    {
+                        quantity += count;
+                    }
+                    else if (isSmall != null) // from-unit is bigger than to-unit
+                    {
+                        unitValue =  FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (long)u.ItemUnitId, itemId);
+                        quantity += count / unitValue;
+                    }
+                    else
+                    {
+                        unitValue =  FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (long)u.ItemUnitId, itemId);
+
+                        if (unitValue != 0)
+                        {
+                            quantity += count * unitValue;
+                        }
+                    }
+
+                }
+            }
+            return quantity;
         }
         private void dg_invoiceDetails_CurrentCellChanged(object sender, EventArgs e)
         {
@@ -647,6 +687,7 @@ namespace EasyGo.View.purchase
                 {
                     item.Index = index;
                     index++;
+                    item.ID = index;
                 }
                 dg_invoiceDetails.ItemsSource = invoiceDetailsList;
                 dg_invoiceDetails.Items.Refresh();
@@ -786,9 +827,94 @@ namespace EasyGo.View.purchase
 
         #region Save
         List<CashTransfer> listPayments;
-        private void Btn_save_Click(object sender, RoutedEventArgs e)
+        private async void Btn_save_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                HelpClass.StartAwait(grid_main);
 
+               // if (FillCombo.groupObject.HasPermissionAction(invoicePermission, FillCombo.groupObjects, "one"))
+                {
+                   // if (MainWindow.posLogin.BoxState == "o") // box is open
+                    {
+                        //check mandatory inputs
+                        if (HelpClass.validate(requiredControlList, this))
+                        {
+                            bool multipleValid = true;
+                            bool validate = validateInvoiceValues();
+                            bool valid = validateItemUnits();
+                           // TextBox tb = (TextBox)dp_desrvedDate.Template.FindName("PART_TextBox", dp_desrvedDate);
+                            if (valid && validate)
+                            {
+                                Window.GetWindow(this).Opacity = 0.2;
+                                //wd_multiplePayment w = new wd_multiplePayment();
+                                //if (invoice.SupplierId != null)
+                                //    w.hasCredit = true;
+                                //else
+                                //    w.hasCredit = false;
+                                //w.isPurchase = true;
+                                //w.invoice.invType = _InvoiceType;
+                                //w.invoice.totalNet = decimal.Parse(txt_total.Text);
+
+                                //w.ShowDialog();
+                                //Window.GetWindow(this).Opacity = 1;
+                                //multipleValid = w.isOk;
+                                //listPayments = w.listPayments;
+
+                                if (multipleValid)
+                                {
+                                    switch (invoice.InvType)
+                                    {
+                                        case "pbd":
+                                            await addInvoice("pbw"); // pbw means waiting purchase bounce
+                                            break;
+
+                                        default:
+                                            foreach (var item in listPayments)
+                                            {
+                                                item.TransType = "p"; //pull
+                                                item.PosId = MainWindow.posLogin.PosId;
+                                                if (invoice.SupplierId != null )
+                                                    item.AgentId = (long)invoice.SupplierId;
+
+                                                item.TransNum = "pv";
+                                                item.Side = "v"; // vendor
+                                                item.CreateUserId = MainWindow.userLogin.UserId;
+                                            }
+                                           // if ((long)cb_branch.SelectedValue == MainWindow.branchLogin.branchId) // reciept invoice directly
+                                            {
+                                                await addInvoice("p");
+                                            }
+                                            //else
+                                            //{
+                                            //    await addInvoice("pw");
+                                            //}
+                                            break;
+                                    };
+                                }
+
+               
+                            }
+                        }
+
+                    }
+                    //else //box is closed
+                    //{
+                    //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trBoxIsClosed"), animation: ToasterAnimation.FadeIn);
+                    //}
+                }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
 
      
@@ -855,7 +981,16 @@ namespace EasyGo.View.purchase
             }
             return valid;
         }
+        private bool validateInvoiceValues()
+        {
+            if (decimal.Parse(txt_total.Text) == 0)
+            {
+                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorTotalIsZeroToolTip"), animation: ToasterAnimation.FadeIn);
+                return false;
+            }
 
+            return true;
+        }
         private async Task addInvoice(string invType)
         {
             InvoiceResult invoiceResult = new InvoiceResult();
@@ -1487,7 +1622,10 @@ namespace EasyGo.View.purchase
                 w.ShowDialog();
                 if (w.isOk)
                 {
+                    invoice = w.purchaseInvoice;
+                    invoiceDetailsList = invoice.InvoiceItems;
 
+                    refreshInvoiceDetails();
                 }
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);

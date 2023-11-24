@@ -267,6 +267,7 @@ namespace EasyGo.Classes.ApiClasses
         public List<Item> PackageItems { get; set; }
         public string ItemType { get; set; }
         public string Barcode { get; set; }
+        public int ID { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(
