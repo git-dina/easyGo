@@ -251,5 +251,9 @@ namespace EasyGo.Classes
             combo.SelectedIndex = -1;
         }
         #endregion
+
+        #region Purchase invoice
+        static public List<PurchaseInvoice> purchaseInvoices;
+        #endregion
     }
 }

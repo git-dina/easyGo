@@ -35,6 +35,7 @@ namespace EasyGo.View.windows
         }
         public PurchaseInvoice purchaseInvoice = new PurchaseInvoice();
         IEnumerable<PurchaseInvoice> purchaseInvoices;
+        private string invType = "pd,pbd,p , pw , pb, pbw";
         public long posId { get; set; }
         public long branchId { get; set; }
         public long branchCreatorId { get; set; }
@@ -44,8 +45,6 @@ namespace EasyGo.View.windows
       
         public string icon { get; set; }
         public string purchaseInvoiceType { get; set; }
-
-        List<string> invTypeL;
 
         public string title { get; set; }
         
@@ -78,48 +77,55 @@ namespace EasyGo.View.windows
             }
         }
 
+        #region search
         private void Txb_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
-                /*
-                dg_PurchaseInvoice.ItemsSource = FillCombo.purchaseInvoices.Where(x => x.invNumber.ToLower().Contains(txb_search.Text.ToLower())).ToList();
-                txt_count.Text = dg_PurchaseInvoice.Items.Count.ToString();
-                */
+                search();
             }
             catch (Exception ex)
             {
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
+
+        private void cb_invType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(cb_invType.SelectedIndex > 0)
+                invType = cb_invType.SelectedValue.ToString();
+            else
+                invType = "pd,pbd,p , pw , pb, pbw";
+            search();
+        }
+
+        private void search()
+        {
+            try
+            {
+                purchaseInvoices = FillCombo.purchaseInvoices.Where(x => x.InvNumber.ToLower().Contains(txb_search.Text.ToLower())).ToList();
+                if (cb_invType.SelectedIndex > 0)
+                    purchaseInvoices = purchaseInvoices.Where(x => x.InvType.Equals(invType));
+                dg_PurchaseInvoice.ItemsSource = purchaseInvoices;
+                txt_count.Text = dg_PurchaseInvoice.Items.Count.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        #endregion
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
 
                 HelpClass.StartAwait(grid_ucPurchaseInvoice);
-                /*
-                invTypeL = purchaseInvoiceType.Split(',').ToList();
 
-                #region translate
-                if (AppSettings.lang.Equals("en"))
-                {
-                    grid_ucPurchaseInvoice.FlowDirection = FlowDirection.LeftToRight;
-                }
-                else
-                {
-                    grid_ucPurchaseInvoice.FlowDirection = FlowDirection.RightToLeft;
-                }
-                txt_PurchaseInvoices.Text = title;
-                translat();
-                #endregion
-                dg_PurchaseInvoice.Columns[0].Visibility = Visibility.Collapsed;
+                await refreshInvoices();
+               search();
 
-                hidDisplayColumns();
-                await refreshPurchaseInvoices();
-                Txb_search_TextChanged(null, null);
-
-                */
                 HelpClass.EndAwait(grid_ucPurchaseInvoice);
             }
             catch (Exception ex)
@@ -131,99 +137,34 @@ namespace EasyGo.View.windows
         }
         private void translat()
         {
-            /*
+            txt_PurchaseInvoices.Text = AppSettings.resourcemanager.GetString("trPurchaseInvoices");
+
             MaterialDesignThemes.Wpf.HintAssist.SetHint(txb_search, AppSettings.resourcemanager.GetString("trSearchHint"));
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(cb_invType, AppSettings.resourcemanager.GetString("trTypeHint"));
 
             col_num.Header = AppSettings.resourcemanager.GetString("trCharp");
-            col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
-            col_user.Header = AppSettings.resourcemanager.GetString("trUser");
+            //col_branch.Header = AppSettings.resourcemanager.GetString("trBranch");
+            //col_user.Header = AppSettings.resourcemanager.GetString("trUser");
             col_count.Header = AppSettings.resourcemanager.GetString("trCount");
             col_total.Header = AppSettings.resourcemanager.GetString("trTotal");
             col_type.Header = AppSettings.resourcemanager.GetString("trType");
 
-            #region translate agent column
-            string[] invTypeArray = new string[] { "tsd", "ssd" };
-            var invTypes = invTypeArray.ToList();
-            var inCommen = invTypeL.Any(s => invTypes.Contains(s));
-            if (inCommen)
-                col_agent.Header = AppSettings.resourcemanager.GetString("trCustomer");
-            else
-                col_agent.Header = AppSettings.resourcemanager.GetString("trVendor");
-
-            #endregion
 
             txt_countTitle.Text = AppSettings.resourcemanager.GetString("trCount") + ":";
 
             btn_select.Content = AppSettings.resourcemanager.GetString("trSelect");
 
-            if (page == "storageMov" && icon == "orders") // import
-                col_branch.Header = AppSettings.resourcemanager.GetString("trToBranch");
-            else if (page == "storageMov" && icon == "ordersWait") // export
-                col_branch.Header = AppSettings.resourcemanager.GetString("trFromBranch");
-            */
-        }
-        /*
-        private void hidDisplayColumns()
-        {
-            #region hide Total column in grid if purchaseInvoice is import/export order/purchase order/ spending request order/Food Beverages Consumption
-
-            string[] invTypeArray = new string[] { "imd", "exd", "im", "ex", "exw", "pod", "po", "srd", "sr", "srw", "src", "fbc" };
-            var invTypes = invTypeArray.ToList();
-            var inCommen = invTypeL.Any(s => invTypes.Contains(s));
-            if (inCommen)
-                col_total.Visibility = Visibility.Collapsed; //make total column unvisible
-            #endregion
-
-            #region display branch & user columns in grid if purchaseInvoice is sales order and purchase orders
-            invTypeArray = new string[] { "or" };
-            invTypes = invTypeArray.ToList();
-            invTypeL = purchaseInvoiceType.Split(',').ToList();
-            inCommen = invTypeL.Any(s => invTypes.Contains(s));
-            if (inCommen)
-            {
-                col_agent.Header = AppSettings.resourcemanager.GetString("trCustomer");
-                col_agent.Visibility = Visibility.Visible;
-                if (fromOrder == false)
-                {
-                    col_branch.Visibility = Visibility.Visible; //make branch column visible
-                    col_user.Visibility = Visibility.Visible; //make user column visible
-                }
-                //dg_PurchaseInvoice.Columns[7].Visibility = Visibility.Visible; //make user column visible
-            }
-            #endregion
-
-            #region display branch, vendor & user columns in grid if purchaseInvoice is  purchase orders
-            if (purchaseInvoiceType == "po" && fromOrder == false)
-            {
-                col_agent.Header = AppSettings.resourcemanager.GetString("trVendor");
-                col_branch.Visibility = Visibility.Visible; //make branch column visible
-                col_user.Visibility = Visibility.Visible; //make user column visible
-                col_agent.Visibility = Visibility.Visible;
-            }
-            #endregion
-
-            #region display branch if purchaseInvoice is export or import process
-            invTypeArray = new string[] { "exw", "im", "ex" };
-            invTypes = invTypeArray.ToList();
-            inCommen = invTypeL.Any(s => invTypes.Contains(s));
-            if (inCommen)
-                col_branch.Visibility = Visibility.Visible; //make branch column unvisible
-            #endregion
-
-            #region display customer if purchaseInvoice is take away or self-service
-            invTypeArray = new string[] { "tsd", "ssd" };
-            invTypes = invTypeArray.ToList();
-            inCommen = invTypeL.Any(s => invTypes.Contains(s));
-            if (inCommen)
-                col_agent.Visibility = Visibility.Visible; //make branch column unvisible
-            #endregion
-        }
-        private async Task refreshPurchaseInvoices()
-        {
           
-
         }
-        */
+
+        private async Task refreshInvoices()
+        {
+
+            FillCombo.purchaseInvoices = await purchaseInvoice.GetInvoicesByCreator(invType, MainWindow.userLogin.UserId, AppSettings.duration);
+           
+        }
+       
+       
         private void Dg_PurchaseInvoice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -258,5 +199,7 @@ namespace EasyGo.View.windows
             }
             catch { }
         }
+
+       
     }
 }

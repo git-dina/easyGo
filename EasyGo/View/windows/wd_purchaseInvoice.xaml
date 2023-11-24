@@ -81,12 +81,13 @@
                 </Border>
                     <Border Grid.Row="0" Grid.Column="1" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
                         <Grid   >
-                            <ComboBox x:Name="cb_discountType"     
+                            <ComboBox x:Name="cb_invType"     
          Padding="10,0,5,0"  TextBlock.Foreground="#4E4E4E"
          materialDesign:HintAssist.Hint="type..."  
           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
           Grid.Column="0" Height="40"  Margin="4,0"
-         BorderBrush="#737373" BorderThickness="0"  />
+         BorderBrush="#737373" BorderThickness="0" 
+                                      SelectionChanged="cb_invType_SelectionChanged"/>
                             <Path Fill="#E81123" x:Name="p_error_discountType" Stretch="Fill" Margin="5,5,20,5"
      HorizontalAlignment="Right" Grid.Row="8"  Visibility="Collapsed"   
 VerticalAlignment="Center" Width="15"  Height="15" 
@@ -152,12 +153,6 @@ VerticalAlignment="Center" Width="15"  Height="15"
                                         <Setter Property="Background" Value="{StaticResource lightRed}"></Setter>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding invType}" Value="pb">
-                                        <Setter Property="Background" Value="{StaticResource lightRed}"></Setter>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding invType}" Value="spd">
-                                        <Setter Property="Background" Value="{StaticResource lightRed}"></Setter>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding invType}" Value="sb">
                                         <Setter Property="Background" Value="{StaticResource lightRed}"></Setter>
                                     </DataTrigger>
                                 </Style.Triggers>

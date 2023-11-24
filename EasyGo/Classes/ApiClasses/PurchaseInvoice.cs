@@ -1,5 +1,6 @@
 ﻿using EasyGo.ApiClasses;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -180,6 +181,25 @@ namespace EasyGo.Classes.ApiClasses
             }
             return invoiceResult;
         }
+
+        public async Task<List<PurchaseInvoice>> GetInvoicesByCreator(string invoiceType, long createUserId, int duration)
+        {
+            List<PurchaseInvoice> items = new List<PurchaseInvoice>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("invoiceType", invoiceType);
+            parameters.Add("createUserId", createUserId.ToString());
+            parameters.Add("duration", duration.ToString());
+
+            IEnumerable<Claim> claims = await APIResult.getList("PurchaseInvoice/GetInvoicesByCreator", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items.Add(JsonConvert.DeserializeObject<PurchaseInvoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return items;
+        }
         #endregion
     }
 
@@ -245,8 +265,8 @@ namespace EasyGo.Classes.ApiClasses
         public int Index { get; set; }
         public string ItemName { get; set; }
         public List<Item> PackageItems { get; set; }
-
-
+        public string ItemType { get; set; }
+        public string Barcode { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(

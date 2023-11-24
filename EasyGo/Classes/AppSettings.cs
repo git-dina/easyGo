@@ -68,8 +68,9 @@ namespace EasyGo.Classes
 
         public static decimal PosBalance;
         // invoices count for logged user
-        #region notification
+        #region purchase invoice
         public static int PurchaseDraftCount;
+        public static int duration = 1;
         #endregion
     }
 }

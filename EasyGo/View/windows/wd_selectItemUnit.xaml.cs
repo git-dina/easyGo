@@ -107,7 +107,11 @@ namespace EasyGo.View.windows
                 if (HelpClass.validate(requiredControlList, this))
                 {
                     if (cb_itemUnit.SelectedValue != null)
+                    {
                         itemUnitId = (long)cb_itemUnit.SelectedValue;
+                        var unit = (ItemUnit)cb_itemUnit.SelectedItem;
+                        unitName = unit.UnitName;
+                    }
                     isOk = true;
                     this.Close();
                 }
