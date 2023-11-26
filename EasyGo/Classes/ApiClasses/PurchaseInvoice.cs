@@ -60,6 +60,7 @@ namespace EasyGo.Classes.ApiClasses
         public string UserLastName { get; set; }
         public List<PurInvoiceItem> InvoiceItems { get; set; }
         public List<PayedInvclass> cachTrans { get; set; }
+       public List<CashTransfer> ListPayments { get; set; }
         public int Count { get; set; }
         #endregion
         #region Methods
