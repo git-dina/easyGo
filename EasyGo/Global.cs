@@ -18,6 +18,7 @@ namespace EasyGo
         public const string TMPSuppliersFolder = "Thumb/suppliers"; // folder to save Suppliers photos locally 
         public const string TMPCatFolder = "Thumb/categories"; // folder to save Categories photos locally 
         public const string TMPItemFolder = "Thumb/items"; // folder to save Categories photos locally 
+        public const string TMPCardsFolder = "Thumb/cards"; // folder to save Logo photos locally 
 
     }
 }
