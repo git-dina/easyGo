@@ -841,26 +841,26 @@ namespace EasyGo.View.purchase
                         //check mandatory inputs
                         if (HelpClass.validate(requiredControlList, this))
                         {
+                            bool multipleValid = true;
                             bool validate = validateInvoiceValues();
                             bool valid = validateItemUnits();
                            // TextBox tb = (TextBox)dp_desrvedDate.Template.FindName("PART_TextBox", dp_desrvedDate);
                             if (valid && validate)
                             {
                                 Window.GetWindow(this).Opacity = 0.2;
-                                //wd_multiplePayment w = new wd_multiplePayment();
-                                //if (invoice.SupplierId != null)
-                                //    w.hasCredit = true;
-                                //else
-                                //    w.hasCredit = false;
-                                //w.isPurchase = true;
-                                //w.invoice.invType = _InvoiceType;
-                                //w.invoice.totalNet = decimal.Parse(txt_total.Text);
+                                wd_multiplePaymentPurchase w = new wd_multiplePaymentPurchase();
+                                if ( invoice.SupplierId != null && invoice.SupplierId != 0)
+                                    w.hasCredit = true;
+                                else
+                                    w.hasCredit = false;
+                                w.invoice.InvType = _InvoiceType;
+                                //w.invoice.TotalNet = decimal.Parse(tb_total.Text);
+                                w.invoice.TotalNet = invoice.TotalNet;
 
-                                //w.ShowDialog();
-                                //Window.GetWindow(this).Opacity = 1;
-                                //multipleValid = w.isOk;
-                                //listPayments = w.listPayments;
-
+                                w.ShowDialog();
+                                Window.GetWindow(this).Opacity = 1;
+                                multipleValid = w.isOk;
+                                listPayments = w.listPayments;
                                 {
                                     switch (invoice.InvType)
                                     {
