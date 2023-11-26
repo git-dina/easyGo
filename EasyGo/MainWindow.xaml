@@ -277,6 +277,39 @@ materialDesign:ButtonAssist.CornerRadius="15">
            Margin="10,0,0,0"/>
                                     </Grid>
                                 </Button>
+                                <Button   x:Name="btn_storage" 
+ Tag="storage"
+ Click="Btn_storage_Click"
+Height="40" 
+HorizontalAlignment="Left"  
+Background="{DynamicResource White}" 
+ BorderBrush="{x:Null}"    
+ Padding="0"  BorderThickness="0"  Margin="10 5"
+materialDesign:ButtonAssist.CornerRadius="15">
+                                    <Grid Width="{Binding ElementName=grid, Path=ActualWidth}"
+ Height="40"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Path  x:Name="path_storage" 
+       Grid.Column="0"  
+ Tag="storage"
+          FlowDirection="LeftToRight"
+      Fill="{DynamicResource MainColor}" 
+      Stretch="Fill"  
+ HorizontalAlignment="Center"
+   VerticalAlignment="Center" Width="20" Height="20"
+ Data="{StaticResource storage}"/>
+                                        <TextBlock  x:Name="txt_storage" Grid.Column="1"
+ Tag="storage"
+           Text="storage" 
+      Foreground="{DynamicResource MainColor}" 
+      HorizontalAlignment="Left" VerticalAlignment="Center" 
+           Margin="10,0,0,0"/>
+                                    </Grid>
+                                </Button>
+
                                 <Button   x:Name="btn_purchase" 
                          Tag="purchase"
                          Click="Btn_purchase_Click"

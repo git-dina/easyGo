@@ -23,6 +23,7 @@ using EasyGo.View.sectionData;
 using EasyGo.Classes.ApiClasses;
 using EasyGo.View.catalog;
 using EasyGo.View.purchase;
+using EasyGo.View.storage;
 
 namespace EasyGo
 {
@@ -540,6 +541,23 @@ namespace EasyGo
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
+         private void Btn_storage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button button = sender as Button;
+                ColorButtonRefresh(button.Tag.ToString());
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                uc_storage uc = new uc_storage();
+                MainWindow.mainWindow.grid_main.Children.Add(uc);
+
+                //MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
 
         private void Btn_sectionData_Click(object sender, RoutedEventArgs e)
         {
@@ -573,5 +591,7 @@ namespace EasyGo
             mainWindow.txt_cashSympol.Text = AppSettings.Currency;
         }
         #endregion
+
+       
     }
 }
