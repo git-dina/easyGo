@@ -252,7 +252,7 @@
     <Compile Include="Classes\ApiClasses\Supplier.cs" />
     <Compile Include="converters\accuracyConverter.cs" />
     <Compile Include="converters\castcateLongTextConverter.cs" />
-    <Compile Include="converters\Class1.cs" />
+    <Compile Include="converters\dateFrameConverter.cs" />
     <Compile Include="converters\purchaseInvoiceTypeConverter.cs" />
     <Compile Include="converters\twoStringsConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
@@ -280,6 +280,9 @@
     <Compile Include="View\purchase\uc_purchaseInvoice.xaml.cs">
       <DependentUpon>uc_purchaseInvoice.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\sectionData\uc_card.xaml.cs">
+      <DependentUpon>uc_card.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\sectionData\uc_customer.xaml.cs">
       <DependentUpon>uc_customer.xaml</DependentUpon>
     </Compile>
@@ -292,11 +295,20 @@
     <Compile Include="View\sectionData\uc_user.xaml.cs">
       <DependentUpon>uc_user.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\storage\uc_itemsStorage.xaml.cs">
+      <DependentUpon>uc_itemsStorage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\storage\uc_storage.xaml.cs">
+      <DependentUpon>uc_storage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_acceptCancelPopup.xaml.cs">
       <DependentUpon>wd_acceptCancelPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_itemUnit.xaml.cs">
       <DependentUpon>wd_itemUnit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\windows\wd_multiplePaymentPurchase.xaml.cs">
+      <DependentUpon>wd_multiplePaymentPurchase.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\windows\wd_previewPdf.xaml.cs">
       <DependentUpon>wd_previewPdf.xaml</DependentUpon>
@@ -374,6 +386,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\sectionData\uc_card.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\sectionData\uc_customer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -390,11 +406,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\storage\uc_itemsStorage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\storage\uc_storage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\windows\wd_acceptCancelPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\windows\wd_itemUnit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_multiplePaymentPurchase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -586,7 +614,6 @@
     <Folder Include="View\reports\" />
     <Folder Include="View\sales\" />
     <Folder Include="View\settings\" />
-    <Folder Include="View\storage\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\netoaster\netoaster.csproj">
