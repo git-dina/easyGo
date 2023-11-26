@@ -88,12 +88,12 @@ namespace EasyGo.View.storage
 
            
             ////////////////////////////////----invoice----/////////////////////////////////
-            dg_itemsStorage.Columns[0].Header = AppSettings.resourcemanager.GetString("trItemUnit");
-            dg_itemsStorage.Columns[1].Header = AppSettings.resourcemanager.GetString("trSectionLocation");
-            dg_itemsStorage.Columns[2].Header = AppSettings.resourcemanager.GetString("trQTR");
-            dg_itemsStorage.Columns[3].Header = AppSettings.resourcemanager.GetString("trStartDate");
-            dg_itemsStorage.Columns[4].Header = AppSettings.resourcemanager.GetString("trEndDate");
-            dg_itemsStorage.Columns[5].Header = AppSettings.resourcemanager.GetString("trNote");
+            col_itemUnit.Header = AppSettings.resourcemanager.GetString("trItemUnit");
+           // dg_itemsStorage.Columns[1].Header = AppSettings.resourcemanager.GetString("trSectionLocation");
+           col_quantity.Header = AppSettings.resourcemanager.GetString("trQTR");
+           col_startDate.Header = AppSettings.resourcemanager.GetString("trStartDate");
+            col_endDate.Header = AppSettings.resourcemanager.GetString("trEndDate");
+           col_notes.Header = AppSettings.resourcemanager.GetString("trNote");
             //dg_itemsStorage.Columns[6].Header = AppSettings.resourcemanager.GetString("trOrderNum");
 
             txt_Location.Text = AppSettings.resourcemanager.GetString("trLocationt");
