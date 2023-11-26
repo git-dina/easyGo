@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyGo.ApiClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,6 +43,16 @@ namespace EasyGo.Classes.ApiClasses
         #endregion
 
         #region Methods
+        public async Task<int> getAmountInBranch(long itemUnitId, int branchId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "ItemLocation/getAmountInBranch";
+
+            parameters.Add("branchId", branchId.ToString());
+            parameters.Add("itemUnitId", itemUnitId.ToString());
+
+            return (int)await APIResult.PostReturnDecimal(method, parameters);
+        }
         #endregion
     }
 }

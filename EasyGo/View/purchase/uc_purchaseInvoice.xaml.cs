@@ -48,6 +48,7 @@ namespace EasyGo.View.purchase
         public static List<string> requiredControlList;
         PurchaseInvoice invoice = new PurchaseInvoice();
         PurchaseInvoice invoiceModel = new PurchaseInvoice();
+        ItemLocation itemLocation = new ItemLocation();
         CashTransfer cashTransfer = new CashTransfer();
         string _InvoiceType = "pd";
 
@@ -495,9 +496,9 @@ namespace EasyGo.View.purchase
                         var itemUnitsIds = FillCombo.itemUnitList.Where(x => x.ItemId == row.ItemId).Select(x => x.ItemUnitId).ToList();
 
                         #region caculate available amount in this invoice 
-                       // int availableAmountInBranch = await FillCombo.itemLocation.getAmountInBranch(row.ItemUnitId, MainWindow.branchLogin.BranchId);
+                       int availableAmountInBranch = await itemLocation.getAmountInBranch((long)row.ItemUnitId, MainWindow.branchLogin.BranchId);
                         int amountInBill = await getAmountInBill(row.ItemId, (long)row.ItemUnitId, row.ID);
-                        int availableAmount = 0; //int availableAmount = availableAmountInBranch - amountInBill;
+                        int availableAmount = availableAmountInBranch - amountInBill;
                         #endregion
                         #region calculate amount in purchase invoice
                         var items = invoice.InvoiceItems.ToList().Where(i => itemUnitsIds.Contains((long)i.ItemUnitId));
