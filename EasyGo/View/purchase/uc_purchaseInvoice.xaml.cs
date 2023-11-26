@@ -840,7 +840,6 @@ namespace EasyGo.View.purchase
                         //check mandatory inputs
                         if (HelpClass.validate(requiredControlList, this))
                         {
-                            bool multipleValid = true;
                             bool validate = validateInvoiceValues();
                             bool valid = validateItemUnits();
                            // TextBox tb = (TextBox)dp_desrvedDate.Template.FindName("PART_TextBox", dp_desrvedDate);
@@ -861,7 +860,6 @@ namespace EasyGo.View.purchase
                                 //multipleValid = w.isOk;
                                 //listPayments = w.listPayments;
 
-                                if (multipleValid)
                                 {
                                     switch (invoice.InvType)
                                     {
