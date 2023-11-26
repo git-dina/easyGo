@@ -12,6 +12,8 @@
             <converters:accuracyConverter x:Key="accuracyConverter"/>
             <converters:twoStringsConverter x:Key="twoStringsConverter"/>
             <converters:purchaseInvoiceTypeConverter x:Key="purchaseInvoiceTypeConverter"/>
+            <converters:dateFrameConverter x:Key="dateFrameConverter"/>
+           
            
 
             <!--#region Fonts-->
