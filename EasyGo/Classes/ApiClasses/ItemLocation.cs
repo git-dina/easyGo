@@ -16,6 +16,7 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<long> CreateUserId { get; set; }
         public Nullable<long> UpdateUserId { get; set; }
+        public bool IsExpired { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<long> ItemUnitId { get; set; }
@@ -28,6 +29,16 @@ namespace EasyGo.Classes.ApiClasses
         public string UnitName { get; set; }
         public string ItemType { get; set; }
         public bool IsFreeZone { get; set; }
+
+        internal Task<int> changeUnitExpireDate(object itemsLocId, DateTime startDate, DateTime endDate, long userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Task<List<ItemLocation>> GetFreeZoneItems(object branchId)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Methods
