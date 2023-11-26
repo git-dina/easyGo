@@ -375,6 +375,7 @@ namespace EasyGo.Classes
         }
         #endregion
 
+
         public static void getMobile(string _mobile, ComboBox _area, TextBox _tb)
         {//mobile
             if ((_mobile != null))
@@ -440,6 +441,48 @@ namespace EasyGo.Classes
             }
         }
 
+        public static async void ellipsLocalImg(string type, string imageUri, Ellipse ellipse)
+        {
+            string dir = System.IO.Directory.GetCurrentDirectory();
+            byte[] data = null;
+            if (type.Equals("Card"))
+            {
+                string path = System.IO.Path.Combine(dir, Global.TMPCardsFolder, imageUri);
+                // The byte[] to save the data in
+                if (System.IO.File.Exists(path))
+                {
+                    // Load file meta data with FileInfo
+
+                    System.IO.FileInfo fileInfo = new System.IO.FileInfo(path);
+                    // The byte[] to save the data in
+                    data = new byte[fileInfo.Length];
+                    using (var stream = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                    {
+                        stream.Read(data, 0, data.Length);
+                    }
+                    var bitmapImage = new BitmapImage();
+                    using (var memoryStream = new System.IO.MemoryStream(data))
+                    {
+                        try
+                        {
+                            bitmapImage.BeginInit();
+                            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmapImage.StreamSource = memoryStream;
+                            bitmapImage.EndInit();
+                            ellipse.Fill = new ImageBrush(bitmapImage);
+                        }
+                        catch
+                        {
+                            Uri resourceUri = new Uri("pic/no-image-icon-90x90.png", UriKind.Relative);
+                            StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+                            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+                            imageBrush.ImageSource = temp;
+                            ellipse.Fill = imageBrush;
+                        }
+                    }
+                }
+            }
+        }
         public static void clearImg(Button img)
         {
             Uri resourceUri = new Uri("pic/no-image-icon-125x125.png", UriKind.Relative);
