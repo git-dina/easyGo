@@ -38,6 +38,7 @@ namespace EasyGo.View.windows
         }
         static private object _Sender;
         public bool isOk { get; set; }
+        public bool hasCredit { get; set; }
         public bool hasDeliveryCompany { get; set; }
         ImageBrush brush = new ImageBrush();
         static private string _SelectedPaymentType = "cash";
@@ -96,7 +97,7 @@ namespace EasyGo.View.windows
                 loading_fillCardCombo();
 
                 //////////////////////////
-                //invoice.agentId
+                //invoice.SupplierId
                 //////////////////////////
                 tb_moneySympol1.Text =
                     tb_moneySympol2.Text =
@@ -105,6 +106,7 @@ namespace EasyGo.View.windows
                 invoice.Paid = 0;
                 tb_cash.Text = tb_total.Text = invoice.TotalNet.ToString();
 
+               
             }
             catch (Exception ex)
             {
@@ -132,20 +134,8 @@ namespace EasyGo.View.windows
         private void configurProcessType()
         {
 
-            //if (invoice.InvType.Equals("sbd"))
-            //{
-            //    chk_cash.Visibility = Visibility.Visible;
-            //    chk_card.Visibility = Visibility.Collapsed;
-            //    //chk_admin.Visibility = Visibility.Collapsed;
-            //}
-            //else
-            {
-
-                chk_cash.Visibility = Visibility.Visible;
-                chk_card.Visibility = Visibility.Visible;
-                //chk_admin.Visibility = Visibility.Collapsed;
-
-            }
+            //chk_cash.Visibility = Visibility.Visible;
+            //chk_card.Visibility = Visibility.Visible;
             chk_cash.IsChecked = true;
         }
         private void Btn_colse_Click(object sender, RoutedEventArgs e)
@@ -180,7 +170,7 @@ namespace EasyGo.View.windows
             try
             {
                 //decimal remain = getCusAvailableBlnc(agent);
-                if(invoice.Paid >= invoice.TotalNet)
+                if (hasCredit == true || invoice.Paid >= invoice.TotalNet)
                 {
                     if (listPayments.Where(x => x.ProcessType == "cash").Count() > 0 &&
                         listPayments.Where(x => x.ProcessType == "cash").FirstOrDefault().Cash > MainWindow.posLogin.Balance
@@ -225,6 +215,27 @@ namespace EasyGo.View.windows
         {
             try
             {
+                /*
+                string name = sender.GetType().Name;
+                if (name == "TextBox")
+                {
+                    if ((sender as TextBox).Name == "tb_processNum")
+                        HelpClass.validateEmptyTextBox((TextBox)sender, p_errorProcessNum, tt_errorProcessNum, "trEmptyProcessNumToolTip");
+                }
+                if (name == "ComboBox")
+                {
+
+                    if ((sender as ComboBox).Name == "cb_paymentProcessType")
+                        HelpClass.validateEmptyComboBox((ComboBox)sender, p_errorpaymentProcessType, tt_errorpaymentProcessType, "trErrorEmptyPaymentTypeToolTip");
+
+                }
+                if (name == "TextBlock")
+                {
+
+                    if ((sender as TextBlock).Name == "txt_card")
+                        HelpClass.validateEmptyTextBlock((TextBlock)sender, p_errorCard, tt_errorCard, "trSelectCreditCard");
+                }
+                */
 
             }
             catch (Exception ex)
@@ -287,7 +298,7 @@ namespace EasyGo.View.windows
                 //}
                 foreach (var el in cardEllipseList)
                 {
-                    el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                    el.Stroke = Application.Current.Resources["LightGrey"] as SolidColorBrush;
                 }
             }
             catch (Exception ex)
@@ -343,7 +354,7 @@ namespace EasyGo.View.windows
                 Ellipse ellipse = new Ellipse();
                 //ellipse.Margin = new Thickness(-5, 0, -5, 0);
                 ellipse.StrokeThickness = 1;
-                ellipse.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                ellipse.Stroke = Application.Current.Resources["LightGrey"] as SolidColorBrush;
                 ellipse.Height = 35;
                 ellipse.Width = 35;
                 ellipse.FlowDirection = FlowDirection.LeftToRight;
@@ -389,7 +400,7 @@ namespace EasyGo.View.windows
                     if ((long)el.Tag == (long)button.Tag)
                         el.Stroke = Application.Current.Resources["MainColor"] as SolidColorBrush;
                     else
-                        el.Stroke = Application.Current.Resources["SecondColor"] as SolidColorBrush;
+                        el.Stroke = Application.Current.Resources["LightGrey"] as SolidColorBrush;
                 }
             }
             catch (Exception ex)
@@ -618,7 +629,7 @@ namespace EasyGo.View.windows
                                     //List<string> str = item.ToString().Split(':').ToList<string>();
                                     //str[1] = str[1].Replace(" ", "");
                                     //dec += decimal.Parse(str[1]);
-                                    //invoice.paid -= decimal.Parse(str[1]);
+                                    //invoice.Paid -= decimal.Parse(str[1]);
                                     //hasDuplicate = true;
                                     break;
                                 }
@@ -772,7 +783,7 @@ namespace EasyGo.View.windows
 
 
 
-                                //if (cashTrasnfer.cash + invoice.paid <= invoice.totalNet || !(cb_paymentProcessType.SelectedValue.ToString().Equals("card") && cashTrasnfer.cash > totalCashList))
+                                //if (cashTrasnfer.cash + invoice.Paid <= invoice.TotalNet || !(cb_paymentProcessType.SelectedValue.ToString().Equals("card") && cashTrasnfer.cash > totalCashList))
                                 {
                                     cashTrasnfer.AgentId = invoice.SupplierId;
                                     cashTrasnfer.InvId = invoice.InvoiceId;
