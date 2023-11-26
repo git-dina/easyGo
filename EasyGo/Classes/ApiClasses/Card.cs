@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -44,6 +45,52 @@ namespace EasyGo.Classes.ApiClasses
                 }
             }
             return categories;
+        }
+
+
+        public async Task<byte[]> downloadImage(string imageName)
+        {
+            byte[] byteImg = null;
+            if (imageName != "")
+            {
+                byteImg = await APIResult.getImage("Categories/GetImage", imageName);
+
+                string dir = Directory.GetCurrentDirectory();
+                string tmpPath = Path.Combine(dir, Global.TMPFolder);
+                if (!Directory.Exists(tmpPath))
+                    Directory.CreateDirectory(tmpPath);
+                tmpPath = Path.Combine(tmpPath, imageName);
+                if (System.IO.File.Exists(tmpPath))
+                {
+                    System.IO.File.Delete(tmpPath);
+                }
+                if (byteImg != null)
+                {
+                    using (FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.ReadWrite))
+                    {
+                        fs.Write(byteImg, 0, byteImg.Length);
+                    }
+                }
+
+            }
+
+            return byteImg;
+
+        }
+
+        internal Task<string> Save(Card card)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Task<string> uploadImage(string imgFileName, string v, long cardId)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Task<string> Delete(int cardId, long userId)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }
