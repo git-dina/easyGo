@@ -103,7 +103,18 @@ namespace EasyGo.View.sectionData
             wp_main.Children.Add(mco_customer);
             #endregion
 
-           
+            #region mco_card
+            uc_mainCardsOnce mco_card = new uc_mainCardsOnce();
+            mco_card.Title = "card";
+            mco_card.Hint = "add, update, delete...";
+            mco_card.ButtonText = "enter";
+            mco_card.Icon = "creditCard";
+            mco_card.Color = Application.Current.Resources["dashboardColor4"] as SolidColorBrush;
+            mco_card.Click += Btn_card_Click;
+            wp_main.Children.Add(mco_card);
+            #endregion
+
+
         }
         void permission()
         {
@@ -193,6 +204,21 @@ namespace EasyGo.View.sectionData
             }
         }
 
-       
+        private void Btn_card_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                uc_card uc = new uc_card();
+                MainWindow.mainWindow.grid_main.Children.Add(uc);
+
+                Button button = sender as Button;
+                //MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
     }
 }
