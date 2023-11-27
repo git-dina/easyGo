@@ -96,7 +96,7 @@ namespace EasyGo.Classes.ApiClasses
         }
 
         public async Task<InvoiceResult> savePurchaseInvoice(PurchaseInvoice item,  Notification amountNot, 
-                                                           CashTransfer PosCashTransfer, List<CashTransfer> listPayments, int posId)
+                                                           CashTransfer PosCashTransfer, int posId)
         {
 
             InvoiceResult invoiceResult = new InvoiceResult();
@@ -112,9 +112,6 @@ namespace EasyGo.Classes.ApiClasses
 
             myContent = JsonConvert.SerializeObject(PosCashTransfer);
             parameters.Add("PosCashTransfer", myContent);
-
-            myContent = JsonConvert.SerializeObject(listPayments);
-            parameters.Add("listPayments", myContent);
 
             parameters.Add("posId", posId.ToString());
 
@@ -151,7 +148,7 @@ namespace EasyGo.Classes.ApiClasses
             }
             return invoiceResult;
         }
-        public async Task<InvoiceResult> savePurchaseBounce(PurchaseInvoice item, List<CashTransfer> listPayments,
+        public async Task<InvoiceResult> savePurchaseBounce(PurchaseInvoice item,
                            CashTransfer posCashTransfer, Notification notification, int posId, int branchId)
         {
             InvoiceResult invoiceResult = new InvoiceResult();
@@ -160,9 +157,6 @@ namespace EasyGo.Classes.ApiClasses
 
             var myContent = JsonConvert.SerializeObject(item);
             parameters.Add("itemObject", myContent);
-
-            myContent = JsonConvert.SerializeObject(listPayments);
-            parameters.Add("listPayments", myContent);
 
             myContent = JsonConvert.SerializeObject(posCashTransfer);
             parameters.Add("posCashTransfer", myContent);
