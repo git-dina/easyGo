@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,7 +55,7 @@ namespace EasyGo.Classes.ApiClasses
             byte[] byteImg = null;
             if (imageName != "")
             {
-                byteImg = await APIResult.getImage("Categories/GetImage", imageName);
+                byteImg = await APIResult.getImage("Card/GetImage", imageName);
 
                 string dir = Directory.GetCurrentDirectory();
                 string tmpPath = Path.Combine(dir, Global.TMPFolder);
@@ -83,14 +85,88 @@ namespace EasyGo.Classes.ApiClasses
             throw new NotImplementedException();
         }
 
-        internal Task<string> uploadImage(string imgFileName, string v, long cardId)
+        internal async Task<string> uploadImage(string imgFileName, string imageName, int cardId)
         {
-            throw new NotImplementedException();
-        }
+            if (imgFileName != "")
+            {
+                MultipartFormDataContent form = new MultipartFormDataContent();
+                // get file extension
+                var ext = imgFileName.Substring(imgFileName.LastIndexOf('.'));
+                var extension = ext.ToLower();
+                string fileName = imageName + extension;
+                try
+                {
+                    // configure trmporery path
+                    string dir = Directory.GetCurrentDirectory();
+                    string tmpPath = Path.Combine(dir, Global.TMPUsersFolder);
+                    string[] files = System.IO.Directory.GetFiles(tmpPath, imageName + ".*");
+                    foreach (string f in files)
+                    {
+                        System.IO.File.Delete(f);
+                    }
 
-        internal Task<string> Delete(int cardId, long userId)
+                    tmpPath = Path.Combine(tmpPath, imageName + extension);
+
+                    if (imgFileName != tmpPath) // edit mode
+                    {
+                        // resize image
+                        ImageProcess imageP = new ImageProcess(150, imgFileName);
+                        imageP.ScaleImage(tmpPath);
+
+                        // read image file
+                        var stream = new FileStream(tmpPath, FileMode.Open, FileAccess.Read);
+
+                        // create http client request
+                        using (var client = new HttpClient())
+                        {
+                            client.BaseAddress = new Uri(Global.APIUri);
+                            client.Timeout = System.TimeSpan.FromSeconds(3600);
+                            string boundary = string.Format("----WebKitFormBoundary{0}", DateTime.Now.Ticks.ToString("x"));
+                            HttpContent content = new StreamContent(stream);
+                            content.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
+                            content.Headers.Add("client", "true");
+
+                            content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                            {
+                                Name = imageName,
+                                FileName = fileName
+                            };
+                            form.Add(content, "fileToUpload");
+
+                            var response = await client.PostAsync(@"Card/PostUserImage", form);
+
+                        }
+                        stream.Dispose();
+                    }
+                    // save image name in DB
+                    Card card = new Card();
+                    card.CardId = cardId;
+                    card.Image = fileName;
+                    await updateImage(card);
+                    return fileName;
+                }
+                catch
+                { return ""; }
+            }
+            return "";
+        }
+        public async Task<string> updateImage(Card card)
         {
-            throw new NotImplementedException();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var myContent = JsonConvert.SerializeObject(card);
+            parameters.Add("itemObject", myContent);
+
+            string method = "Card/UpdateImage";
+            return await APIResult.post(method, parameters);
+        }
+        internal async Task<string> Delete(int cardId, long userId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("cardId", cardId.ToString());
+            parameters.Add("userId", userId.ToString());
+
+            string method = "Card/Delete";
+            return await APIResult.post(method, parameters);
         }
         #endregion
     }

@@ -1096,11 +1096,10 @@ namespace EasyGo.Classes
                 return true;
             }
         }
-        public static async void getLocalImg(string type, string imageUri, Button button)
+        public static async void getLocalImg( string imageUri, Button button,string tmpFolder)
         {
             try
             {
-
                 //if (type.Equals("Category"))
                 //{
                 //    Category category = new Category();
@@ -1130,11 +1129,11 @@ namespace EasyGo.Classes
                 //    button.Background = new ImageBrush(bitmapImage);
                 //}
                 //else
-                if (type.Equals("User"))
+               // if (type.Equals("User"))
                 {
-                    User user = new User();
-                    byte[] imageBuffer = readLocalImage(imageUri, Global.TMPUsersFolder);
-                    var bitmapImage = new BitmapImage();
+                   // User user = new User();
+                    byte[] imageBuffer = readLocalImage(imageUri, tmpFolder);
+                   var bitmapImage = new BitmapImage();
                     using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
                     {
                         bitmapImage.BeginInit();
@@ -1143,23 +1142,8 @@ namespace EasyGo.Classes
                         bitmapImage.EndInit();
                     }
                     button.Background = new ImageBrush(bitmapImage);
-                }
-                //else if (type.Equals("Agent"))
-                //{
-                //    Agent agent = new Agent();
-                //    byte[] imageBuffer = readLocalImage(imageUri, Global.TMPAgentsFolder);
-                //    var bitmapImage = new BitmapImage();
-                //    using (var memoryStream = new System.IO.MemoryStream(imageBuffer))
-                //    {
-                //        bitmapImage.BeginInit();
-                //        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                //        bitmapImage.StreamSource = memoryStream;
-                //        bitmapImage.EndInit();
-                //    }
-                //    button.Background = new ImageBrush(bitmapImage);
-                //}
-
-                //}
+                } 
+  
             }
             catch
             {

@@ -391,7 +391,7 @@ namespace EasyGo.View.sectionData
                         if (isModified)
                             getImg();
                         else
-                            HelpClass.getLocalImg("User", user.Image, btn_image);
+                            HelpClass.getLocalImg( user.Image, btn_image,Global.TMPUsersFolder);
                         #endregion
 
                         inputEditable();

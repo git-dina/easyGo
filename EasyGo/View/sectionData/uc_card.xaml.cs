@@ -128,22 +128,14 @@ namespace EasyGo.View.sectionData
 
                         if (res.Equals("failed"))
                             Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-
-                        else if (res.Equals("dCardName")) //card name already exist
-                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCardNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
-
-                        else if (res.Equals("dFullName")) //full name already exist
-                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorDuplicateCardFullNameToolTip"), animation: ToasterAnimation.FadeIn);
-                        else if (res.Equals("upgrade")) //reached maximum number of cards
-                            Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpgrade"), animation: ToasterAnimation.FadeIn);
-
+                      
                         else
                         {
                             Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
                             if (openFileDialog.FileName != "")
                             {
-                                long cardId = long.Parse(res);
+                                int cardId = int.Parse(res);
                                 string b = await card.uploadImage(imgFileName,
                                     Md5Encription.MD5Hash("Inc-m" + cardId.ToString()), cardId);
                                 card.Image = b;
@@ -194,18 +186,12 @@ namespace EasyGo.View.sectionData
                             if (res.Equals("failed"))
                                 Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
 
-                            else if (res.Equals("dCardName")) //card name already exist
-                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trCardNameAlreadyExist"), animation: ToasterAnimation.FadeIn);
-
-                            else if (res.Equals("dFullName")) //full name already exist
-                                Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorDuplicateCardFullNameToolTip"), animation: ToasterAnimation.FadeIn);
-
                             else
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopUpdate"), animation: ToasterAnimation.FadeIn);
                                 await Search();
                                 FillCombo.cardsList = cards.ToList();
-                                long cardId = long.Parse(res);
+                                int cardId = int.Parse(res);
                                
                                 if (openFileDialog.FileName != "")
                                 {
@@ -266,7 +252,7 @@ namespace EasyGo.View.sectionData
                                 await RefreshCardsList();
                                 await Search();
                                 Clear();
-                                FillCombo.cardsList = cards.ToList();
+                               // FillCombo.cardsList = cards.ToList();
                             }
                         }
 
@@ -334,7 +320,7 @@ namespace EasyGo.View.sectionData
                         if (isModified)
                             getImg();
                         else
-                            HelpClass.getLocalImg("Card", card.Image, btn_image);
+                            HelpClass.getLocalImg(card.Image, btn_image, Global.TMPCardsFolder);
                         #endregion
 
                     }
