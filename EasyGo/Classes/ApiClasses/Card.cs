@@ -25,7 +25,7 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<decimal> CommissionRatio { get; set; }
         public decimal Balance { get; set; }
         public bool BalanceType { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; } = true;
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public Nullable<long> CreateUserId { get; set; }
@@ -80,9 +80,14 @@ namespace EasyGo.Classes.ApiClasses
 
         }
 
-        internal Task<string> Save(Card card)
+        internal async Task<string> Save(Card card)
         {
-            throw new NotImplementedException();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "Card/Save";
+
+            var myContent = JsonConvert.SerializeObject(card);
+            parameters.Add("itemObject", myContent);
+            return await APIResult.post(method, parameters);
         }
 
         internal async Task<string> uploadImage(string imgFileName, string imageName, int cardId)
