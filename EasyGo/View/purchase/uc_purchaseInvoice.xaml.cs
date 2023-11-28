@@ -1083,7 +1083,7 @@ namespace EasyGo.View.purchase
                         #region posCash posCash with type inv
                         var cashT = invoice.posCashTransfer(invoice, "pb");
                         #endregion
-                        invoiceResult = await invoiceModel.savePurchaseBounce(invoice, listPayments, cashT, not, MainWindow.posLogin.PosId, MainWindow.branchLogin.BranchId);
+                        invoiceResult = await invoiceModel.savePurchaseBounce(invoice,  cashT, not, MainWindow.posLogin.PosId, MainWindow.branchLogin.BranchId);
                         break;
                     case "p":
                     case "pw":
@@ -1120,7 +1120,7 @@ namespace EasyGo.View.purchase
                         #region posCash
                         CashTransfer posCashTransfer = invoice.posCashTransfer(invoice, "pi");
                         #endregion
-                        invoiceResult = await invoiceModel.savePurchaseInvoice(invoice, amountNot,  posCashTransfer, listPayments, MainWindow.posLogin.PosId);
+                        invoiceResult = await invoiceModel.savePurchaseInvoice(invoice, amountNot,  posCashTransfer, MainWindow.posLogin.PosId);
 
                         break;
 
