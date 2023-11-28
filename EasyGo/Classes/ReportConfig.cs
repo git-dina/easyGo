@@ -1213,14 +1213,7 @@ namespace EasyGo.Classes
             rep.DataSources.Add(new ReportDataSource("DataSetPos", possQuery));
         }
 
-        
-        public static void userReport(IEnumerable<User> usersQuery, LocalReport rep, string reppath)
-        {
-            rep.ReportPath = reppath;
-            rep.EnableExternalImages = true;
-            rep.DataSources.Clear();
-            rep.DataSources.Add(new ReportDataSource("DataSetUser", usersQuery));
-        }
+        #region Section data reports
 
         public static void UserReport(IEnumerable<User> Query1, LocalReport rep, string reppath, List<ReportParameter> paramarr)
         {
@@ -1275,6 +1268,29 @@ namespace EasyGo.Classes
             paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
 
         }
+
+        public static void CardsReport(IEnumerable<Card> cardsQuery, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            List<Card> query = JsonConvert.DeserializeObject<List<Card>>(JsonConvert.SerializeObject(cardsQuery));
+            //foreach (Card row in query)
+            //{
+            //    row.commissionValue = decimal.Parse(HelpClass.DecTostring(row.commissionValue));
+            //    row.commissionRatio = decimal.Parse(HelpClass.PercentageDecTostring(row.commissionRatio));
+            //}
+            rep.DataSources.Add(new ReportDataSource("DataSetCard", query));
+            //title
+            paramarr.Add(new ReportParameter("trTitle", AppSettings.resourcemanagerreport.GetString("trPaymentMethods"))); //trCards
+            //table columns
+            paramarr.Add(new ReportParameter("trName", AppSettings.resourcemanagerreport.GetString("trName")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trNo", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            //paramarr.Add(new ReportParameter("trcommissionValue", AppSettings.resourcemanagerreport.GetString("commissionValue")));
+            //paramarr.Add(new ReportParameter("trcommissionRatio", AppSettings.resourcemanagerreport.GetString("commissionRatio")));
+        }
+        #endregion
         public static string ConvertInvType(string invType)
         {
             string value = "";

@@ -575,37 +575,36 @@ namespace EasyGo.View.sectionData
         LocalReport rep = new LocalReport();
         public void BuildReport()
         {
-            /*
+
             List<ReportParameter> paramarr = new List<ReportParameter>();
 
             string addpath;
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\SectionData\Persons\Ar\ArCards.rdlc";
+                addpath = @"\Reports\SectionData\BanksData\Ar\ArCards.rdlc";
             }
             else
             {
-                addpath = @"\Reports\SectionData\Persons\En\EnCards.rdlc";
+                addpath = @"\Reports\SectionData\BanksData\En\EnCards.rdlc";
             }
             string searchval = "";
             //filter   
-            // paramarr.Add(new ReportParameter("stateval", stateval));
-            // paramarr.Add(new ReportParameter("trActiveState", AppSettings.resourcemanagerreport.GetString("trState")));
+           
             paramarr.Add(new ReportParameter("trSearch", AppSettings.resourcemanagerreport.GetString("trSearch")));
             searchval = tb_search.Text;
             paramarr.Add(new ReportParameter("searchVal", searchval));
             //end filter
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
 
-            ReportConfig.CardReport(cardsQuery, rep, reppath, paramarr);
+            ReportConfig.CardsReport(cardsQuery, rep, reppath, paramarr);
             ReportConfig.setReportLanguage(paramarr);
             ReportConfig.Header(paramarr);
 
             rep.SetParameters(paramarr);
 
             rep.Refresh();
-            */
+     
 
         }
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)

@@ -503,6 +503,12 @@
     <Content Include="Reports\Catalog\En\EnUnit.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\SectionData\BanksData\Ar\ArCard.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\SectionData\BanksData\En\EnCard.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\socialMedia\email.png" />
     <Resource Include="pic\socialMedia\facebook.png" />
     <Resource Include="pic\socialMedia\fax.png" />
@@ -526,6 +532,7 @@
     </Content>
     <Resource Include="fonts\cairo-font\Cairo Regular 400.ttf" />
     <None Include="EasyGo_TemporaryKey.pfx" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Card.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Category.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Customer.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Item.datasource" />
