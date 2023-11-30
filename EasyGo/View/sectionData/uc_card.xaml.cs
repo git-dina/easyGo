@@ -117,7 +117,7 @@ namespace EasyGo.View.sectionData
                     {
 
                         card.Name = tb_Name.Text;
-                        card.HasProcessNum = tgl_HasProcessNum.IsChecked.Value;
+                        card.HasProcessNum = tgl_HasProcessNum.IsChecked == true? true : false;
                         card.Notes = tb_Notes.Text;
                         card.CreateUserId = MainWindow.userLogin.UserId;
 
@@ -173,7 +173,7 @@ namespace EasyGo.View.sectionData
                         if (HelpClass.validate(requiredControlList, this) && HelpClass.IsValidEmail(this))
                         {
                             card.Name = tb_Name.Text;
-                            card.HasProcessNum = tgl_HasProcessNum.IsChecked.Value;
+                            card.HasProcessNum = tgl_HasProcessNum.IsChecked == true ? true : false;
                             card.Notes = tb_Notes.Text;
                             card.UpdateUserId = MainWindow.userLogin.UserId;
                             
