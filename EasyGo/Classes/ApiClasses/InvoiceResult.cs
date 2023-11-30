@@ -8,7 +8,7 @@ namespace EasyGo.Classes.ApiClasses
 {
     public class InvoiceResult
     {
-        public int Result { get; set; }
+        public string Result { get; set; }
         public string Message { get; set; }
         public string InvTime { get; set; }
         public DateTime? UpdateDate { get; set; }

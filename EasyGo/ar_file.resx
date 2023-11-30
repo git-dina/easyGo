@@ -5165,4 +5165,7 @@
   <data name="trItemUnits" xml:space="preserve">
     <value>وحدات العنصر</value>
   </data>
+  <data name="trHasProcessNum" xml:space="preserve">
+    <value>لديه رقم عملية</value>
+  </data>
 </root>

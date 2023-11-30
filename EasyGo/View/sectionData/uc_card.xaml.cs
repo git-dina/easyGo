@@ -89,9 +89,8 @@ namespace EasyGo.View.sectionData
             tt_delete_Button.Content = AppSettings.resourcemanager.GetString("trDelete");
 
             dg_card.Columns[0].Header = AppSettings.resourcemanager.GetString("trName");
-            dg_card.Columns[1].Header = AppSettings.resourcemanager.GetString("trMobile");
-            dg_card.Columns[2].Header = AppSettings.resourcemanager.GetString("trAddress");
-            dg_card.Columns[3].Header = AppSettings.resourcemanager.GetString("trNotes");
+            dg_card.Columns[1].Header = AppSettings.resourcemanager.GetString("trHasProcessNum");
+            dg_card.Columns[2].Header = AppSettings.resourcemanager.GetString("trNotes");
             btn_clear.ToolTip = AppSettings.resourcemanager.GetString("trClear");
 
 

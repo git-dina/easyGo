@@ -1129,10 +1129,22 @@ namespace EasyGo.View.purchase
                         break;
                 };
 
-                if (invoiceResult.Result > 0) // success
+                if (invoiceResult.Result.Equals("lowBalance"))// رصيد pos غير كاف
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
+                //else if (invoiceResult.Result == -10) // كمية الخصائص المرجعة غير كافية
+                //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("PropertiesNotAvailable"), animation: ToasterAnimation.FadeIn);
+                else if (invoiceResult.Result.Equals("lowReturnQty"))// الكمية المرجعة أكبر من الكمية المشتراة
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
+                else if (invoiceResult.Result.Equals("lowQty"))// الكمية في المخزن غير كافية في حالة الإرجاع
+                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotAvailableFromToolTip") + " " + invoiceResult.Message, animation: ToasterAnimation.FadeIn);
+                //else if (invoiceResult.Result == -4) // رصيد المورد غير كاف في حالة الإرجاع
+                //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorMaxDeservedExceeded"), animation: ToasterAnimation.FadeIn);
+                else if(invoiceResult.Result.Equals("failed"))
+                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
+                else // success
                 {
-                   // prInvoiceId = invoiceResult.Result;
-                    invoice.InvoiceId = invoiceResult.Result;
+                    // prInvoiceId = invoiceResult.Result;
+                    invoice.InvoiceId = long.Parse( invoiceResult.Result);
                     invoice.InvNumber = invoiceResult.Message;
                     invoice.UpdateDate = invoiceResult.UpdateDate;
                     TimeSpan ts;
@@ -1140,7 +1152,7 @@ namespace EasyGo.View.purchase
                     invoice.InvTime = ts;
 
                     AppSettings.PurchaseDraftCount = invoiceResult.PurchaseDraftCount;
-                   // AppSettings.PosBalance = invoiceResult.PosBalance;
+                    // AppSettings.PosBalance = invoiceResult.PosBalance;
                     MainWindow.posLogin.Balance = invoiceResult.PosBalance;
                     MainWindow.setBalance();
 
@@ -1151,7 +1163,7 @@ namespace EasyGo.View.purchase
 
                     if (invoice.InvType == "pw" || invoice.InvType == "p")
                     {
-                       // if (AppSettings.print_on_save_pur == "1")
+                        // if (AppSettings.print_on_save_pur == "1")
                         {
                             Thread t1 = new Thread(async () =>
                             {
@@ -1173,7 +1185,7 @@ namespace EasyGo.View.purchase
                             });
                             t1.Start();
                         }
-                       // if (AppSettings.email_on_save_pur == "1")
+                        // if (AppSettings.email_on_save_pur == "1")
                         //{
                         //    Thread t2 = new Thread(async () =>
                         //    {
@@ -1217,22 +1229,10 @@ namespace EasyGo.View.purchase
                     //MainWindow.InvoiceGlobalItemUnitsList = await itemUnitModel.Getall();
 
                     clearInvoice();
-                   // setNotifications();
+                    // setNotifications();
 
                 }
-                else if (invoiceResult.Result.Equals(-2))// رصيد pos غير كاف
-                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopNotEnoughBalance"), animation: ToasterAnimation.FadeIn);
-                else if (invoiceResult.Result == -10) // كمية الخصائص المرجعة غير كافية
-                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("PropertiesNotAvailable"), animation: ToasterAnimation.FadeIn);
-                else if (invoiceResult.Result == -9)// الكمية المرجعة أكبر من الكمية المشتراة
-                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
-                else if (invoiceResult.Result.Equals(-3))// الكمية في المخزن غير كافية في حالة الإرجاع
-                    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountNotAvailableFromToolTip") + " " + invoiceResult.Message, animation: ToasterAnimation.FadeIn);
-                //else if (invoiceResult.Result == -4) // رصيد المورد غير كاف في حالة الإرجاع
-                //    Toaster.ShowWarning(Window.GetWindow(this), message: MainWindow.resourcemanager.GetString("trErrorMaxDeservedExceeded"), animation: ToasterAnimation.FadeIn);
-                else
-                    Toaster.ShowError(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopError"), animation: ToasterAnimation.FadeIn);
-
+             
             }
 
         }

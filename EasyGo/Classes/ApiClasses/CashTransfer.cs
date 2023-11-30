@@ -20,7 +20,7 @@ namespace EasyGo.Classes.ApiClasses
         public string Notes { get; set; }
         public Nullable<int> PosIdCreator { get; set; }
         public Nullable<byte> IsConfirm { get; set; }
-        public Nullable<int> CashTransIdSource { get; set; }
+        public Nullable<long> CashTransIdSource { get; set; }
         public string Side { get; set; }
         public string DocNum { get; set; }
         public Nullable<int> BankId { get; set; }
