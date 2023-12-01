@@ -397,7 +397,7 @@ namespace EasyGo.View.windows
                 //set border color
                 foreach (var el in cardEllipseList)
                 {
-                    if ((long)el.Tag == (long)button.Tag)
+                    if ((int)el.Tag == (int)button.Tag)
                         el.Stroke = Application.Current.Resources["MainColor"] as SolidColorBrush;
                     else
                         el.Stroke = Application.Current.Resources["LightGrey"] as SolidColorBrush;
