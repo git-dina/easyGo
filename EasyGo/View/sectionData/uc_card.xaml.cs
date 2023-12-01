@@ -581,11 +581,11 @@ namespace EasyGo.View.sectionData
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\SectionData\BanksData\Ar\ArCards.rdlc";
+                addpath = @"\Reports\SectionData\BanksData\Ar\ArCard.rdlc";
             }
             else
             {
-                addpath = @"\Reports\SectionData\BanksData\En\EnCards.rdlc";
+                addpath = @"\Reports\SectionData\BanksData\En\EnCard.rdlc";
             }
             string searchval = "";
             //filter   
