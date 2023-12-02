@@ -1755,6 +1755,7 @@ namespace EasyGo.View.purchase
                 if (w.isOk)
                 {
                     invoice = w.purchaseInvoice;
+                    invoice.Count = invoice.InvoiceItems.Sum(x => x.Quantity);
                     this.DataContext = invoice;
                     _InvoiceType = invoice.InvType;
                     invoiceDetailsList = invoice.InvoiceItems;
