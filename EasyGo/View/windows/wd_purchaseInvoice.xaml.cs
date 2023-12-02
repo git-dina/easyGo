@@ -35,6 +35,7 @@ namespace EasyGo.View.windows
         }
         public PurchaseInvoice purchaseInvoice = new PurchaseInvoice();
         IEnumerable<PurchaseInvoice> purchaseInvoices;
+        IEnumerable<PurchaseInvoice> purchaseInvoicesQuery;
         private string invType = "pd,pbd,p , pw , pb, pbw";
         public long posId { get; set; }
         public long branchId { get; set; }
@@ -104,10 +105,10 @@ namespace EasyGo.View.windows
         {
             try
             {
-                purchaseInvoices = FillCombo.purchaseInvoices.Where(x => x.InvNumber.ToLower().Contains(txb_search.Text.ToLower())).ToList();
+                purchaseInvoicesQuery = purchaseInvoices.Where(x => x.InvNumber.ToLower().Contains(txb_search.Text.ToLower())).ToList();
                 if (cb_invType.SelectedIndex > 0)
-                    purchaseInvoices = purchaseInvoices.Where(x => x.InvType.Equals(invType));
-                dg_PurchaseInvoice.ItemsSource = purchaseInvoices;
+                    purchaseInvoicesQuery = purchaseInvoicesQuery.Where(x => x.InvType.Equals(invType));
+                dg_PurchaseInvoice.ItemsSource = purchaseInvoicesQuery;
                 txt_count.Text = dg_PurchaseInvoice.Items.Count.ToString();
 
             }
@@ -163,7 +164,7 @@ namespace EasyGo.View.windows
         private async Task refreshInvoices()
         {
 
-            FillCombo.purchaseInvoices = await purchaseInvoice.GetInvoicesByCreator(invType, MainWindow.userLogin.UserId, AppSettings.duration);
+           purchaseInvoices = await purchaseInvoice.GetInvoicesByCreator(invType, MainWindow.userLogin.UserId, AppSettings.duration);
            
         }
        
