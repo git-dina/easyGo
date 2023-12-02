@@ -140,7 +140,8 @@ namespace EasyGo.View.purchase
 
             //tt_error_previous.Content = AppSettings.resourcemanager.GetString("trPrevious");
             //tt_error_next.Content = AppSettings.resourcemanager.GetString("trNext");
-
+            btn_next.ToolTip = AppSettings.resourcemanager.GetString("trNext");
+            btn_previous.ToolTip = AppSettings.resourcemanager.GetString("trPrevious");
             btn_save.Content = AppSettings.resourcemanager.GetString("trBuy");
         }
       
@@ -1755,13 +1756,8 @@ namespace EasyGo.View.purchase
                 if (w.isOk)
                 {
                     invoice = w.purchaseInvoice;
-                    invoice.Count = invoice.InvoiceItems.Sum(x => x.Quantity);
-                    this.DataContext = invoice;
-                    _InvoiceType = invoice.InvType;
-                    invoiceDetailsList = invoice.InvoiceItems;
-
-                    refreshInvoiceDetails();
-                    inputEditable();
+                    viewInvoice();
+                    
                 }
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
@@ -1773,5 +1769,59 @@ namespace EasyGo.View.purchase
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
+
+        private void viewInvoice()
+        {
+            invoice.Count = invoice.InvoiceItems.Sum(x => x.Quantity);
+            this.DataContext = invoice;
+            _InvoiceType = invoice.InvType;
+            invoiceDetailsList = invoice.InvoiceItems;
+
+            refreshInvoiceDetails();
+            inputEditable();
+        }
+        #region navigation
+        private async void btn_next_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                invoice = await invoiceModel.GetNextInvoice(invoice.InvoiceId, MainWindow.userLogin.UserId,AppSettings.duration);
+                viewInvoice();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+
+        private async void btn_previous_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+
+                invoice = await invoiceModel.GetPreviousInvoice(invoice.InvoiceId, MainWindow.userLogin.UserId, AppSettings.duration);
+                viewInvoice();
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
+        #endregion
+
+
     }
 }

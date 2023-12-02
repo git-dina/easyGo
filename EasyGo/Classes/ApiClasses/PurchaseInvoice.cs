@@ -197,6 +197,43 @@ namespace EasyGo.Classes.ApiClasses
             }
             return items;
         }
+        
+        public async Task<PurchaseInvoice> GetNextInvoice(long invoiceId, long createUserId, int duration)
+        {
+           PurchaseInvoice items = new PurchaseInvoice();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("invoiceId", invoiceId.ToString());
+            parameters.Add("createUserId", createUserId.ToString());
+            parameters.Add("duration", duration.ToString());
+
+            IEnumerable<Claim> claims = await APIResult.getList("PurchaseInvoice/GetNextInvoice", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items = JsonConvert.DeserializeObject<PurchaseInvoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                }
+            }
+            return items;
+        }
+        public async Task<PurchaseInvoice> GetPreviousInvoice(long invoiceId, long createUserId, int duration)
+        {
+           PurchaseInvoice items = new PurchaseInvoice();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("invoiceId", invoiceId.ToString());
+            parameters.Add("createUserId", createUserId.ToString());
+            parameters.Add("duration", duration.ToString());
+
+            IEnumerable<Claim> claims = await APIResult.getList("PurchaseInvoice/GetPreviousInvoice", parameters);
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    items = JsonConvert.DeserializeObject<PurchaseInvoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                }
+            }
+            return items;
+        }
         #endregion
     }
 
