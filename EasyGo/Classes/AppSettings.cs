@@ -43,18 +43,18 @@ namespace EasyGo.Classes
         public static string logoImage;
         public static string companyName;
 
-        public static string com_name_ar;
-        public static string com_address_ar;
-        public static string Email;
-        public static string Fax;
-        public static string Mobile;
-        public static string Address;
-        public static string Phone;
+        public static string com_name_ar="";
+        public static string com_address_ar="";
+        public static string Email="";
+        public static string Fax ="";
+        public static string Mobile ="";
+        public static string Address="";
+        public static string Phone ="";
 
         //social
-        public static string com_website;
+        public static string com_website="";
         public static string com_website_icon;
-        public static string com_social;
+        public static string com_social="";
         public static string com_social_icon;
         #endregion
 

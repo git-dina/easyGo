@@ -891,7 +891,7 @@ l0.3,260.4L348.9,261.7z"  />
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns >
-                                <DataGridTemplateColumn Width="20" Header=""  >
+                                <DataGridTemplateColumn Width="20" Header="" x:Name="col_delete"  >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Margin="-10"   Click="deleteRowFromInvoiceItems"
@@ -904,9 +904,9 @@ l0.3,260.4L348.9,261.7z"  />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn  Header="Num"  Binding="{Binding Path=Index, Mode=OneWay}"/>
+                                <DataGridTextColumn  Header="Num" x:Name="col_index"  Binding="{Binding Path=Index, Mode=OneWay}"/>
                                 <DataGridTextColumn Width="*"  Header="Item" Binding="{Binding Path=ItemName, Mode=OneWay}"/>
-                                <DataGridTemplateColumn  Header="UnitName"  >
+                                <DataGridTemplateColumn  Header="UnitName" x:Name="col_unit" >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Margin="-2.5 0"   Click="unitRowFromInvoiceItems"
@@ -915,9 +915,9 @@ l0.3,260.4L348.9,261.7z"  />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn  Header="Amount"    Binding="{Binding Path=Quantity}"/>
-                                <DataGridTextColumn  Header="Price"    Binding="{Binding Path=Price}"/>
-                                <DataGridTextColumn  Header="Total"    Binding="{Binding Path = Total, Mode=OneWay,Converter={StaticResource accuracyConverter }}"/>
+                                <DataGridTextColumn  Header="Amount" x:Name="col_quantity"   Binding="{Binding Path=Quantity}"/>
+                                <DataGridTextColumn  Header="Price" x:Name="col_price"   Binding="{Binding Path=Price}"/>
+                                <DataGridTextColumn  Header="Total" x:Name="col_total"   Binding="{Binding Path = Total, Mode=OneWay,Converter={StaticResource accuracyConverter }}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

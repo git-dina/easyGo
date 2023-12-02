@@ -33,9 +33,9 @@ namespace EasyGo
     public partial class MainWindow : Window
     {
         internal static UserLog userLog;
-        internal static User userLogin = new User();
-        internal static Pos posLogin = new Pos();
-        internal static Branch branchLogin = new Branch();
+        internal static User userLogin = new User { UserId = 3};
+        internal static Pos posLogin = new Pos { PosId =2,Balance =0};
+        internal static Branch branchLogin = new Branch { BranchId = 2,Code ="br1", Name="Branch-1"};
 
         public static Boolean go_out = false;
 

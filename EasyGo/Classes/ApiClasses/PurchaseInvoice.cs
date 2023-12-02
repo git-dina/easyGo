@@ -47,6 +47,7 @@ namespace EasyGo.Classes.ApiClasses
         public bool IsActive { get; set; } = true;
         public decimal ShippingCost { get; set; }
         public Nullable<System.TimeSpan> InvTime { get; set; }
+        public Nullable<decimal> Remain { get; set; }
         //extra
 
         public string MainInvNumber { get; set; }

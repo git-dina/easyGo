@@ -51,7 +51,7 @@ namespace EasyGo.View.purchase
         ItemLocation itemLocation = new ItemLocation();
         CashTransfer cashTransfer = new CashTransfer();
         string _InvoiceType = "pd";
-
+        public static bool isFromReport = false;
         #region barcode params
         DateTime _lastKeystroke = new DateTime(0);
         #endregion
@@ -147,21 +147,144 @@ namespace EasyGo.View.purchase
        
         private void clearInvoice()
         {
-          
-        }
-       
-        //bool menuState = false;
-
-        #region validate - clearValidate - textChange - lostFocus - . . . . 
-        void Clear()
-        {
-
-            //this.DataContext = new Receipt();
-
+            invoice = new PurchaseInvoice();
+            invoiceDetailsList = new List<PurInvoiceItem>();
+            listPayments = new List<CashTransfer>();
+            refreshInvoiceDetails();
+            _InvoiceType = "pd";
+            isFromReport = false;
+            inputEditable();
 
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
+
+        private void inputEditable()
+        {
+            if (_InvoiceType == "pbw") // purchase invoice
+            {
+                col_delete.Visibility = Visibility.Visible; //make delete column visible
+                col_price.IsReadOnly = false; //make price read only
+                col_unit.IsReadOnly = false; //make unit read only
+                col_quantity.IsReadOnly = false; //make count read only
+                btn_supplier.IsEnabled = false;
+                //tb_barcode.IsEnabled = false;
+                //cb_branch.IsEnabled = false;
+                btn_discount.IsEnabled = false;
+                btn_save.IsEnabled = true;
+                btn_tax.IsEnabled = false;
+
+            }
+            else if (_InvoiceType == "pbd") // return invoice
+            {
+                col_delete.Visibility = Visibility.Visible; //make delete column visible
+                col_price.IsReadOnly = false; //make price read only
+                col_unit.IsReadOnly = true; //make unit read only
+                col_quantity.IsReadOnly = false; //make count read only
+                btn_supplier.IsEnabled = false;
+                //tb_barcode.IsEnabled = false;
+                //cb_branch.IsEnabled = true;
+                btn_discount.IsEnabled = false;
+                btn_save.IsEnabled = true;
+                btn_tax.IsEnabled = false;
+            }
+            else if (_InvoiceType == "pd") // purchase draft 
+            {
+                col_delete.Visibility = Visibility.Visible; //make delete column visible
+                col_price.IsReadOnly = false;
+                col_unit.IsReadOnly = false;
+                col_quantity.IsReadOnly = false;
+                btn_supplier.IsEnabled = true;
+                //tb_barcode.IsEnabled = true;
+                // cb_branch.IsEnabled = true;
+                btn_discount.IsEnabled = true;
+                btn_save.IsEnabled = true;
+                btn_tax.IsEnabled = true;
+
+            }
+            //else if (_InvoiceType == "po") //  purchase order
+            //{
+            //    col_delete.Visibility = Visibility.Visible; //make delete column visible
+            //    col_price.IsReadOnly = false;
+            //    col_unit.IsReadOnly = false;
+            //    col_quantity.IsReadOnly = false;
+            //    btn_supplier.IsEnabled = false;
+            //    //tb_barcode.IsEnabled = true;
+            //    //cb_branch.IsEnabled = true;
+            //    btn_discount.IsEnabled = true;
+            //    btn_save.IsEnabled = true;
+            //    btn_tax.IsEnabled = true;
+            //}
+            else if (_InvoiceType == "pw" || _InvoiceType == "p" || _InvoiceType == "pb")//|| archived)
+            {
+                col_delete.Visibility = Visibility.Collapsed; //make delete column unvisible
+                col_price.IsReadOnly = true; //make price read only
+                col_unit.IsReadOnly = true; //make unit read only
+                col_quantity.IsReadOnly = true; //make count read only
+                btn_supplier.IsEnabled = false;
+                // tb_barcode.IsEnabled = false;
+                // cb_branch.IsEnabled = false;
+                btn_discount.IsEnabled = false;
+                btn_save.IsEnabled = false;
+                btn_tax.IsEnabled = false;
+
+
+                if (_InvoiceType.Equals("pb") || _InvoiceType.Equals("p"))
+                {
+                    #region print - pdf - send email
+                    btn_printInvoice.Visibility = Visibility.Visible;
+                    btn_pdf.Visibility = Visibility.Visible;
+                    //if (FillCombo.groupObject.HasPermissionAction(printCountPermission, FillCombo.groupObjects, "one"))
+                    //{
+                    //    btn_printCount.Visibility = Visibility.Visible;
+                    //    bdr_printCount.Visibility = Visibility.Visible;
+                    //}
+                    //else
+                    //{
+                    //    btn_printCount.Visibility = Visibility.Collapsed;
+                    //    bdr_printCount.Visibility = Visibility.Collapsed;
+                    //}
+                    //if (FillCombo.groupObject.HasPermissionAction(sendEmailPermission, FillCombo.groupObjects, "one"))
+                    //{
+                    //    btn_emailMessage.Visibility = Visibility.Visible;
+                    //    bdr_emailMessage.Visibility = Visibility.Visible;
+                    //}
+                    //else
+                    //{
+                    //    btn_emailMessage.Visibility = Visibility.Collapsed;
+                    //    bdr_emailMessage.Visibility = Visibility.Collapsed;
+                    //}
+                    #endregion
+                }
+                else
+                {
+                    #region print - pdf - send email
+                    btn_printInvoice.Visibility = Visibility.Collapsed;
+                    btn_pdf.Visibility = Visibility.Collapsed;
+                    // btn_printCount.Visibility = Visibility.Collapsed;
+                    // btn_emailMessage.Visibility = Visibility.Collapsed;
+                    // bdr_emailMessage.Visibility = Visibility.Collapsed;
+                    #endregion
+                }
+                if (!isFromReport)
+                {
+                    btn_next.Visibility = Visibility.Visible;
+                    btn_previous.Visibility = Visibility.Visible;
+                }
+
+                //if ((_InvoiceType != "pd" && invoice.tax == 0) || _InvoiceType == "pbd")
+                //{
+                //    sp_tax.Visibility = Visibility.Collapsed;
+                //    tb_taxValue.Text = "0";
+                //}
+                //else if (AppSettings.invoiceTax_bool == true || invoice.tax > 0)
+                //    sp_tax.Visibility = Visibility.Visible;
+            }
+        }
+        //bool menuState = false;
+
+        #region validate - clearValidate - textChange - lostFocus - . . . . 
+
         string input;
         decimal _decimal = 0;
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -453,16 +576,16 @@ namespace EasyGo.View.purchase
                 PurInvoiceItem row = e.Row.Item as PurInvoiceItem;
                 int index = invoiceDetailsList.IndexOf(invoiceDetailsList.Where(p => p.ItemUnitId == row.ItemUnitId ).FirstOrDefault());
 
-                TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
-                if (elapsed.TotalMilliseconds < 100)
-                {
-                    if (columnName == AppSettings.resourcemanager.GetString("trAmount"))
-                        t.Text = invoiceDetailsList[index].Quantity.ToString();
-                    else if (columnName == AppSettings.resourcemanager.GetString("trPrice"))
-                        t.Text = HelpClass.DecTostring(invoiceDetailsList[index].Price);
+                //TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
+                //if (elapsed.TotalMilliseconds < 100)
+                //{
+                //    if (columnName == AppSettings.resourcemanager.GetString("trAmount"))
+                //        t.Text = invoiceDetailsList[index].Quantity.ToString();
+                //    else if (columnName == AppSettings.resourcemanager.GetString("trPrice"))
+                //        t.Text = HelpClass.DecTostring(invoiceDetailsList[index].Price);
 
-                }
-                else
+                //}
+                //else
                 {
                     int oldCount = 0;
                     long newCount = 0;
@@ -721,6 +844,7 @@ namespace EasyGo.View.purchase
                         Quantity = 1,
                         Price = (decimal)defaultUnit.PurchasePrice,
                         Total = (decimal)defaultUnit.PurchasePrice,
+                        CreateUserId = MainWindow.userLogin.UserId,
                     });
                 }
             }
@@ -860,7 +984,9 @@ namespace EasyGo.View.purchase
                                 w.ShowDialog();
                                 Window.GetWindow(this).Opacity = 1;
                                 multipleValid = w.isOk;
+                                invoice.Remain = w.theRemine;
                                 listPayments = w.listPayments;
+                                if (multipleValid)
                                 {
                                     switch (invoice.InvType)
                                     {
@@ -1050,10 +1176,10 @@ namespace EasyGo.View.purchase
                 //}
 
                 invoice.Paid = 0;
-                invoice.Deserved = invoice.TotalNet;            
+                invoice.Deserved = invoice.TotalNet;
 
                 //invoice.BranchId = (int)cb_branch.SelectedValue;
-               
+                invoice.BranchId = invoice.BranchCreatorId;
                
 
                 invoice.CreateUserId = MainWindow.userLogin.UserId;
@@ -1061,6 +1187,9 @@ namespace EasyGo.View.purchase
  
                 if (invType == "pw" || invType == "p")
                     invoice.InvNumber = "pi";
+
+                invoice.ListPayments = listPayments;
+                invoice.InvoiceItems = invoiceDetailsList;
                 #endregion
             
                 // save invoice in DB
