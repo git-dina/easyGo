@@ -138,21 +138,21 @@ VerticalAlignment="Center" Width="15"  Height="15"
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>-->
-                            <DataGridTextColumn x:Name="col_num" Width="3*"  Header="Number" Binding="{Binding Path=invNumber}"/>
-                            <DataGridTextColumn x:Name="col_count" Width="1.5*"  Header="items count" Binding="{Binding Path=itemsCount}"/>
-                            <DataGridTextColumn x:Name="col_total" Width="2*" Header="Total" Binding="{Binding Path =totalNet,Converter={StaticResource accuracyConverter }}"/>
-                            <DataGridTextColumn x:Name="col_type" Width="2*"  Header="" Binding="{Binding invType, Converter={StaticResource purchaseInvoiceTypeConverter}}"/>
+                            <DataGridTextColumn x:Name="col_num" Width="3*"  Header="Number" Binding="{Binding Path=InvNumber}"/>
+                                <DataGridTextColumn x:Name="col_count" Width="1.5*"  Header="items count" Binding="{Binding Path=ItemsCount}"/>
+                            <DataGridTextColumn x:Name="col_total" Width="2*" Header="Total" Binding="{Binding Path =TotalNet,Converter={StaticResource accuracyConverter }}"/>
+                            <DataGridTextColumn x:Name="col_type" Width="2*"  Header="" Binding="{Binding InvType, Converter={StaticResource purchaseInvoiceTypeConverter}}"/>
                         </DataGrid.Columns>
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding invType}" Value="pbd">
+                                    <DataTrigger Binding="{Binding InvType}" Value="pbd">
                                         <Setter Property="Background" Value="{StaticResource lightRed}"></Setter>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding invType}" Value="pbw">
+                                    <DataTrigger Binding="{Binding InvType}" Value="pbw">
                                         <Setter Property="Background" Value="{StaticResource lightRed}"></Setter>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding invType}" Value="pb">
+                                    <DataTrigger Binding="{Binding InvType}" Value="pb">
                                         <Setter Property="Background" Value="{StaticResource lightRed}"></Setter>
                                     </DataTrigger>
                                 </Style.Triggers>

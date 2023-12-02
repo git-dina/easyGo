@@ -148,6 +148,7 @@ namespace EasyGo.View.purchase
         private void clearInvoice()
         {
             invoice = new PurchaseInvoice();
+            this.DataContext = invoice;
             invoiceDetailsList = new List<PurInvoiceItem>();
             listPayments = new List<CashTransfer>();
             refreshInvoiceDetails();
@@ -155,6 +156,9 @@ namespace EasyGo.View.purchase
             isFromReport = false;
             inputEditable();
 
+            ActiveButton(btn_supplier, false, AppSettings.resourcemanager.GetString("trSupplier"));
+            ActiveButton(btn_discount, false);
+            ActiveButton(btn_tax, false);
             // last 
             HelpClass.clearValidate(requiredControlList, this);
         }
@@ -1751,9 +1755,12 @@ namespace EasyGo.View.purchase
                 if (w.isOk)
                 {
                     invoice = w.purchaseInvoice;
+                    this.DataContext = invoice;
+                    _InvoiceType = invoice.InvType;
                     invoiceDetailsList = invoice.InvoiceItems;
 
                     refreshInvoiceDetails();
+                    inputEditable();
                 }
                 Window.GetWindow(this).Opacity = 1;
                 HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);

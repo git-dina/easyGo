@@ -254,6 +254,33 @@ namespace EasyGo.Classes
 
         #region Purchase invoice
         static public List<PurchaseInvoice> purchaseInvoices;
+        static public List<keyValueString> purchaseTypesList;
+        static public IEnumerable<keyValueString> RefreshPurchaseTypes()
+        {
+            purchaseTypesList = new List<keyValueString>() {
+                new keyValueString(){key="", value="-" },
+                new keyValueString(){key="pd", value=AppSettings.resourcemanager.GetString("trPurchaseDraft") },
+                new keyValueString(){key="p", value=AppSettings.resourcemanager.GetString("trPurchase") },
+                new keyValueString(){key="pbd", value=AppSettings.resourcemanager.GetString("trPurchaseReturnDraft") },
+                new keyValueString(){key="pb", value=AppSettings.resourcemanager.GetString("trPurchaseReturnInvoice") },
+                new keyValueString(){key="pw", value=AppSettings.resourcemanager.GetString("trPurchaseInvoiceWaiting") },
+                new keyValueString(){key="pbw", value=AppSettings.resourcemanager.GetString("trPurchaseReturnInvoiceWaiting") },
+            };
+
+            return purchaseTypesList;
+        }
+
+        static public void fillPurchaseTypes(ComboBox combo)
+        {
+            if (purchaseTypesList is null)
+                RefreshPurchaseTypes();
+
+            combo.ItemsSource = purchaseTypesList;
+            combo.SelectedValuePath = "key";
+            combo.DisplayMemberPath = "value";
+            combo.SelectedIndex = -1;
+        }
+
         #endregion
     }
 }

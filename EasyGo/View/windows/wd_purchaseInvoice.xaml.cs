@@ -54,6 +54,7 @@ namespace EasyGo.View.windows
             {
                 purchaseInvoice = dg_PurchaseInvoice.SelectedItem as PurchaseInvoice;
                 DialogResult = true;
+                isOk = true;
                 this.Close();
             }
             catch (Exception ex)
@@ -125,6 +126,8 @@ namespace EasyGo.View.windows
 
                 await refreshInvoices();
                search();
+
+                FillCombo.fillPurchaseTypes(cb_invType);
 
                 HelpClass.EndAwait(grid_ucPurchaseInvoice);
             }

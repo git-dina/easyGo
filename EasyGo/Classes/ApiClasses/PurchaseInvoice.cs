@@ -16,7 +16,7 @@ namespace EasyGo.Classes.ApiClasses
     {
         #region Attributes
         public long InvoiceId { get; set; }
-        public string InvNumber { get; set; }
+        public string InvNumber { get; set; } = "#000000";
         public string InvType { get; set; }
         public Nullable<long> SupplierId { get; set; }
         public string DiscountType { get; set; } = "rate";
@@ -62,6 +62,7 @@ namespace EasyGo.Classes.ApiClasses
         public List<PurInvoiceItem> InvoiceItems { get; set; }
         public List<PayedInvclass> cachTrans { get; set; }
        public List<CashTransfer> ListPayments { get; set; }
+        public int ItemsCount { get; set; }
         public int Count { get; set; }
         #endregion
         #region Methods
