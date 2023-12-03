@@ -86,8 +86,8 @@ namespace EasyGo.View.storage
         private void translate()
         {
 
-           
-            ////////////////////////////////----invoice----/////////////////////////////////
+            txt_title.Text = AppSettings.resourcemanager.GetString("trItemsStorage");
+
             col_itemUnit.Header = AppSettings.resourcemanager.GetString("trItemUnit");
            // dg_itemsStorage.Columns[1].Header = AppSettings.resourcemanager.GetString("trSectionLocation");
            col_quantity.Header = AppSettings.resourcemanager.GetString("trQTR");
@@ -120,31 +120,33 @@ namespace EasyGo.View.storage
 
                 //if (FillCombo.groupObject.HasPermissionAction(transferPermission, FillCombo.groupObjects, "one"))
                 //{
-                /*
+                
                     if (dg_itemsStorage.SelectedIndex != -1)
                     {
-                        if (tb_quantity.Text != "" && int.Parse(tb_quantity.Text) == 0)
-                            HelpClass.SetValidate(p_error_quantity, "trErrorQuantIsZeroToolTip");
-                        else if (HelpClass.validate(requiredControlList, this))
+                        //if (tb_quantity.Text != "" && int.Parse(tb_quantity.Text) == 0)
+                        //    HelpClass.SetValidate(p_error_quantity, "trErrorQuantIsZeroToolTip");
+                        //else 
+                        if (HelpClass.validate(requiredControlList, this))
                         {
-                            long oldLocationId = (long)itemLocation.locationId;
-                            long newLocationId = (long)cb_locationId.SelectedValue;
-                            if (oldLocationId != newLocationId)
+                           // long oldLocationId = (long)itemLocation.LocationId;
+                           // long newLocationId = (long)cb_locationId.SelectedValue;
+                           // if (oldLocationId != newLocationId)
                             {
-                                int quantity = int.Parse(tb_quantity.Text);
-                                ItemLocation newLocation = new ItemLocation();
-                                newLocation.itemUnitId = itemLocation.itemUnitId;
-                                newLocation.invoiceId = itemLocation.invoiceId;
-                                newLocation.locationId = newLocationId;
-                                newLocation.quantity = quantity;
-                                newLocation.startDate = dp_startDate.SelectedDate;
-                                newLocation.endDate = dp_endDate.SelectedDate;
-                                newLocation.notes = tb_notes.Text;
-                                newLocation.updateUserId = MainWindow.userLogin.userId;
-                                newLocation.createUserId = MainWindow.userLogin.userId;
+                            // int quantity = int.Parse(tb_quantity.Text);
+                            //ItemLocation newLocation = new ItemLocation();
+                            //newLocation.itemUnitId = itemLocation.itemUnitId;
+                            //newLocation.invoiceId = itemLocation.invoiceId;
+                            //newLocation.locationId = newLocationId;
+                            //newLocation.quantity = quantity;
+                            //newLocation.startDate = dp_startDate.SelectedDate;
+                            //newLocation.endDate = dp_endDate.SelectedDate;
+                            //newLocation.notes = tb_notes.Text;
+                            //newLocation.updateUserId = MainWindow.userLogin.userId;
+                            //newLocation.createUserId = MainWindow.userLogin.userId;
 
-                                int res = await itemLocation.trasnferItem(itemLocation.itemsLocId, newLocation);
-                                if (res > 0)
+                            //int res = await itemLocation.trasnferItem(itemLocation.itemsLocId, newLocation);
+                            string res = await itemLocation.SaveItemNotes(itemLocation.ItemLocId, tb_notes.Text, MainWindow.userLogin.UserId);
+                                if (res.Equals("success"))
                                 {
                                     Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
 
@@ -157,12 +159,12 @@ namespace EasyGo.View.storage
                                 Search();
                                 Clear();
                             }
-                            else
-                                Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trTranseToSameLocation"), animation: ToasterAnimation.FadeIn);
+                            //else
+                            //    Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trTranseToSameLocation"), animation: ToasterAnimation.FadeIn);
 
                         }
                     }
-                    */
+                   
                 //}
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
@@ -390,7 +392,6 @@ namespace EasyGo.View.storage
         {
             //await refreshStoredItemsLocations();
             await refreshFreeZoneItemsLocations();
-            //await refreshKitchenItemsLocations();
 
         }
         /*
@@ -404,13 +405,7 @@ namespace EasyGo.View.storage
         {
             freeZoneItems = await itemLocation.GetFreeZoneItems(MainWindow.branchLogin.BranchId);
         }
-        /*
-        List<ItemLocation> kitchenItems = new List<ItemLocation>();
-        private async Task refreshKitchenItemsLocations()
-        {
-            kitchenItems = await itemLocation.GetKitchenItems(MainWindow.branchLogin.branchId);
-        }
-        */
+
         #endregion
         #region validate - Clear - textChange - lostFocus - . . . . 
         void Clear()
@@ -752,8 +747,8 @@ namespace EasyGo.View.storage
 
                             var startDate = dp_startDate.SelectedDate;
                             var endDate = dp_endDate.SelectedDate;
-                            int res = (int)await itemLocation.changeUnitExpireDate(itemLocation.ItemLocId, (DateTime)startDate, (DateTime)endDate, MainWindow.userLogin.UserId);
-                            if (res > 0)
+                            string res = await itemLocation.changeUnitExpireDate(itemLocation.ItemLocId, (DateTime)startDate, (DateTime)endDate, MainWindow.userLogin.UserId);
+                            if (res.Equals("success"))
                             {
                                 Toaster.ShowSuccess(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trPopAdd"), animation: ToasterAnimation.FadeIn);
                                 await refreshGrids();

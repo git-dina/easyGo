@@ -1,7 +1,10 @@
 ﻿using EasyGo.ApiClasses;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,15 +34,6 @@ namespace EasyGo.Classes.ApiClasses
         public string ItemType { get; set; }
         public bool IsFreeZone { get; set; }
 
-        internal Task<int> changeUnitExpireDate(object itemsLocId, DateTime startDate, DateTime endDate, long userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal Task<List<ItemLocation>> GetFreeZoneItems(object branchId)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #region Methods
@@ -52,6 +46,54 @@ namespace EasyGo.Classes.ApiClasses
             parameters.Add("itemUnitId", itemUnitId.ToString());
 
             return (int)await APIResult.PostReturnDecimal(method, parameters);
+        }
+
+        internal async Task<List<ItemLocation>> GetFreeZoneItems(int branchId)
+        {
+            List<ItemLocation> list = new List<ItemLocation>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("branchId", branchId.ToString());
+
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("ItemLocation/GetFreeZoneItems", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    list.Add(JsonConvert.DeserializeObject<ItemLocation>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" }));
+                }
+            }
+            return list;
+
+        }
+
+        public async Task<string> changeUnitExpireDate(long itemLocId, DateTime startDate, DateTime endDate, long userId)
+        {
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "ItemLocation/ChangeUnitExpireDate";
+
+
+            parameters.Add("itemLocId", itemLocId.ToString());
+            parameters.Add("userId", userId.ToString());
+            parameters.Add("startDate", startDate.ToString());
+            parameters.Add("endDate", endDate.ToString());
+
+            return await APIResult.post(method, parameters);
+        }
+        public async Task<string> SaveItemNotes(long itemLocId,string notes,  long userId)
+        {
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            string method = "ItemLocation/SaveItemNotes";
+
+
+            parameters.Add("itemLocId", itemLocId.ToString());
+            parameters.Add("userId", userId.ToString());
+            parameters.Add("notes", notes.ToString());
+
+            return await APIResult.post(method, parameters);
         }
         #endregion
     }
