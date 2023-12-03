@@ -64,6 +64,9 @@ namespace EasyGo.Classes.ApiClasses
        public List<CashTransfer> ListPayments { get; set; }
         public int ItemsCount { get; set; }
         public int Count { get; set; }
+
+        public bool HasNextInvoice { get; set; }
+        public bool HasPrevInvoice { get; set; }
         #endregion
         #region Methods
 
@@ -198,11 +201,12 @@ namespace EasyGo.Classes.ApiClasses
             return items;
         }
         
-        public async Task<PurchaseInvoice> GetNextInvoice(long invoiceId, long createUserId, int duration)
+        public async Task<PurchaseInvoice> GetNextInvoice(long invoiceId,string invType, long createUserId, int duration)
         {
            PurchaseInvoice items = new PurchaseInvoice();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("invoiceId", invoiceId.ToString());
+            parameters.Add("invType", invType);
             parameters.Add("createUserId", createUserId.ToString());
             parameters.Add("duration", duration.ToString());
 
@@ -216,11 +220,12 @@ namespace EasyGo.Classes.ApiClasses
             }
             return items;
         }
-        public async Task<PurchaseInvoice> GetPreviousInvoice(long invoiceId, long createUserId, int duration)
+        public async Task<PurchaseInvoice> GetPreviousInvoice(long invoiceId,string invType, long createUserId, int duration)
         {
            PurchaseInvoice items = new PurchaseInvoice();
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("invoiceId", invoiceId.ToString());
+            parameters.Add("invType", invType); 
             parameters.Add("createUserId", createUserId.ToString());
             parameters.Add("duration", duration.ToString());
 

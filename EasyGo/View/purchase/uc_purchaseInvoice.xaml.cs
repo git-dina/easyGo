@@ -74,7 +74,7 @@ namespace EasyGo.View.purchase
 
                 btn_allItems_Click(btn_allItems, null);
 
-
+                Clear();
 
                 HelpClass.EndAwait(grid_main);
             }
@@ -146,7 +146,7 @@ namespace EasyGo.View.purchase
         }
       
        
-        private void clearInvoice()
+        private void Clear()
         {
             invoice = new PurchaseInvoice();
             this.DataContext = invoice;
@@ -277,6 +277,7 @@ namespace EasyGo.View.purchase
                     btn_previous.Visibility = Visibility.Visible;
                 }
 
+              
                 //if ((_InvoiceType != "pd" && invoice.tax == 0) || _InvoiceType == "pbd")
                 //{
                 //    sp_tax.Visibility = Visibility.Collapsed;
@@ -285,6 +286,9 @@ namespace EasyGo.View.purchase
                 //else if (AppSettings.invoiceTax_bool == true || invoice.tax > 0)
                 //    sp_tax.Visibility = Visibility.Visible;
             }
+
+            btn_next.IsEnabled = invoice.HasNextInvoice == true ? true : false;
+            btn_previous.IsEnabled = invoice.HasPrevInvoice == true ? true : false;
         }
         //bool menuState = false;
 
@@ -1071,17 +1075,17 @@ namespace EasyGo.View.purchase
                         {
                             await addInvoice(_InvoiceType);
                         }
-                        clearInvoice();
+                        Clear();
                         _InvoiceType = "pd";
                     }
                     else if (invoiceDetailsList.Count == 0)
                     {
-                        clearInvoice();
+                        Clear();
                         _InvoiceType = "pd";
                     }
                 }
                 else
-                    clearInvoice();
+                    Clear();
 
                 //setNotifications();
 
@@ -1362,7 +1366,7 @@ namespace EasyGo.View.purchase
 
                     //MainWindow.InvoiceGlobalItemUnitsList = await itemUnitModel.Getall();
 
-                    clearInvoice();
+                    Clear();
                     // setNotifications();
 
                 }
@@ -1788,7 +1792,7 @@ namespace EasyGo.View.purchase
 
                 HelpClass.StartAwait(grid_main);
 
-                invoice = await invoiceModel.GetNextInvoice(invoice.InvoiceId, MainWindow.userLogin.UserId,AppSettings.duration);
+                invoice = await invoiceModel.GetNextInvoice(invoice.InvoiceId,invoice.InvType, MainWindow.userLogin.UserId,AppSettings.duration);
                 viewInvoice();
 
                 HelpClass.EndAwait(grid_main);
@@ -1808,7 +1812,7 @@ namespace EasyGo.View.purchase
 
                 HelpClass.StartAwait(grid_main);
 
-                invoice = await invoiceModel.GetPreviousInvoice(invoice.InvoiceId, MainWindow.userLogin.UserId, AppSettings.duration);
+                invoice = await invoiceModel.GetPreviousInvoice(invoice.InvoiceId, invoice.InvType, MainWindow.userLogin.UserId, AppSettings.duration);
                 viewInvoice();
 
                 HelpClass.EndAwait(grid_main);
