@@ -960,9 +960,62 @@ namespace EasyGo.View.purchase
         }
 
         #region return
-        private void btn_returnInvoice_Click(object sender, RoutedEventArgs e)
+        private async void btn_returnInvoice_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
 
+                HelpClass.StartAwait(grid_main);
+                //if (FillCombo.groupObject.HasPermissionAction(returnPermission, FillCombo.groupObjects, "one"))
+                {
+                    invoice.InvType = "pbd";
+                    if (_InvoiceType == "p")
+                    {
+                        _InvoiceType = "pbd";
+                        // isFromReport = true;
+                        viewInvoice();
+                        btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
+                        //setNotifications();
+                    }
+                    else
+                    {
+                        await saveBeforeExit();
+                        Window.GetWindow(this).Opacity = 0.2;
+                        //wd_returnInvoice w = new wd_returnInvoice();
+                        //w.page = "purchase";
+                        //w.userId = MainWindow.userLogin.UserId;
+                        //w.invoiceType = "p";
+                        //w.ShowDialog();
+                        //if (w.ShowDialog() == true)
+                        {
+                            _InvoiceType = "pbd";
+                            //invoice = w.invoice;
+                            isFromReport = true;
+
+                            viewInvoice();
+                         
+                            btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
+                          //  setNotifications();
+                        }
+
+
+
+                        Window.GetWindow(this).Opacity = 1;
+                    }
+
+                }
+                //else
+                //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                Window.GetWindow(this).Opacity = 1;
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
         #endregion
         #region Save
@@ -1057,7 +1110,34 @@ namespace EasyGo.View.purchase
             }
         }
 
-     
+     private async Task saveBeforeExit()
+        {
+            if (invoiceDetailsList.Count > 0 && (_InvoiceType == "pd" || _InvoiceType == "pbd"))
+            {
+                bool valid = validateItemUnits();
+                if (valid)
+                {
+                    #region Accept
+                    MainWindow.mainWindow.Opacity = 0.2;
+                    wd_acceptCancelPopup w = new wd_acceptCancelPopup();
+                    w.contentText = AppSettings.resourcemanager.GetString("trSaveInvoiceNotification");
+                    w.ShowDialog();
+                    MainWindow.mainWindow.Opacity = 1;
+                    #endregion
+                    if (w.isOk)
+                    {
+                        await addInvoice(_InvoiceType);
+                    }
+                    Clear();
+                    //_InvoiceType = "pd";
+                }
+                else if (invoiceDetailsList.Count == 0)
+                {
+                    Clear();
+                   // _InvoiceType = "pd";
+                }
+            }
+        }
         private async void btn_newInvoice_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1067,28 +1147,7 @@ namespace EasyGo.View.purchase
 
                 if (invoiceDetailsList.Count > 0  && (_InvoiceType == "pd" || _InvoiceType == "pbd"))
                 {
-                    bool valid = validateItemUnits();
-                    if (valid)
-                    {
-                        #region Accept
-                        MainWindow.mainWindow.Opacity = 0.2;
-                        wd_acceptCancelPopup w = new wd_acceptCancelPopup();
-                        w.contentText = AppSettings.resourcemanager.GetString("trSaveInvoiceNotification");
-                        w.ShowDialog();
-                        MainWindow.mainWindow.Opacity = 1;
-                        #endregion
-                        if (w.isOk)
-                        {
-                            await addInvoice(_InvoiceType);
-                        }
-                        Clear();
-                        _InvoiceType = "pd";
-                    }
-                    else if (invoiceDetailsList.Count == 0)
-                    {
-                        Clear();
-                        _InvoiceType = "pd";
-                    }
+                   await saveBeforeExit();
                 }
                 else
                     Clear();
