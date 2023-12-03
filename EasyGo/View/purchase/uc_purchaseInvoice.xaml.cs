@@ -959,6 +959,12 @@ namespace EasyGo.View.purchase
 
         }
 
+        #region return
+        private void btn_returnInvoice_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
         #region Save
         List<CashTransfer> listPayments;
         private async void Btn_save_Click(object sender, RoutedEventArgs e)
@@ -1824,8 +1830,9 @@ namespace EasyGo.View.purchase
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
+
         #endregion
 
-
+        
     }
 }

@@ -608,7 +608,7 @@ Background="{x:Null}" x:Name="btn_newInvoice" Click="btn_newInvoice_Click"  >
                         </StackPanel>
                     </Button>
                     <Button Grid.Column="1" DockPanel.Dock="Right" BorderBrush="{x:Null}" Padding="0"  Margin="5,10,5,0" Height="auto"
-Background="{x:Null}" x:Name="btn_returnInvoice" Click="btn_printInvoice_Click"  >
+Background="{x:Null}" x:Name="btn_returnInvoice" Click="btn_returnInvoice_Click"  >
                         <StackPanel>
                             <Path Fill="{StaticResource MainColor}" Stretch="Fill"  
    Height="30" Width="30" FlowDirection="LeftToRight"
