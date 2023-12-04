@@ -509,6 +509,12 @@
     <Content Include="Reports\SectionData\BanksData\En\EnCard.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\Storage\Ar\ArItemsStorage.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\Storage\En\EnItemsStorage.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="pic\socialMedia\email.png" />
     <Resource Include="pic\socialMedia\facebook.png" />
     <Resource Include="pic\socialMedia\fax.png" />
@@ -536,6 +542,7 @@
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Category.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Customer.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Item.datasource" />
+    <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.ItemLocation.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.orderPreparingStatus.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Supplier.datasource" />
     <None Include="Properties\DataSources\EasyGo.Classes.ApiClasses.Unit.datasource" />

@@ -502,7 +502,7 @@ namespace EasyGo.View.storage
 
         private void BuildReport()
         {
-            /*
+          
             List<ReportParameter> paramarr = new List<ReportParameter>();
             string searchval = "";
             string stateval = "";
@@ -512,11 +512,11 @@ namespace EasyGo.View.storage
             bool isArabic = ReportCls.checkLang();
             if (isArabic)
             {
-                addpath = @"\Reports\Storage\storageOperations\Ar\ArItemsStorage.rdlc";
+                addpath = @"\Reports\Storage\Ar\ArItemsStorage.rdlc";
             }
             else
             {
-                addpath = @"\Reports\Storage\storageOperations\En\EnItemsStorage.rdlc";
+                addpath = @"\Reports\Storage\En\EnItemsStorage.rdlc";
             }
             //if ((bool)chk_freezone.IsChecked)
             //{
@@ -530,26 +530,22 @@ namespace EasyGo.View.storage
             title = AppSettings.resourcemanagerreport.GetString("trLocations") + "/" + subtitle;
             paramarr.Add(new ReportParameter("trTitle", title));
             //filter   
-            //stateval = tgl_isActive.IsChecked == true ? AppSettings.resourcemanagerreport.GetString("trActive_")
-            //  : AppSettings.resourcemanagerreport.GetString("trNotActive");
-            //paramarr.Add(new ReportParameter("stateval", stateval));
-            //paramarr.Add(new ReportParameter("trActiveState", AppSettings.resourcemanagerreport.GetString("trState")));
+         
             paramarr.Add(new ReportParameter("trSearch", AppSettings.resourcemanagerreport.GetString("trSearch")));
             searchval = tb_search.Text;
             paramarr.Add(new ReportParameter("searchVal", searchval));
             //end filter
             string reppath = reportclass.PathUp(Directory.GetCurrentDirectory(), 2, addpath);
-            //D:\myproj\posproject5\Restaurant\Restaurant\View\storage\storageOperations\uc_ItemsStorage.xaml.cs
             ReportCls.checkLang();
 
-            clsReports.ItemsStorage(itemLocationListQuery, rep, reppath, paramarr);
-            clsReports.setReportLanguage(paramarr);
-            clsReports.Header(paramarr);
+            ReportConfig.ItemsStorage(itemLocationListQuery, rep, reppath, paramarr);
+            ReportConfig.setReportLanguage(paramarr);
+            ReportConfig.Header(paramarr);
 
             rep.SetParameters(paramarr);
 
             rep.Refresh();
-            */
+           
         }
         private void PrintRep()
         {

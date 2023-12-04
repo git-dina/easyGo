@@ -1291,6 +1291,26 @@ namespace EasyGo.Classes
             //paramarr.Add(new ReportParameter("trcommissionRatio", AppSettings.resourcemanagerreport.GetString("commissionRatio")));
         }
         #endregion
+
+        #region storage
+        public static void ItemsStorage(IEnumerable<ItemLocation> invoiceItems, LocalReport rep, string reppath, List<ReportParameter> paramarr)
+        {
+            rep.ReportPath = reppath;
+            rep.EnableExternalImages = true;
+            rep.DataSources.Clear();
+            rep.DataSources.Add(new ReportDataSource("DataSetItemsStorage", invoiceItems));
+            paramarr.Add(new ReportParameter("trNum", AppSettings.resourcemanagerreport.GetString("trNo.")));
+            paramarr.Add(new ReportParameter("trItemUnit", AppSettings.resourcemanagerreport.GetString("trItemUnit")));
+            paramarr.Add(new ReportParameter("trSectionLocation", AppSettings.resourcemanagerreport.GetString("trSectionLocation")));
+            paramarr.Add(new ReportParameter("trQuantity", AppSettings.resourcemanagerreport.GetString("trQTR")));
+            paramarr.Add(new ReportParameter("trStartDate", AppSettings.resourcemanagerreport.GetString("trStartDate")));
+            paramarr.Add(new ReportParameter("trEndDate", AppSettings.resourcemanagerreport.GetString("trEndDate")));
+            paramarr.Add(new ReportParameter("trNote", AppSettings.resourcemanagerreport.GetString("trNote")));
+            paramarr.Add(new ReportParameter("trOrderNum", AppSettings.resourcemanagerreport.GetString("trOrderNum")));
+            DateFormConv(paramarr);
+
+        }
+        #endregion
         public static string ConvertInvType(string invType)
         {
             string value = "";
