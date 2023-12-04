@@ -505,7 +505,6 @@ namespace EasyGo.View.storage
           
             List<ReportParameter> paramarr = new List<ReportParameter>();
             string searchval = "";
-            string stateval = "";
             string subtitle = "";
             string title = "";
             string addpath;
@@ -556,23 +555,23 @@ namespace EasyGo.View.storage
                 LocalReportExtensions.PrintToPrinterbyNameAndCopy(rep, AppSettings.rep_printer_name, AppSettings.rep_print_count == null ? short.Parse("1") : short.Parse(AppSettings.rep_print_count));
             });
         }
-        private void PdfRep()
-        {
+        //private void PdfRep()
+        //{
 
-            BuildReport();
+        //    BuildReport();
 
-            this.Dispatcher.Invoke(() =>
-            {
-                saveFileDialog.Filter = "PDF|*.pdf;";
+        //    this.Dispatcher.Invoke(() =>
+        //    {
+        //        saveFileDialog.Filter = "PDF|*.pdf;";
 
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    string filepath = saveFileDialog.FileName;
-                    LocalReportExtensions.ExportToPDF(rep, filepath);
-                }
-            });
+        //        if (saveFileDialog.ShowDialog() == true)
+        //        {
+        //            string filepath = saveFileDialog.FileName;
+        //            LocalReportExtensions.ExportToPDF(rep, filepath);
+        //        }
+        //    });
 
-        }
+        //}
 
         private void Btn_pdf_Click(object sender, RoutedEventArgs e)
         {
@@ -583,14 +582,17 @@ namespace EasyGo.View.storage
 
                 //if (FillCombo.groupObject.HasPermissionAction(reportsPermission, FillCombo.groupObjects, "one"))
                 //{
-                    if (itemLocationListQuery != null)
-                    {
-                        Thread t1 = new Thread(() =>
-                        {
-                            PdfRep();
-                        });
-                        t1.Start();
-                    }
+                #region
+                BuildReport();
+
+                saveFileDialog.Filter = "PDF|*.pdf;";
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string filepath = saveFileDialog.FileName;
+                    LocalReportExtensions.ExportToPDF(rep, filepath);
+                }
+                #endregion
                 //}
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
