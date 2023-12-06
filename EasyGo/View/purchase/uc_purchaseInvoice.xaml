@@ -845,7 +845,7 @@ l0.3,260.4L348.9,261.7z"  />
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Text="#000000" Foreground="{StaticResource White}" 
+                                <TextBlock Text="{Binding InvNumber}" Foreground="{StaticResource White}" 
                                            x:Name="txt_invoiceNumber" 
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
                               Grid.Column="1"      Margin="5"
