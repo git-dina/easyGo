@@ -84,7 +84,7 @@ namespace EasyGo
                 timer.Tick += timer_Tick;
                 timer.Start();
 
-                menuList = new List<string> { "home", "catalog", "purchase",
+                menuList = new List<string> { "home", "catalog", "storage", "purchase",
                    "sectionData",""};
 
                 if (AppSettings.lang.Equals("en"))
