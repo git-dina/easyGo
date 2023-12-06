@@ -36,7 +36,7 @@ namespace EasyGo.Classes
         internal static string timeFormat = "ShortTimePattern";
         internal static string accuracy;
 
-        public static string Currency;
+        public static string Currency = "SYP";
         public static long CurrencyId;
 
         #region company info
