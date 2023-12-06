@@ -319,6 +319,9 @@
     <Compile Include="View\windows\wd_selectDiscount.xaml.cs">
       <DependentUpon>wd_selectDiscount.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_selectInvoicePurByNumber.xaml.cs">
+      <DependentUpon>wd_selectInvoicePurByNumber.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_selectSupplier.xaml.cs">
       <DependentUpon>wd_selectSupplier.xaml</DependentUpon>
     </Compile>
@@ -435,6 +438,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_selectDiscount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_selectInvoicePurByNumber.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
