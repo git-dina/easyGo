@@ -972,6 +972,7 @@ namespace EasyGo.View.purchase
                     if (_InvoiceType == "p")
                     {
                         _InvoiceType = "pbd";
+                        invoice = await invoiceModel.GetInvoiceToReturn(invoice.InvoiceId);
                         // isFromReport = true;
                         viewInvoice();
                         btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
