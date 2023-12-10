@@ -106,7 +106,8 @@
                             Background="White"/>
                         <DataGrid  Margin="5,5,5,45" Grid.Row="1"  IsReadOnly="True"   HeadersVisibility="Column"
                        x:Name="dg_itemsStorage" SelectionChanged="Dg_itemsStorage_SelectionChanged"  AutoGenerateColumns="False"   Background="White"
-                        ColumnWidth="SizeToHeader"    AlternatingRowBackground="#f3f3f3" AlternationCount="2">
+                          AlternatingRowBackground="#f3f3f3" AlternationCount="2"
+                                    ColumnWidth="Auto" >
                             <DataGrid.OpacityMask>
                                 <VisualBrush Visual="{Binding ElementName=brd_roundDataGrid}"/>
                             </DataGrid.OpacityMask>
@@ -120,7 +121,7 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="*"  Header="Item-Unit" x:Name="col_itemUnit"  >
+                                <DataGridTextColumn Width="*" Header="Item-Unit" x:Name="col_itemUnit"  >
                                     <DataGridTextColumn.Binding>
                                         <MultiBinding StringFormat="{}{0}-{1}">
                                             <Binding Path="ItemName"></Binding>
@@ -154,7 +155,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>-->
-                                <DataGridTextColumn Width="*"  Header="Quantity"  x:Name="col_quantity"   Binding="{Binding Path=Quantity}">
+                                <DataGridTextColumn   Header="Quantity"  x:Name="col_quantity"   Binding="{Binding Path=Quantity}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -165,7 +166,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="Start Date" x:Name="col_startDate"  Binding="{Binding Path=StartDate,Converter={StaticResource dateFrameConverter}}">
+                                <DataGridTextColumn   Header="Start Date" x:Name="col_startDate"  Binding="{Binding Path=StartDate,Converter={StaticResource dateFrameConverter}}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -176,7 +177,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="End Date" x:Name="col_endDate"  Binding="{Binding Path=EndDate,Converter={StaticResource dateFrameConverter}}">
+                                <DataGridTextColumn   Header="End Date" x:Name="col_endDate"  Binding="{Binding Path=EndDate,Converter={StaticResource dateFrameConverter}}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -187,7 +188,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Width="*"  Header="Note" x:Name="col_notes"  Binding="{Binding Path=Notes}">
+                                <DataGridTextColumn   Header="Note" x:Name="col_notes"  Binding="{Binding Path=Notes}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
