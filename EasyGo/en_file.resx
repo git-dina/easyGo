@@ -5194,4 +5194,10 @@ Please add Email in setting</value>
   <data name="trHasProcessNum" xml:space="preserve">
     <value>Has Process Num</value>
   </data>
+  <data name="done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
 </root>

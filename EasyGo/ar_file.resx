@@ -5168,4 +5168,10 @@
   <data name="trHasProcessNum" xml:space="preserve">
     <value>لديه رقم عملية</value>
   </data>
+  <data name="done" xml:space="preserve">
+    <value>منتهية</value>
+  </data>
+  <data name="draft" xml:space="preserve">
+    <value>مسودة</value>
+  </data>
 </root>
