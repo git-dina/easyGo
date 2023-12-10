@@ -12,6 +12,7 @@
             <converters:accuracyConverter x:Key="accuracyConverter"/>
             <converters:twoStringsConverter x:Key="twoStringsConverter"/>
             <converters:purchaseInvoiceTypeConverter x:Key="purchaseInvoiceTypeConverter"/>
+            <converters:purchaseInvoiceStateConverter x:Key="purchaseInvoiceStateConverter"/>
             <converters:dateFrameConverter x:Key="dateFrameConverter"/>
            
            
