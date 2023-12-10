@@ -88,7 +88,7 @@ namespace EasyGo.View.purchase
 
         private void translate()
         {
-            txt_invoiceTitle.Text = AppSettings.resourcemanager.GetString("trInvoice"); 
+            //txt_invoiceTitle.Text = AppSettings.resourcemanager.GetString("trInvoice"); 
 
             dg_invoiceDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNo.");
             dg_invoiceDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");

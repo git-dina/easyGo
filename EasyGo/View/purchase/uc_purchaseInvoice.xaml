@@ -741,7 +741,9 @@ l0.3,260.4L348.9,261.7z"  />
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock  Text="invoice" x:Name="txt_invoiceTitle" Foreground="{StaticResource MainColor}" 
+                        <TextBlock  x:Name="txt_invoiceTitle"
+                                     Text="{Binding InvType, Mode=OneWay,Converter={StaticResource purchaseInvoiceTypeConverter }}"
+                                     Foreground="{StaticResource MainColor}" 
                                                 FontWeight="SemiBold" FontSize="14"  
                                    VerticalAlignment="Center"
                                        HorizontalAlignment="Left" Margin="5"
@@ -856,7 +858,9 @@ l0.3,260.4L348.9,261.7z"  />
                         </Button>
 
 
-                        <TextBlock Grid.Column="4"   Text="inv Status" x:Name="txt_invoiceStatus" Foreground="{StaticResource MainColor}" 
+                        <TextBlock  x:Name="txt_invoiceStatus"
+                                     Text="{Binding InvType, Mode=OneWay,Converter={StaticResource purchaseInvoiceStateConverter }}"
+                            Grid.Column="4"    Foreground="{StaticResource MainColor}" 
                                                 FontWeight="SemiBold" FontSize="14"  
                                    VerticalAlignment="Center"
                                        HorizontalAlignment="Right" Margin="5"
