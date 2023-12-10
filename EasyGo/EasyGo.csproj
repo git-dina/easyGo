@@ -253,6 +253,7 @@
     <Compile Include="converters\accuracyConverter.cs" />
     <Compile Include="converters\castcateLongTextConverter.cs" />
     <Compile Include="converters\dateFrameConverter.cs" />
+    <Compile Include="converters\purchaseInvoiceStateConverter.cs" />
     <Compile Include="converters\purchaseInvoiceTypeConverter.cs" />
     <Compile Include="converters\twoStringsConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
