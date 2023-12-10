@@ -129,6 +129,7 @@ namespace EasyGo.View.windows
                search();
 
                 FillCombo.fillPurchaseTypes(cb_invType);
+                cb_invType.SelectedIndex = 0;
 
                 HelpClass.EndAwait(grid_ucPurchaseInvoice);
             }

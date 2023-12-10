@@ -146,13 +146,10 @@ VerticalAlignment="Center" Width="15"  Height="15"
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding InvType}" Value="pbd">
+                                        <DataTrigger Binding="{Binding InvType}" Value="pb">
                                         <Setter Property="Background" Value="{StaticResource lightRed}"></Setter>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding InvType}" Value="pbw">
-                                        <Setter Property="Background" Value="{StaticResource lightRed}"></Setter>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding InvType}" Value="pb">
+                                        <DataTrigger Binding="{Binding InvType}" Value="pbd">
                                         <Setter Property="Background" Value="{StaticResource lightRed}"></Setter>
                                     </DataTrigger>
                                 </Style.Triggers>
