@@ -9,7 +9,7 @@
          WindowStyle="None" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" Margin="0"  
          Height="140" Width="300"  Background="Transparent" AllowsTransparency="True" 
-        Loaded="Window_Loaded"  
+        Loaded="Window_Loaded"  Unloaded="Window_Unloaded"
         MouseDown="Window_MouseDown" >
     <Border BorderThickness="1,0,1,1"  Grid.Row="1"
                     CornerRadius="7,7,7,7"    Background="#F1F5F8">

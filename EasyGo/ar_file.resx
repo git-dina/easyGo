@@ -5174,4 +5174,7 @@
   <data name="draft" xml:space="preserve">
     <value>مسودة</value>
   </data>
+  <data name="trAllQuantityReturned" xml:space="preserve">
+    <value>تم ارجاع كل كمية فاتورة المشتريات</value>
+  </data>
 </root>

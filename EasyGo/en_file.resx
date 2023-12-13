@@ -5200,4 +5200,7 @@ Please add Email in setting</value>
   <data name="draft" xml:space="preserve">
     <value>Draft</value>
   </data>
+  <data name="trAllQuantityReturned" xml:space="preserve">
+    <value>All purchase invoice quantities have been returned</value>
+  </data>
 </root>

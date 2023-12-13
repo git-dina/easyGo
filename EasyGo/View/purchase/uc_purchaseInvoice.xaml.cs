@@ -986,9 +986,8 @@ namespace EasyGo.View.purchase
                         if (w.isOk == true)
                         {
                            
-                            invoice = await invoiceModel.GetInvoiceToReturn(invoice.InvoiceId);
-                            if(invoice.InvoiceItems.Select(x => x.Quantity).Sum() > 0)
-                                showReturn = true;
+                            invoice = w.purchaseInvoice;
+                            showReturn = true;
                          
                         }
 
