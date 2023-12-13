@@ -17,7 +17,7 @@ namespace EasyGo.Classes.ApiClasses
         #region Attributes
         public long InvoiceId { get; set; }
         public string InvNumber { get; set; } = "#000000";
-        public string InvType { get; set; }
+        public string InvType { get; set; } = "pd";
         public Nullable<long> SupplierId { get; set; }
         public string DiscountType { get; set; } = "rate";
         public decimal DiscountValue { get; set; }
