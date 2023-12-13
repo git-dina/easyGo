@@ -968,42 +968,45 @@ namespace EasyGo.View.purchase
                 HelpClass.StartAwait(grid_main);
                 //if (FillCombo.groupObject.HasPermissionAction(returnPermission, FillCombo.groupObjects, "one"))
                 {
-                    invoice.InvType = "pbd";
+                    bool showReturn = false;
                     if (_InvoiceType == "p")
                     {
-                        _InvoiceType = "pbd";
+                        showReturn = true;
                         invoice = await invoiceModel.GetInvoiceToReturn(invoice.InvoiceId);
-                        // isFromReport = true;
-                        viewInvoice();
-                        btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
-                        //setNotifications();
                     }
                     else
                     {
                         await saveBeforeExit();
                         Window.GetWindow(this).Opacity = 0.2;
-                        //wd_returnInvoice w = new wd_returnInvoice();
+                        wd_selectInvoicePurByNumber w = new wd_selectInvoicePurByNumber();
                         //w.page = "purchase";
                         //w.userId = MainWindow.userLogin.UserId;
                         //w.invoiceType = "p";
-                        //w.ShowDialog();
-                        //if (w.ShowDialog() == true)
+                        w.ShowDialog();
+                        if (w.isOk == true)
                         {
-                            _InvoiceType = "pbd";
-                            //invoice = w.invoice;
-                            isFromReport = true;
-
-                            viewInvoice();
+                           
+                            invoice = await invoiceModel.GetInvoiceToReturn(invoice.InvoiceId);
+                            if(invoice.InvoiceItems.Select(x => x.Quantity).Sum() > 0)
+                                showReturn = true;
                          
-                            btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
-                          //  setNotifications();
                         }
-
-
 
                         Window.GetWindow(this).Opacity = 1;
                     }
+                    if(showReturn)
+                    {
+                        invoice.InvType = "pbd";
+                        invoice.InvNumber = "#000000";
+                        _InvoiceType = "pbd";
 
+                       // isFromReport = true;
+
+                        viewInvoice();
+                        btn_save.Content = AppSettings.resourcemanager.GetString("trReturn");
+                        //  setNotifications();
+
+                    }
                 }
                 //else
                 //    Toaster.ShowInfo(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trdontHavePermission"), animation: ToasterAnimation.FadeIn);
