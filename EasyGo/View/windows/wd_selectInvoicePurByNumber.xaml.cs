@@ -224,7 +224,7 @@ namespace EasyGo.View.windows
                 {
                     if (purchaseInvoice.InvoiceItems.Select(x => x.Quantity).Sum() > 0)
                     {
-                        DialogResult = true;
+                        isOk = true;
                         this.Close();
                     }
                     else
