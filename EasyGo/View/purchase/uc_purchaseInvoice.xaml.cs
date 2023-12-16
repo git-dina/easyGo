@@ -971,8 +971,15 @@ namespace EasyGo.View.purchase
                     bool showReturn = false;
                     if (_InvoiceType == "p")
                     {
-                        showReturn = true;
+                        
                         invoice = await invoiceModel.GetInvoiceToReturn(invoice.InvoiceId);
+                        if (invoice.InvoiceItems.Select(x => x.Quantity).Sum() > 0)
+                            showReturn = true;
+                        else
+                        {
+                            showReturn = false;
+                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trAllQuantityReturned"), animation: ToasterAnimation.FadeIn);
+                        }
                     }
                     else
                     {
@@ -997,6 +1004,9 @@ namespace EasyGo.View.purchase
                     {
                         invoice.InvType = "pbd";
                         invoice.InvNumber = "#000000";
+                        invoice.InvoiceMainId = invoice.InvoiceId;
+                        invoice.InvoiceId = 0;
+
                         _InvoiceType = "pbd";
 
                        // isFromReport = true;
@@ -1062,7 +1072,8 @@ namespace EasyGo.View.purchase
                                     switch (invoice.InvType)
                                     {
                                         case "pbd":
-                                            await addInvoice("pbw"); // pbw means waiting purchase bounce
+                                            await addInvoice("pb"); // pbw means waiting purchase bounce
+                                            //await addInvoice("pbw"); // pbw means waiting purchase bounce
                                             break;
 
                                         default:
@@ -1198,7 +1209,7 @@ namespace EasyGo.View.purchase
             InvoiceResult invoiceResult = new InvoiceResult();
 
             #region invoice object
-            if ((invoice.InvType == "p" || invoice.InvType == "pw") && (invType == "pbw" || invType == "pbd")) // invoice is purchase and will be bounce purchase  or purchase bounce draft , save another invoice in db
+            if ((invoice.InvType == "p" || invoice.InvType == "pw") && (invType == "pb" || invType == "pbw" || invType == "pbd")) // invoice is purchase and will be bounce purchase  or purchase bounce draft , save another invoice in db
             {
                 invoice.InvoiceMainId = invoice.InvoiceId;
                 invoice.InvoiceId = 0;
@@ -1828,6 +1839,7 @@ namespace EasyGo.View.purchase
                 if (w.isOk)
                 {
                     invoice = w.purchaseInvoice;
+                    _InvoiceType = invoice.InvType;
                     viewInvoice();
                     
                 }
@@ -1846,7 +1858,6 @@ namespace EasyGo.View.purchase
         {
             invoice.Count = invoice.InvoiceItems.Sum(x => x.Quantity);
             this.DataContext = invoice;
-            _InvoiceType = invoice.InvType;
             invoiceDetailsList = invoice.InvoiceItems;
 
             refreshInvoiceDetails();
