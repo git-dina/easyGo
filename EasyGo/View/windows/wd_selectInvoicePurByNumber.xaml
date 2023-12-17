@@ -69,7 +69,7 @@
                                      MaxLength="50" BorderThickness="0"
                                     materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                                     Height="40"  Margin="5,0,5,-1" 
-                                          />
+                                         KeyDown="Tb_InvoiceNumber_KeyDown"  />
                                      <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
                                  HorizontalAlignment="Right" Visibility="Collapsed"    x:Name="p_error_InvoiceNumber"
                             VerticalAlignment="Center" Width="15"  Height="15"

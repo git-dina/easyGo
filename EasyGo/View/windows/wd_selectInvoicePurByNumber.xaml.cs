@@ -239,6 +239,28 @@ namespace EasyGo.View.windows
             tb_InvoiceNumber.Clear();
             tb_InvoiceNumber.Focus();
         }
+
+        private async void Tb_InvoiceNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+
+                HelpClass.StartAwait(grid_main);
+                if (e.Key == Key.Return)
+                {
+                    string barcode = tb_InvoiceNumber.Text;
+                    await dealWithBarcode(barcode);
+                }
+
+                HelpClass.EndAwait(grid_main);
+            }
+            catch (Exception ex)
+            {
+
+                HelpClass.EndAwait(grid_main);
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
         #endregion
         #region validate - clearValidate - textChange - lostFocus - . . . . 
 
@@ -298,5 +320,7 @@ namespace EasyGo.View.windows
         }
 
         #endregion
+
+       
     }
 }
