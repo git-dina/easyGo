@@ -239,6 +239,7 @@
     <Compile Include="Classes\ApiClasses\Notification.cs" />
     <Compile Include="Classes\ApiClasses\Pos.cs" />
     <Compile Include="Classes\ApiClasses\PurchaseInvoice.cs" />
+    <Compile Include="Classes\ApiClasses\SalesInvoice.cs" />
     <Compile Include="Classes\ApiClasses\Section.cs" />
     <Compile Include="Classes\ApiClasses\Unit.cs" />
     <Compile Include="Classes\ApiClasses\User.cs" />
