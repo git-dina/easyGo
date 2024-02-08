@@ -157,6 +157,8 @@ namespace EasyGo.View.purchase
             isFromReport = false;
             inputEditable();
 
+            btn_save.Content = AppSettings.resourcemanager.GetString("trBuy");
+
             ActiveButton(btn_supplier, false, AppSettings.resourcemanager.GetString("trSupplier"));
             ActiveButton(btn_discount, false);
             ActiveButton(btn_tax, false);
@@ -544,17 +546,19 @@ namespace EasyGo.View.purchase
         {
             try
             {
-                HelpClass.StartAwait(grid_main);
-                var itemCards = sender as uc_itemCards;
-                if (itemCards != null)
+                if (_InvoiceType == "pd")
                 {
-                    selectedItem = itemCards.item;
-                    AddItemToInvoice(selectedItem);
+                    HelpClass.StartAwait(grid_main);
+                    var itemCards = sender as uc_itemCards;
+                    if (itemCards != null)
+                    {
+                        selectedItem = itemCards.item;
+                        AddItemToInvoice(selectedItem);
 
+                    }
+
+                    HelpClass.EndAwait(grid_main);
                 }
-
-
-                HelpClass.EndAwait(grid_main);
             }
             catch
             {
@@ -1283,7 +1287,8 @@ namespace EasyGo.View.purchase
                 // save invoice in DB
                 switch (invType)
                 {
-                    case "pbw":
+                    //case "pbw":
+                    case "pb":
                         #region notification Object
                         Notification not = new Notification()
                         {
@@ -1297,7 +1302,7 @@ namespace EasyGo.View.purchase
                             UpdateUserId = MainWindow.userLogin.UserId,
                         };
                         #endregion
-                        #region posCash posCash with type inv
+                        #region posCash  with type inv
                         var cashT = invoice.posCashTransfer(invoice, "pb");
                         #endregion
                         invoiceResult = await invoiceModel.savePurchaseBounce(invoice,  cashT, not, MainWindow.posLogin.PosId, MainWindow.branchLogin.BranchId);

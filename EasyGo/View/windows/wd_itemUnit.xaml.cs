@@ -312,6 +312,7 @@ namespace EasyGo.View.windows
                                    // await FillCombo.RefreshPurchaseItems();
                                     Clear();
                                     await RefreshItemUnitsList();
+                                    await FillCombo.RefreshItemsHasUnits();
                                     await Search();
                                 }
                             }
@@ -413,6 +414,7 @@ namespace EasyGo.View.windows
                                     //await FillCombo.RefreshPurchaseItems();
                                     Clear();
                                     await RefreshItemUnitsList();
+                                    await FillCombo.RefreshItemsHasUnits();
                                     await Search();
                                 }
                             }
