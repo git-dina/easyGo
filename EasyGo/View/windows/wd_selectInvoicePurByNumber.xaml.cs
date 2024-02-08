@@ -217,7 +217,7 @@ namespace EasyGo.View.windows
             prefix = prefix.ToLower();
             barcode = barcode.ToLower();
 
-            if (prefix == "pi")
+            if (prefix == "p")
             {
                 purchaseInvoice = await purchaseInvModel.GetInvoiceToReturn(barcode, MainWindow.userLogin.UserId, MainWindow.branchLogin.BranchId);
                 if (purchaseInvoice != null)

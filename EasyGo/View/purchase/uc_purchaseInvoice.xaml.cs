@@ -793,7 +793,7 @@ namespace EasyGo.View.purchase
 
                         PurInvoiceItem row = (PurInvoiceItem)dg_invoiceDetails.SelectedItems[0];
                         invoiceDetailsList.Remove(row);
-
+                        CalculateInvoiceValues();
                         refreshInvoiceDetails();
                     }
 
