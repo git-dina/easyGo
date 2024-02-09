@@ -559,6 +559,21 @@ namespace EasyGo
             }
         }
 
+        private void Btn_sales_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_accounts_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_reports_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void Btn_sectionData_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -577,7 +592,10 @@ namespace EasyGo
             }
         }
 
+        private void Btn_settings_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
 
 
 
@@ -590,6 +608,7 @@ namespace EasyGo
             mainWindow.txt_cashValue.Text = HelpClass.DecTostring(posLogin.Balance);
             mainWindow.txt_cashSympol.Text = AppSettings.Currency;
         }
+
         #endregion
 
        

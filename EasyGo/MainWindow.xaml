@@ -343,6 +343,105 @@ materialDesign:ButtonAssist.CornerRadius="15">
                                                             </Grid>
                                                         </Button>
 
+                                <Button   x:Name="btn_sales" 
+ Tag="sales"
+ Click="Btn_sales_Click"
+Height="40" 
+HorizontalAlignment="Left"  
+Background="{DynamicResource White}" 
+ BorderBrush="{x:Null}"    
+ Padding="0"  BorderThickness="0"  Margin="10 5"
+materialDesign:ButtonAssist.CornerRadius="15">
+                                    <Grid Width="{Binding ElementName=grid, Path=ActualWidth}"
+ Height="40"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Path  x:Name="path_sales" 
+       Grid.Column="0"  
+ Tag="sales"
+          FlowDirection="LeftToRight"
+      Fill="{DynamicResource MainColor}" 
+      Stretch="Fill"  
+ HorizontalAlignment="Center"
+   VerticalAlignment="Center" Width="20" Height="20"
+ Data="{StaticResource shoppingCart}"/>
+                                        <TextBlock  x:Name="txt_sales" Grid.Column="1"
+ Tag="sales"
+           Text="sales" 
+      Foreground="{DynamicResource MainColor}" 
+      HorizontalAlignment="Left" VerticalAlignment="Center" 
+           Margin="10,0,0,0"/>
+                                    </Grid>
+                                </Button>
+
+                                <Button   x:Name="btn_accounts" 
+ Tag="accounts"
+ Click="Btn_accounts_Click"
+Height="40" 
+HorizontalAlignment="Left"  
+Background="{DynamicResource White}" 
+ BorderBrush="{x:Null}"    
+ Padding="0"  BorderThickness="0"  Margin="10 5"
+materialDesign:ButtonAssist.CornerRadius="15">
+                                    <Grid Width="{Binding ElementName=grid, Path=ActualWidth}"
+ Height="40"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Path  x:Name="path_accounts" 
+       Grid.Column="0"  
+ Tag="accounts"
+          FlowDirection="LeftToRight"
+      Fill="{DynamicResource MainColor}" 
+      Stretch="Fill"  
+ HorizontalAlignment="Center"
+   VerticalAlignment="Center" Width="20" Height="20"
+ Data="{StaticResource accounts}"/>
+                                        <TextBlock  x:Name="txt_accounts" Grid.Column="1"
+ Tag="accounts"
+           Text="accounts" 
+      Foreground="{DynamicResource MainColor}" 
+      HorizontalAlignment="Left" VerticalAlignment="Center" 
+           Margin="10,0,0,0"/>
+                                    </Grid>
+                                </Button>
+
+                                <Button   x:Name="btn_reports" 
+ Tag="reports"
+ Click="Btn_reports_Click"
+Height="40" 
+HorizontalAlignment="Left"  
+Background="{DynamicResource White}" 
+ BorderBrush="{x:Null}"    
+ Padding="0"  BorderThickness="0"  Margin="10 5"
+materialDesign:ButtonAssist.CornerRadius="15">
+                                    <Grid Width="{Binding ElementName=grid, Path=ActualWidth}"
+ Height="40"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Path  x:Name="path_reports" 
+       Grid.Column="0"  
+ Tag="reports"
+          FlowDirection="LeftToRight"
+      Fill="{DynamicResource MainColor}" 
+      Stretch="Fill"  
+ HorizontalAlignment="Center"
+   VerticalAlignment="Center" Width="20" Height="20"
+ Data="{StaticResource reports}"/>
+                                        <TextBlock  x:Name="txt_reports" Grid.Column="1"
+ Tag="reports"
+           Text="reports" 
+      Foreground="{DynamicResource MainColor}" 
+      HorizontalAlignment="Left" VerticalAlignment="Center" 
+           Margin="10,0,0,0"/>
+                                    </Grid>
+                                </Button>
+                                
                                 <Button   x:Name="btn_sectionData" 
      Tag="sectionData"
      Click="Btn_sectionData_Click"
@@ -376,7 +475,40 @@ materialDesign:ButtonAssist.CornerRadius="15">
                                     </Grid>
                                 </Button>
 
-                         </StackPanel>
+                                <Button   x:Name="btn_settings" 
+ Tag="settings"
+ Click="Btn_settings_Click"
+Height="40" 
+HorizontalAlignment="Left"  
+Background="{DynamicResource White}" 
+ BorderBrush="{x:Null}"    
+ Padding="0"  BorderThickness="0"  Margin="10 5"
+materialDesign:ButtonAssist.CornerRadius="15">
+                                    <Grid Width="{Binding ElementName=grid, Path=ActualWidth}"
+ Height="40"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Path  x:Name="path_settings" 
+       Grid.Column="0"  
+ Tag="settings"
+          FlowDirection="LeftToRight"
+      Fill="{DynamicResource MainColor}" 
+      Stretch="Fill"  
+ HorizontalAlignment="Center"
+   VerticalAlignment="Center" Width="20" Height="20"
+ Data="{StaticResource settings}"/>
+                                        <TextBlock  x:Name="txt_settings" Grid.Column="1"
+ Tag="settings"
+           Text="settings" 
+      Foreground="{DynamicResource MainColor}" 
+      HorizontalAlignment="Left" VerticalAlignment="Center" 
+           Margin="10,0,0,0"/>
+                                    </Grid>
+                                </Button>
+
+                            </StackPanel>
                     </ScrollViewer>
                     </Border>
                 </Grid>
