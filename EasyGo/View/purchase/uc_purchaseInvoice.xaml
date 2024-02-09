@@ -264,7 +264,7 @@ BorderBrush="{StaticResource LightGrey}"/>
                      Margin="5"/>
                                     <TextBlock Text="supplier" Foreground="{DynamicResource MainColor}" x:Name="txt_supplier"
                   HorizontalAlignment="Left" VerticalAlignment="Center" 
-             Grid.Column="1"      Margin="5"/>
+             Grid.Column="1"      Margin="0 5 10 5"/>
                                 </Grid>
                             </Button>
                             <Button  Grid.Row="1"
@@ -290,7 +290,7 @@ BorderBrush="{StaticResource LightGrey}"/>
                                       Margin="5"/>
                                     <TextBlock x:Name="txt_discount" Text="discount" Foreground="{DynamicResource MainColor}"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
-                              Grid.Column="1"      Margin="5"/>
+                              Grid.Column="1"      Margin="0 5 10 5"/>
                                 </Grid>
                             </Button>
                             <Button  x:Name="btn_tax" 
@@ -316,7 +316,7 @@ BorderBrush="{StaticResource LightGrey}"/>
                                       Margin="5"/>
                                     <TextBlock Text="tax" Foreground="{DynamicResource MainColor}" x:Name="txt_tax"
                                    HorizontalAlignment="Left" VerticalAlignment="Center" 
-                              Grid.Column="1"      Margin="5"/>
+                              Grid.Column="1"      Margin="0 5 10 5"/>
                                 </Grid>
                             </Button>
                         </StackPanel>
