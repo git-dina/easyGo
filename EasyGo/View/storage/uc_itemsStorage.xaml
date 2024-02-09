@@ -443,7 +443,7 @@
                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                           BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                          TextBlock.Foreground="#4E4E4E"
-                          SelectedDate="{Binding startDate, Mode=OneWay}" Padding="10,0,5,0"  
+                          SelectedDate="{Binding StartDate, Mode=OneWay}" Padding="10,0,5,0"  
                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                          materialDesign:HintAssist.Hint="start date..."  
                          Foreground="#4E4E4E"   Height="40"    />
@@ -464,7 +464,7 @@
                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                           BorderBrush="#737373"   BorderThickness="0" Margin="4,0"
                          TextBlock.Foreground="#4E4E4E"
-                          SelectedDate="{Binding endDate, Mode=OneWay}" Padding="10,0,5,0"  
+                          SelectedDate="{Binding EndDate, Mode=OneWay}" Padding="10,0,5,0"  
                          materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
                          materialDesign:HintAssist.Hint="end date..."  
                          Foreground="#4E4E4E"   Height="40"    />
