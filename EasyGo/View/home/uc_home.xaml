@@ -34,7 +34,7 @@
             </Style.Resources>
         </Style>
     </UserControl.Resources>
-    <Grid x:Name="grid_main" Margin="10" >
+    <Grid x:Name="grid_main" Margin="10 10 10 0" >
         <Grid.RowDefinitions>
             <RowDefinition Height="135"/>
             <RowDefinition Height="135"/>
