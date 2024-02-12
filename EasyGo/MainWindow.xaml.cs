@@ -24,6 +24,7 @@ using EasyGo.Classes.ApiClasses;
 using EasyGo.View.catalog;
 using EasyGo.View.purchase;
 using EasyGo.View.storage;
+using EasyGo.View.home;
 
 namespace EasyGo
 {
@@ -496,8 +497,8 @@ namespace EasyGo
                 Button button = sender as Button;
                 ColorButtonRefresh(button.Tag.ToString());
                 MainWindow.mainWindow.grid_main.Children.Clear();
-                //uc_sectionData uc = new uc_sectionData();
-                //MainWindow.mainWindow.grid_main.Children.Add(uc);
+                uc_home uc = new uc_home();
+                MainWindow.mainWindow.grid_main.Children.Add(uc);
 
                 //MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
             }
