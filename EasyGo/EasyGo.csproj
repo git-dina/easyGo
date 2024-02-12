@@ -257,10 +257,15 @@
     <Compile Include="converters\purchaseInvoiceStateConverter.cs" />
     <Compile Include="converters\purchaseInvoiceTypeConverter.cs" />
     <Compile Include="converters\reverseBoolConverter.cs" />
+    <Compile Include="converters\salesInvoiceStateConverter.cs" />
+    <Compile Include="converters\salesInvoiceTypeConverter.cs" />
     <Compile Include="converters\twoStringsConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="Template\uc_itemCards.xaml.cs">
       <DependentUpon>uc_itemCards.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Template\uc_itemCardWithPrice.xaml.cs">
+      <DependentUpon>uc_itemCardWithPrice.xaml</DependentUpon>
     </Compile>
     <Compile Include="Template\uc_itemUnitCards.xaml.cs">
       <DependentUpon>uc_itemUnitCards.xaml</DependentUpon>
@@ -285,6 +290,9 @@
     </Compile>
     <Compile Include="View\purchase\uc_purchaseInvoice.xaml.cs">
       <DependentUpon>uc_purchaseInvoice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\sales\uc_salesInvoice.xaml.cs">
+      <DependentUpon>uc_salesInvoice.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\sectionData\uc_card.xaml.cs">
       <DependentUpon>uc_card.xaml</DependentUpon>
@@ -328,6 +336,9 @@
     <Compile Include="View\windows\wd_selectInvoicePurByNumber.xaml.cs">
       <DependentUpon>wd_selectInvoicePurByNumber.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\windows\wd_selectInvoiceSaleByNumber.xaml.cs">
+      <DependentUpon>wd_selectInvoiceSaleByNumber.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\windows\wd_selectSupplier.xaml.cs">
       <DependentUpon>wd_selectSupplier.xaml</DependentUpon>
     </Compile>
@@ -367,6 +378,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Template\uc_itemCardWithPrice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Template\uc_itemUnitCards.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -396,6 +411,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\purchase\uc_purchaseInvoice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\sales\uc_salesInvoice.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -452,6 +471,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\windows\wd_selectInvoicePurByNumber.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\windows\wd_selectInvoiceSaleByNumber.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -642,7 +665,6 @@
   <ItemGroup>
     <Folder Include="View\accounts\" />
     <Folder Include="View\reports\" />
-    <Folder Include="View\sales\" />
     <Folder Include="View\settings\" />
   </ItemGroup>
   <ItemGroup>
