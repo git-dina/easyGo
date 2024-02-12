@@ -280,6 +280,9 @@
     <Compile Include="View\catalog\uc_unit.xaml.cs">
       <DependentUpon>uc_unit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\home\uc_home.xaml.cs">
+      <DependentUpon>uc_home.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\purchase\uc_purchaseInvoice.xaml.cs">
       <DependentUpon>uc_purchaseInvoice.xaml</DependentUpon>
     </Compile>
@@ -385,6 +388,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\catalog\uc_unit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\home\uc_home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -634,7 +641,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\accounts\" />
-    <Folder Include="View\home\" />
     <Folder Include="View\reports\" />
     <Folder Include="View\sales\" />
     <Folder Include="View\settings\" />
