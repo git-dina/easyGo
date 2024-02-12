@@ -25,6 +25,7 @@ using EasyGo.View.catalog;
 using EasyGo.View.purchase;
 using EasyGo.View.storage;
 using EasyGo.View.home;
+using EasyGo.View.sales;
 
 namespace EasyGo
 {
@@ -562,7 +563,20 @@ namespace EasyGo
 
         private void Btn_sales_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                Button button = sender as Button;
+                ColorButtonRefresh(button.Tag.ToString());
+                MainWindow.mainWindow.grid_main.Children.Clear();
+                uc_salesInvoice uc = new uc_salesInvoice();
+                MainWindow.mainWindow.grid_main.Children.Add(uc);
 
+                //MainWindow.mainWindow.initializationMainTrack(button.Tag.ToString());
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
         }
 
         private void Btn_accounts_Click(object sender, RoutedEventArgs e)
