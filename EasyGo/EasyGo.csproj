@@ -256,6 +256,7 @@
     <Compile Include="converters\dateFrameConverter.cs" />
     <Compile Include="converters\purchaseInvoiceStateConverter.cs" />
     <Compile Include="converters\purchaseInvoiceTypeConverter.cs" />
+    <Compile Include="converters\reverseBoolConverter.cs" />
     <Compile Include="converters\twoStringsConverter.cs" />
     <Compile Include="en_file.Designer.cs" />
     <Compile Include="Template\uc_itemCards.xaml.cs">
