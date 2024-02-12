@@ -915,6 +915,7 @@ l0.3,260.4L348.9,261.7z"  />
                                         <DataTemplate>
                                             <Button Margin="-2.5 0"   Click="unitRowFromInvoiceItems"
                                          Padding="2.5 0" Content="{Binding Path=UnitName}"
+                                                    IsEnabled="{Binding ElementName=col_unit, Path=IsReadOnly,Converter={StaticResource reverseBoolConverter }}"
                                       />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
