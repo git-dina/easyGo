@@ -1,0 +1,94 @@
+﻿<Window x:Class="EasyGo.View.windows.wd_selectInvoiceSaleByNumber"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasyGo.View.windows"
+        mc:Ignorable="d" KeyDown="HandleKeyPress"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         WindowStyle="None" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" Margin="0"  
+         Height="140" Width="300"  Background="Transparent" AllowsTransparency="True" 
+        Loaded="Window_Loaded"  Unloaded="Window_Unloaded"
+        MouseDown="Window_MouseDown" >
+    <Border BorderThickness="1,0,1,1"  Grid.Row="1"
+                    CornerRadius="7,7,7,7"    Background="#F1F5F8">
+        <Grid x:Name="grid_main" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.ColumnSpan="2"   >
+                <Border  BorderThickness="0" Grid.Row="0" 
+                    CornerRadius="7,7,0,0"  Background="{StaticResource MainColor}">
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Path x:Name="path_title" Fill="White" Stretch="Fill"
+                           VerticalAlignment="Center"  FlowDirection="LeftToRight"
+                        Width="20" Height="20"
+                         Data="{StaticResource invoice}"/>
+
+                            <TextBlock Grid.Column="1" Text="title" x:Name="txt_title" Margin="10,0,0,0"  Foreground="White" 
+                     FontSize="14"     VerticalAlignment="Center" 
+                           FontWeight="Bold" />
+                        </StackPanel>
+
+
+                        <Button   IsCancel="true"  HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}" 
+                             BorderBrush="{x:Null}"  Foreground="White" Margin="7.5,0"  x:Name="btn_colse" Click="Btn_colse_Click"
+                             FontWeight="SemiBold" Width="24" Padding="0" ToolTip="Close"  FontSize="14">
+                            <materialDesign:PackIcon Foreground="White" Kind="Close" 
+                                         Width="20" Height="20"/>
+                        </Button>
+                    </Grid>
+
+                </Border>
+            </Grid>
+            <Border BorderThickness="1,0,1,1"  Grid.Row="1"
+                    CornerRadius="0,0,7,7" BorderBrush="#999999"  Background="White">
+                <Grid x:Name="grid_mainGrid" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Row="8" CornerRadius="10" Margin="10,5,10,5"   BorderThickness="1" BorderBrush="{StaticResource LightGrey}">
+                            <Grid>
+                                <TextBox x:Name="tb_InvoiceNumber"  Text="{Binding InvoiceNumber, Mode=OneWay}" Padding="10,0,5,0"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                     materialDesign:HintAssist.Hint="InvoiceNumber..."  
+                                    Foreground="#4E4E4E"  
+                                     MaxLength="50" BorderThickness="0"
+                                    materialDesign:TextFieldAssist.CharacterCounterStyle="{Binding}"
+                                    Height="40"  Margin="5,0,5,-1" 
+                                         KeyDown="Tb_InvoiceNumber_KeyDown"  />
+                                <Path Fill="#E81123"   Stretch="Fill" Margin="5,5,15,5"
+                                 HorizontalAlignment="Right" Visibility="Collapsed"    x:Name="p_error_InvoiceNumber"
+                            VerticalAlignment="Center" Width="15"  Height="15"
+                                Data="{StaticResource infoCircle}">
+                                </Path>
+                            </Grid>
+
+                        </Border>
+
+                    </Grid>
+
+
+                    <Button   Grid.Row="3"   Content="Select" materialDesign:ButtonAssist.CornerRadius="7"
+                       Margin="10,10" x:Name="btn_select"  Click="Btn_select_Click"
+                         Foreground="White"  Background="{StaticResource MainColor}" BorderBrush="{x:Null}" />
+                </Grid>
+            </Border>
+
+
+        </Grid>
+    </Border>
+</Window>
