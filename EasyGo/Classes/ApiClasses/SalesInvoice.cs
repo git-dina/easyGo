@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,10 +63,25 @@ namespace EasyGo.Classes.ApiClasses
         #endregion
     }
 
-    public class SalesInvoiceItem
+    public class SalesInvoiceItem : INotifyPropertyChanged
     {
+        public int index { get; set; }
         public int ItemTransId { get; set; }
-        public int Quantity { get; set; }
+
+        //public int Quantity { get; set; }
+        private int _Quantity;
+        public int Quantity
+        {
+            get => _Quantity;
+            set
+            {
+                if (_Quantity == value) return;
+
+                _Quantity = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Nullable<long> InvoiceId { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
@@ -72,6 +89,7 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<long> UpdateUserId { get; set; }
         public string Notes { get; set; }
         public decimal Price { get; set; }
+        public decimal Total { get; set; }
         public Nullable<long> ItemUnitId { get; set; }
         public Nullable<int> OfferId { get; set; }
         public decimal Profit { get; set; }
@@ -87,9 +105,14 @@ namespace EasyGo.Classes.ApiClasses
         public Nullable<long> ItemId { get; set; }
         public string ItemName { get; set; }
         public string UnitName { get; set; }
+        public string Image { get; set; }
         public string Barcode { get; set; }
         public string ItemType { get; set; }
         public Nullable<long> UnitId { get; set; }
         public List<Item> PackageItems { get; set; }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
     }
 }
