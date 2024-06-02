@@ -1,11 +1,14 @@
 ﻿using EasyGo.Classes;
 using EasyGo.Classes.ApiClasses;
+using EasyGo.converters;
 using EasyGo.Template;
 using EasyGo.View.windows;
+using MaterialDesignThemes.Wpf;
 using netoaster;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -72,6 +75,9 @@ namespace EasyGo.View.sales
 
                 Clear();
 
+
+              
+
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -84,32 +90,7 @@ namespace EasyGo.View.sales
 
         private void translate()
         {
-            /*
-            //txt_invoiceTitle.Text = AppSettings.resourcemanager.GetString("trInvoice"); 
-
-            dg_invoiceDetails.Columns[1].Header = AppSettings.resourcemanager.GetString("trNo.");
-            dg_invoiceDetails.Columns[2].Header = AppSettings.resourcemanager.GetString("trItem");
-            dg_invoiceDetails.Columns[3].Header = AppSettings.resourcemanager.GetString("trUnit");
-            dg_invoiceDetails.Columns[4].Header = AppSettings.resourcemanager.GetString("trAmount");
-            dg_invoiceDetails.Columns[5].Header = AppSettings.resourcemanager.GetString("trPrice");
-            dg_invoiceDetails.Columns[6].Header = AppSettings.resourcemanager.GetString("trTotal");
-
-            txt_supplier.Text = AppSettings.resourcemanager.GetString("trSupplier");
-            txt_discount.Text = AppSettings.resourcemanager.GetString("trDiscount");
-            txt_tax.Text = AppSettings.resourcemanager.GetString("trTax");
-
-            txt_CountTitle.Text = AppSettings.resourcemanager.GetString("trCount");
-            txt_SupTotalTitle.Text = AppSettings.resourcemanager.GetString("trSum");
-            txt_taxValueTitle.Text = AppSettings.resourcemanager.GetString("trTaxValue");
-            txt_taxRateTitle.Text = AppSettings.resourcemanager.GetString("trTaxRate");
-            txt_discountValueTitle.Text = AppSettings.resourcemanager.GetString("trDiscountValue");
-            txt_discountRateTitle.Text = AppSettings.resourcemanager.GetString("trDiscountRate");
-            txt_totalTitle.Text = AppSettings.resourcemanager.GetString("trTotal");
-
-            btn_next.ToolTip = AppSettings.resourcemanager.GetString("trNext");
-            btn_previous.ToolTip = AppSettings.resourcemanager.GetString("trPrevious");
-            btn_save.Content = AppSettings.resourcemanager.GetString("trBuy");
-            */
+            
         }
 
 
@@ -117,13 +98,15 @@ namespace EasyGo.View.sales
         {
             invoice = new SalesInvoice();
             this.DataContext = invoice;
-            invoiceDetailsList = new List<PurInvoiceItem>();
+            invoiceDetailsList = new List<SalesInvoiceItem>();
             listPayments = new List<CashTransfer>();
             refreshInvoiceDetails();
             _InvoiceType = "pd";
             isFromReport = false;
-            inputEditable();
 
+            /*
+            inputEditable();
+            */
             btn_save.Content = AppSettings.resourcemanager.GetString("trBuy");
 
             ActiveButton(btn_supplier, false, AppSettings.resourcemanager.GetString("trSupplier"));
@@ -133,122 +116,7 @@ namespace EasyGo.View.sales
             HelpClass.clearValidate(requiredControlList, this);
         }
 
-        private void inputEditable()
-        {
-            /*
-            if (_InvoiceType == "pbw") // purchase invoice
-            {
-                col_delete.Visibility = Visibility.Visible; //make delete column visible
-                col_price.IsReadOnly = false; //make price read only
-                col_unit.IsReadOnly = false; //make unit read only
-                col_quantity.IsReadOnly = false; //make count read only
-                btn_supplier.IsEnabled = false;
-                //tb_barcode.IsEnabled = false;
-                //cb_branch.IsEnabled = false;
-                btn_discount.IsEnabled = false;
-                btn_save.IsEnabled = true;
-                btn_tax.IsEnabled = false;
-
-            }
-            else if (_InvoiceType == "pbd") // return invoice
-            {
-                col_delete.Visibility = Visibility.Visible; //make delete column visible
-                col_price.IsReadOnly = false; //make price read only
-                col_unit.IsReadOnly = true; //make unit read only
-                col_quantity.IsReadOnly = false; //make count read only
-                btn_supplier.IsEnabled = false;
-                //tb_barcode.IsEnabled = false;
-                //cb_branch.IsEnabled = true;
-                btn_discount.IsEnabled = false;
-                btn_save.IsEnabled = true;
-                btn_tax.IsEnabled = false;
-            }
-            else if (_InvoiceType == "pd") // purchase draft 
-            {
-                col_delete.Visibility = Visibility.Visible; //make delete column visible
-                col_price.IsReadOnly = false;
-                col_unit.IsReadOnly = false;
-                col_quantity.IsReadOnly = false;
-                btn_supplier.IsEnabled = true;
-                //tb_barcode.IsEnabled = true;
-                // cb_branch.IsEnabled = true;
-                btn_discount.IsEnabled = true;
-                btn_save.IsEnabled = true;
-                btn_tax.IsEnabled = true;
-
-            }
-            else if (_InvoiceType == "pw" || _InvoiceType == "p" || _InvoiceType == "pb")//|| archived)
-            {
-                col_delete.Visibility = Visibility.Collapsed; //make delete column unvisible
-                col_price.IsReadOnly = true; //make price read only
-                col_unit.IsReadOnly = true; //make unit read only
-                col_quantity.IsReadOnly = true; //make count read only
-                btn_supplier.IsEnabled = false;
-                // tb_barcode.IsEnabled = false;
-                // cb_branch.IsEnabled = false;
-                btn_discount.IsEnabled = false;
-                btn_save.IsEnabled = false;
-                btn_tax.IsEnabled = false;
-
-
-                if (_InvoiceType.Equals("pb") || _InvoiceType.Equals("p"))
-                {
-                    #region print - pdf - send email
-                    btn_printInvoice.Visibility = Visibility.Visible;
-                    btn_pdf.Visibility = Visibility.Visible;
-                    //if (FillCombo.groupObject.HasPermissionAction(printCountPermission, FillCombo.groupObjects, "one"))
-                    //{
-                    //    btn_printCount.Visibility = Visibility.Visible;
-                    //    bdr_printCount.Visibility = Visibility.Visible;
-                    //}
-                    //else
-                    //{
-                    //    btn_printCount.Visibility = Visibility.Collapsed;
-                    //    bdr_printCount.Visibility = Visibility.Collapsed;
-                    //}
-                    //if (FillCombo.groupObject.HasPermissionAction(sendEmailPermission, FillCombo.groupObjects, "one"))
-                    //{
-                    //    btn_emailMessage.Visibility = Visibility.Visible;
-                    //    bdr_emailMessage.Visibility = Visibility.Visible;
-                    //}
-                    //else
-                    //{
-                    //    btn_emailMessage.Visibility = Visibility.Collapsed;
-                    //    bdr_emailMessage.Visibility = Visibility.Collapsed;
-                    //}
-                    #endregion
-                }
-                else
-                {
-                    #region print - pdf - send email
-                    btn_printInvoice.Visibility = Visibility.Collapsed;
-                    btn_pdf.Visibility = Visibility.Collapsed;
-                    // btn_printCount.Visibility = Visibility.Collapsed;
-                    // btn_emailMessage.Visibility = Visibility.Collapsed;
-                    // bdr_emailMessage.Visibility = Visibility.Collapsed;
-                    #endregion
-                }
-                if (!isFromReport)
-                {
-                    btn_next.Visibility = Visibility.Visible;
-                    btn_previous.Visibility = Visibility.Visible;
-                }
-
-
-                //if ((_InvoiceType != "pd" && invoice.tax == 0) || _InvoiceType == "pbd")
-                //{
-                //    sp_tax.Visibility = Visibility.Collapsed;
-                //    tb_taxValue.Text = "0";
-                //}
-                //else if (AppSettings.invoiceTax_bool == true || invoice.tax > 0)
-                //    sp_tax.Visibility = Visibility.Visible;
-            }
-
-            btn_next.IsEnabled = invoice.HasNextInvoice == true ? true : false;
-            btn_previous.IsEnabled = invoice.HasPrevInvoice == true ? true : false;
-            */
-        }
-        //bool menuState = false;
+       
 
         #region validate - clearValidate - textChange - lostFocus - . . . . 
 
@@ -295,6 +163,24 @@ namespace EasyGo.View.sales
             }
 
         }
+        private void NumberInt_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            try
+            {
+                //only  digits
+                TextBox textBox = sender as TextBox;
+                HelpClass.InputJustNumber(ref textBox);
+                //if (textBox.Tag.ToString() == "int")
+                {
+                    Regex regex = new Regex("[^0-9]");
+                    e.Handled = regex.IsMatch(e.Text);
+                }
+            }
+            catch (Exception ex)
+            {
+                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
+            }
+        }
         private void Spaces_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             try
@@ -328,16 +214,6 @@ namespace EasyGo.View.sales
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
         }
-
-
-
-
-
-
-
-
-
-
         #endregion
 
 
@@ -500,27 +376,13 @@ namespace EasyGo.View.sales
         }
         private void Btn_itemCards_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (_InvoiceType == "pd")
-                {
-                    HelpClass.StartAwait(grid_main);
-                    var itemCards = sender as uc_itemCards;
-                    if (itemCards != null)
-                    {
-                        selectedItem = itemCards.item;
-                        AddItemToInvoice(selectedItem);
+            // dina
+            MessageBox.Show("add item to invoice details here");
 
-                    }
+            // this example 
+            invoiceDetailsList.Add(new SalesInvoiceItem() { ItemName = "Item1", Quantity = 1, Total = 1972 });
+            BuildInvoiceDetails(invoiceDetailsList);
 
-                    HelpClass.EndAwait(grid_main);
-                }
-            }
-            catch
-            {
-                HelpClass.EndAwait(grid_main);
-
-            }
         }
 
 
@@ -532,244 +394,65 @@ namespace EasyGo.View.sales
 
 
         #region invoiceDetails
+        List<SalesInvoiceItem> invoiceDetailsList = new List<SalesInvoiceItem>();
+        int _SequenceNum = 1;
 
-        private async void Dg_invoiceDetails_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        void BuildInvoiceDetails(List<SalesInvoiceItem> itemsList)
         {
-
-            try
+            sv_invoiceDetails.Content = new Grid();
+            if (itemsList.Count > 0)
             {
-
-                TextBox t = e.EditingElement as TextBox;  // Assumes columns are all TextBoxes
-                var columnName = e.Column.Header.ToString();
-
-                PurInvoiceItem row = e.Row.Item as PurInvoiceItem;
-                int index = invoiceDetailsList.IndexOf(invoiceDetailsList.Where(p => p.ItemUnitId == row.ItemUnitId).FirstOrDefault());
-
-                //TimeSpan elapsed = (DateTime.Now - _lastKeystroke);
-                //if (elapsed.TotalMilliseconds < 100)
-                //{
-                //    if (columnName == AppSettings.resourcemanager.GetString("trAmount"))
-                //        t.Text = invoiceDetailsList[index].Quantity.ToString();
-                //    else if (columnName == AppSettings.resourcemanager.GetString("trPrice"))
-                //        t.Text = HelpClass.DecTostring(invoiceDetailsList[index].Price);
-
-                //}
-                //else
+                #region Grid Container
+                Grid gridContainer = new Grid();
+                gridContainer.Margin = new Thickness(5);
+                //int rowCount = billDetailsList.Count();
+                int rowCount = itemsList.Count;
+                RowDefinition[] rd = new RowDefinition[rowCount];
+                for (int i = 0; i < rowCount; i++)
                 {
-                    int oldCount = 0;
-                    long newCount = 0;
-                    decimal oldPrice = 0;
-                    decimal newPrice = 0;
-
-                    //"tb_amont"
-                    if (columnName == AppSettings.resourcemanager.GetString("trAmount"))
-                    {
-                        if (!t.Text.Equals(""))
-                            newCount = int.Parse(t.Text);
-                        else
-                            newCount = 0;
-                        if (newCount < 0)
-                        {
-                            newCount = 0;
-                            t.Text = "0";
-                        }
-                    }
-                    else
-                        newCount = row.Quantity;
-
-                    oldCount = row.Quantity;
-                    oldPrice = row.Price;
-
-                    #region if return invoice
-                    if (_InvoiceType == "pbd" || _InvoiceType == "pbw")
-                    {
-                        var selectedItemUnitId = row.ItemUnitId;
-
-                        var itemUnitsIds = FillCombo.itemUnitList.Where(x => x.ItemId == row.ItemId).Select(x => x.ItemUnitId).ToList();
-
-                        #region caculate available amount in this invoice 
-                        int availableAmountInBranch = await itemLocation.getAmountInBranch((long)row.ItemUnitId, MainWindow.branchLogin.BranchId);
-                        int amountInBill = await getAmountInBill(row.ItemId, (long)row.ItemUnitId, row.ID);
-                        int availableAmount = availableAmountInBranch - amountInBill;
-                        #endregion
-                        #region calculate amount in purchase invoice
-                        var items = invoice.InvoiceItems.ToList().Where(i => itemUnitsIds.Contains((long)i.ItemUnitId));
-                        int purchasedAmount = 0;
-                        foreach (var it in items)
-                        {
-                            if (selectedItemUnitId == (long)it.ItemUnitId)
-                                purchasedAmount += (int)it.Quantity;
-                            else
-                                purchasedAmount += FillCombo.itemUnit.fromUnitToUnitQuantity((int)it.Quantity, row.ItemId, (long)it.ItemUnitId, (long)selectedItemUnitId);
-                        }
-                        #endregion
-                        if (newCount > (purchasedAmount - amountInBill) || newCount > availableAmount)
-                        {
-                            // return old value 
-                            t.Text = (purchasedAmount - amountInBill) > availableAmount ? availableAmount.ToString() : (purchasedAmount - amountInBill).ToString();
-
-                            newCount = (purchasedAmount - amountInBill) > availableAmount ? availableAmount : (purchasedAmount - amountInBill);
-                            Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trErrorAmountIncreaseToolTip"), animation: ToasterAnimation.FadeIn);
-                        }
-                    }
-                    #endregion
-                    if (columnName == AppSettings.resourcemanager.GetString("trPrice") && !t.Text.Equals(""))
-                        newPrice = decimal.Parse(t.Text);
-                    else
-                        newPrice = row.Price;
-
-
-
-                    // old total for changed item
-                    decimal total = oldPrice * oldCount;
-
-                    // new total for changed item
-                    total = newCount * newPrice;
-
-
-                    //refresh total cell
-                    //TextBlock tb = dg_invoiceDetails.Columns[6].GetCellContent(dg_invoiceDetails.Items[index]) as TextBlock;
-                    //tb.Text = HelpClass.DecTostring(total);
-
-                    //  refresh sum and total text box
-                    CalculateInvoiceValues();
-
-                    // update item in invoiceDetails           
-                    invoiceDetailsList[index].Quantity = (int)newCount;
-                    invoiceDetailsList[index].Price = newPrice;
-                    invoiceDetailsList[index].Total = total;
+                    rd[i] = new RowDefinition();
+                    rd[i].Height = new GridLength(1, GridUnitType.Auto);
                 }
-                refreshInvoiceDetails();
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
-
-            try
-            {
-                await Task.Delay(0050);
-                CalculateInvoiceValues();
-            }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
-        }
-
-        private async Task<int> getAmountInBill(long itemId, long itemUnitId, long ID)
-        {
-            int quantity = 0;
-            var itemUnits = FillCombo.itemUnitList.Where(a => a.ItemId == itemId).ToList();
-
-            var smallUnits = FillCombo.itemUnit.getSmallItemUnits(itemId, itemUnitId);
-            foreach (ItemUnit u in itemUnits)
-            {
-                var isInBill = invoiceDetailsList.ToList().Find(x => x.ItemUnitId == (long)u.ItemUnitId && x.ID != ID); // unit exist in invoice
-                if (isInBill != null)
+                for (int i = 0; i < rowCount; i++)
                 {
-                    var isSmall = smallUnits.Find(x => x.ItemUnitId == (long)u.ItemUnitId);
-                    int unitValue = 0;
-
-                    int index = invoiceDetailsList.IndexOf(invoiceDetailsList.Where(p => p.ItemUnitId == u.ItemUnitId).FirstOrDefault());
-                    int count = invoiceDetailsList[index].Quantity;
-                    if (itemUnitId == u.ItemUnitId)
-                    {
-                        quantity += count;
-                    }
-                    else if (isSmall != null) // from-unit is bigger than to-unit
-                    {
-                        unitValue = FillCombo.itemUnit.largeToSmallUnitQuan(itemUnitId, (long)u.ItemUnitId, itemId);
-                        quantity += count / unitValue;
-                    }
-                    else
-                    {
-                        unitValue = FillCombo.itemUnit.smallToLargeUnit(itemUnitId, (long)u.ItemUnitId, itemId);
-
-                        if (unitValue != 0)
-                        {
-                            quantity += count * unitValue;
-                        }
-                    }
-
+                    gridContainer.RowDefinitions.Add(rd[i]);
                 }
+                /////////////////////////////////////////////////////
+
+                #endregion
+                _SequenceNum = 1;
+                foreach (var item in itemsList)
+                {
+                    var it = items.Where(x => x.ItemId == item.ItemId).FirstOrDefault();
+                    item.index = _SequenceNum;
+                    uc_itemSalesInvoice itemSalesInvoiceTemp = new uc_itemSalesInvoice();
+                    itemSalesInvoiceTemp.salesInvoiceItem = item;
+                    itemSalesInvoiceTemp.funcDelete = DeleteInvoiceDetails;
+
+                    Grid.SetRow(itemSalesInvoiceTemp, item.index-1);
+                    gridContainer.Children.Add(itemSalesInvoiceTemp);                  
+                    
+
+                    _SequenceNum++;
+                }
+                sv_invoiceDetails.Content = gridContainer;
             }
-            return quantity;
         }
-        private void dg_invoiceDetails_CurrentCellChanged(object sender, EventArgs e)
+        bool DeleteInvoiceDetails(SalesInvoiceItem _salesInvoiceItem)
         {
-            try
+            invoiceDetailsList.Remove(_salesInvoiceItem);
+
+            int counter = 1;
+            foreach (var item in invoiceDetailsList)
             {
-                CalculateInvoiceValues();
+                item.index = counter;
+                counter++;
             }
-            catch (Exception ex)
-            {
-                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
+            BuildInvoiceDetails(invoiceDetailsList);
+            return true;
         }
-        private void unitRowFromInvoiceItems(object sender, RoutedEventArgs e)
-        {
-            /*
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-                    if (vis is DataGridRow)
-                    {
-
-                        PurInvoiceItem row = (PurInvoiceItem)dg_invoiceDetails.SelectedItems[0];
-                        var item = FillCombo.itemsHasUnitsList.Where(x => x.ItemId == row.ItemId).FirstOrDefault();
-                        wd_selectItemUnit w = new wd_selectItemUnit();
-                        w.itemUnitsList = item.ItemUnits;
-                        w.itemUnitId = row.ItemUnitId;
-                        w.ShowDialog();
-                        if (w.isOk)
-                        {
-                            row.ItemUnitId = w.itemUnitId;
-                            row.UnitName = w.unitName;
-                        }
-
-                        refreshInvoiceDetails();
-                    }
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
-            */
-        }
-        private void deleteRowFromInvoiceItems(object sender, RoutedEventArgs e)
-        {/*
-
-            try
-            {
-                HelpClass.StartAwait(grid_main);
-
-                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-                    if (vis is DataGridRow)
-                    {
-
-                        PurInvoiceItem row = (PurInvoiceItem)dg_invoiceDetails.SelectedItems[0];
-                        invoiceDetailsList.Remove(row);
-                        CalculateInvoiceValues();
-                        refreshInvoiceDetails();
-                    }
-
-                HelpClass.EndAwait(grid_main);
-            }
-            catch (Exception ex)
-            {
-                HelpClass.EndAwait(grid_main);
-                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
-            */
-        }
+        
         #endregion
-        List<PurInvoiceItem> invoiceDetailsList = new List<PurInvoiceItem>();
 
         #region Invoice Operations
 
@@ -791,101 +474,7 @@ namespace EasyGo.View.sales
             catch { }
             */
         }
-        private void AddItemToInvoice(Item item)
-        {
-            long defaultUnitId = 0;
 
-            var defaultUnit = item.ItemUnits.Where(x => x.IsDefaultPurchase == true).FirstOrDefault();
-            if (defaultUnit != null)
-            {
-                defaultUnitId = defaultUnit.ItemUnitId;
-                var itemInInvoice = invoiceDetailsList.Where(x => x.ItemUnitId == defaultUnitId).FirstOrDefault();
-                if (itemInInvoice != null)
-                {
-                    itemInInvoice.Quantity++;
-                    itemInInvoice.Total = itemInInvoice.Quantity * itemInInvoice.Price;
-                }
-                else
-                {
-
-                    invoiceDetailsList.Add(new PurInvoiceItem()
-                    {
-                        ItemName = item.Name,
-                        ItemUnitId = defaultUnitId,
-                        ItemId = item.ItemId,
-                        UnitName = defaultUnit.UnitName,
-                        Quantity = 1,
-                        Price = (decimal)defaultUnit.PurchasePrice,
-                        Total = (decimal)defaultUnit.PurchasePrice,
-                        CreateUserId = MainWindow.userLogin.UserId,
-                    });
-                }
-            }
-            else
-            {
-                invoiceDetailsList.Add(new PurInvoiceItem()
-                {
-                    ItemName = item.Name,
-                    Quantity = 1,
-                    Price = 0,
-                    Total = 0,
-                });
-            }
-
-            refreshInvoiceDetails();
-            CalculateInvoiceValues();
-        }
-
-        private void CalculateInvoiceValues()
-        {
-            decimal total = invoiceDetailsList.Select(x => x.Total).Sum();
-
-
-            #region tax
-
-            if (invoice.TaxType.Equals("rate"))
-            {
-                invoice.Tax = HelpClass.calcPercentage(total, (decimal)invoice.TaxPercentage);//tax value
-            }
-            else if (total != 0)
-                invoice.TaxPercentage = (invoice.Tax.Value * 100) / total; //tax rate
-
-            #endregion
-            decimal totalAfterTax = total + invoice.Tax.Value;
-
-            #region discount
-
-            decimal manualDiscount = 0;
-            decimal manualDiscountRate = 0;
-
-            if (invoice.DiscountType == "rate")
-            {
-                manualDiscount = HelpClass.calcPercentage(totalAfterTax, (decimal)invoice.DiscountPercentage);
-                manualDiscountRate = (decimal)invoice.DiscountPercentage;
-            }
-            else
-            {
-                manualDiscount = invoice.DiscountValue.Value;
-                manualDiscountRate = (manualDiscount * 100) / totalAfterTax;
-            }
-
-
-            #endregion
-
-            decimal totalNet = totalAfterTax - manualDiscount;
-
-
-            //display
-            invoice.Count = invoiceDetailsList.Select(x => x.Quantity).Sum();
-            invoice.Total = invoiceDetailsList.Select(x => x.Total).Sum();
-
-            invoice.DiscountValue = manualDiscount;
-            invoice.DiscountPercentage = manualDiscountRate;
-            invoice.TotalNet = totalNet;
-
-            this.DataContext = null;
-            this.DataContext = invoice;
-        }
 
         #endregion
 
@@ -935,7 +524,6 @@ namespace EasyGo.View.sales
                     bool showReturn = false;
                     if (_InvoiceType == "p")
                     {
-                        // dina 
                         /*
                         invoice = await invoiceModel.GetInvoiceToReturn(invoice.InvoiceId);
                         if (invoice.InvoiceItems.Select(x => x.Quantity).Sum() > 0)
@@ -1004,8 +592,7 @@ namespace EasyGo.View.sales
             try
             {
                 HelpClass.StartAwait(grid_main);
-
-               
+                invoiceDetailsList[0].Quantity++;
                 HelpClass.EndAwait(grid_main);
             }
             catch (Exception ex)
@@ -1576,41 +1163,6 @@ namespace EasyGo.View.sales
         */
         #endregion
 
-        /*
-        private void btn_supplier_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                HelpClass.StartAwait(MainWindow.mainWindow.grid_mainWindow);
-                Window.GetWindow(this).Opacity = 0.2;
-                wd_selectSupplier w = new wd_selectSupplier();
-                w.supplierId = invoice.SupplierId;
-                w.ShowDialog();
-                if (w.isOk)
-                {
-                    invoice.SupplierId = w.supplierId;
-                    invoice.SupplierName = w.supplierName;
-                    //yasin
-                    if (invoice.SupplierId != null)
-                    {
-                        ActiveButton(btn_supplier, true, invoice.SupplierName);
-                    }
-                    else
-                    {
-                        ActiveButton(btn_supplier, false, AppSettings.resourcemanager.GetString("trSupplier"));
-                    }
-                }
-                Window.GetWindow(this).Opacity = 1;
-                HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
-            }
-            catch (Exception ex)
-            {
-                Window.GetWindow(this).Opacity = 1;
-                HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
-                HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
-            }
-        }
-        */
         private void btn_discount_Click(object sender, RoutedEventArgs e)
         {
             /*
@@ -1631,7 +1183,6 @@ namespace EasyGo.View.sales
 
                     CalculateInvoiceValues();
 
-                    //yasin
                     if (invoice.DiscountValue != 0)
                     {
                         ActiveButton(btn_discount, true);
@@ -1655,6 +1206,7 @@ namespace EasyGo.View.sales
 
         private void btn_tax_Click(object sender, RoutedEventArgs e)
         {
+            /*
             try
             {
                 HelpClass.StartAwait(MainWindow.mainWindow.grid_mainWindow);
@@ -1672,7 +1224,6 @@ namespace EasyGo.View.sales
 
                     CalculateInvoiceValues();
 
-                    //yasin
                     if (invoice.Tax != 0)
                     {
                         ActiveButton(btn_tax, true);
@@ -1691,6 +1242,7 @@ namespace EasyGo.View.sales
                 HelpClass.EndAwait(MainWindow.mainWindow.grid_mainWindow);
                 HelpClass.ExceptionMessage(ex, this, this.GetType().FullName, System.Reflection.MethodBase.GetCurrentMethod().Name);
             }
+            */
         }
 
         void ActiveButton(Button button, bool isActive, string text = "")

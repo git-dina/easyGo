@@ -871,8 +871,16 @@ l0.3,260.4L348.9,261.7z"  />
                         BorderBrush="{StaticResource MainColor}"/>
                     <Grid x:Name="grid_invoiceDetails"
                               Grid.Row="2" >
-                        <Border Margin="5,5,5,17.5"   Grid.Row="1" CornerRadius="10" x:Name="brd_roundDataGrid" BorderThickness="0" 
-                            Background="White"/>
+                        <ScrollViewer x:Name="sv_invoiceDetails" 
+                                Margin="0,10" 
+                                         VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                            Width="auto"
+                                          ScrollViewer.CanContentScroll="True">
+                            <!--<StackPanel  x:Name="sp_invoiceDetails">
+                                
+                            </StackPanel>-->
+                        </ScrollViewer>
+
                     </Grid>
                 </Grid>
             </Border>
