@@ -18,22 +18,22 @@ namespace EasyGo.converters
 
                 switch (value)
                 {
-                    //مشتريات 
-                    case "p":
-                        value = AppSettings.resourcemanager.GetString("trPurchaseInvoice");
+                    //مبيعات 
+                    case "s":
+                        value = AppSettings.resourcemanager.GetString("trSalesInvoice");
                         break;
-                    //مسودة مشتريات
-                    case "pd":
-                        value = AppSettings.resourcemanager.GetString("trPurchaseDraft");
+                    //مسودة مبيعات
+                    case "sd":
+                        value = AppSettings.resourcemanager.GetString("trSalesDraft");
                         break;
 
-                    //مرتجع شراء
-                    case "pb":
-                        value = AppSettings.resourcemanager.GetString("trPurchaseReturnInvoice");
+                    //مرتجع مبيعات
+                    case "sb":
+                        value = AppSettings.resourcemanager.GetString("trSalesReturnInvoice");
                         break;
-                    // مسودة مرتجع مشتريات
-                    case "pbd":
-                        value = AppSettings.resourcemanager.GetString("trPurchaseReturnDraft");
+                    // مسودة مرتجع مبيعات
+                    case "sbd":
+                        value = AppSettings.resourcemanager.GetString("trSalesReturnDraft");
                         break;
 
                     default: break;
