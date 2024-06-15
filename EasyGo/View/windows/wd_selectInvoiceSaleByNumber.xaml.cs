@@ -111,7 +111,7 @@ namespace EasyGo.View.windows
         public bool isOk { get; set; }
         public SalesInvoice salesInvoice { get; set; }
 
-        SalesInvoice purchaseInvModel = new SalesInvoice();
+        SalesInvoice salesInvModel = new SalesInvoice();
         public static List<string> requiredControlList = new List<string>();
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -217,11 +217,11 @@ namespace EasyGo.View.windows
             prefix = prefix.ToLower();
             barcode = barcode.ToLower();
 
-            if (prefix == "p")
+            if (prefix == "s")
             {
                 // dina
-                /*
-                salesInvoice = await purchaseInvModel.GetInvoiceToReturn(barcode, MainWindow.userLogin.UserId, MainWindow.branchLogin.BranchId);
+              
+                salesInvoice = await salesInvModel.GetInvoiceToReturn(barcode, MainWindow.userLogin.UserId, MainWindow.branchLogin.BranchId);
                 if (salesInvoice != null)
                 {
                     if (salesInvoice.InvoiceItems.Select(x => x.Quantity).Sum() > 0)
@@ -234,7 +234,7 @@ namespace EasyGo.View.windows
                 }
                 else
                     Toaster.ShowWarning(Window.GetWindow(this), message: AppSettings.resourcemanager.GetString("trNoInvoice"), animation: ToasterAnimation.FadeIn);
-            */
+          
             }
 
 

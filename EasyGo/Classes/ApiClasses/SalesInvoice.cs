@@ -1,8 +1,12 @@
-﻿using System;
+﻿using EasyGo.ApiClasses;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,6 +64,27 @@ namespace EasyGo.Classes.ApiClasses
         #endregion
 
         #region Methods
+
+        public async Task<SalesInvoice> GetInvoiceToReturn(string invNum, long userId, long branchId)
+        {
+            SalesInvoice item = new SalesInvoice();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("invNum", invNum);
+            parameters.Add("userId", userId.ToString());
+            parameters.Add("branchId", branchId.ToString());
+            //#################
+            IEnumerable<Claim> claims = await APIResult.getList("SalesInvoice/GetInvoiceToReturnByNum", parameters);
+
+            foreach (Claim c in claims)
+            {
+                if (c.Type == "scopes")
+                {
+                    item = JsonConvert.DeserializeObject<SalesInvoice>(c.Value, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy" });
+                    break;
+                }
+            }
+            return item;
+        }
         #endregion
     }
 
