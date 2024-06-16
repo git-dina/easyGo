@@ -49,7 +49,7 @@ namespace EasyGo.View.sales
         SalesInvoice invoiceModel = new SalesInvoice();
         ItemLocation itemLocation = new ItemLocation();
         CashTransfer cashTransfer = new CashTransfer();
-        string _InvoiceType = "pd";
+        string _InvoiceType = "sd";
         public static bool isFromReport = false;
         #region barcode params
         DateTime _lastKeystroke = new DateTime(0);
@@ -101,7 +101,7 @@ namespace EasyGo.View.sales
             invoiceDetailsList = new List<SalesInvoiceItem>();
             listPayments = new List<CashTransfer>();
             refreshInvoiceDetails();
-            _InvoiceType = "pd";
+            _InvoiceType = "sd";
             isFromReport = false;
 
             /*
@@ -109,7 +109,7 @@ namespace EasyGo.View.sales
             */
             btn_save.Content = AppSettings.resourcemanager.GetString("trBuy");
 
-            ActiveButton(btn_supplier, false, AppSettings.resourcemanager.GetString("trSupplier"));
+            ActiveButton(btn_supplier, false, AppSettings.resourcemanager.GetString("trCustomer"));
             ActiveButton(btn_discount, false);
             ActiveButton(btn_tax, false);
             // last 

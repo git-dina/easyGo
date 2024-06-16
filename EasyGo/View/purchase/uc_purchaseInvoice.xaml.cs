@@ -1393,11 +1393,8 @@ namespace EasyGo.View.purchase
                                 List<PayedInvclass> payedlist = new List<PayedInvclass>();
                                 payedlist = await cashTransfer.PayedBycashlist(listPayments);
                                 msg = await printPurInvoice(invoice, invoice.InvoiceItems, payedlist);
-                                if (msg == "")
-                                {
 
-                                }
-                                else
+                                if (msg != "")
                                 {
                                     this.Dispatcher.Invoke(() =>
                                     {
