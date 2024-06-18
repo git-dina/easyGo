@@ -377,6 +377,9 @@ namespace EasyGo.View.sales
         private void Btn_itemCards_Click(object sender, RoutedEventArgs e)
         {
             // dina
+            Item _item = (sender as uc_itemCardWithPrice).item;
+            MessageBox.Show($"Id: {_item.ItemId}, Name: {_item.Name}.");
+
             MessageBox.Show("add item to invoice details here");
 
             // this example 
